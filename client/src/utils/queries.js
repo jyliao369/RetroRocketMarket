@@ -19,10 +19,13 @@ export const QUERY_SINGLE_USER = gql`
             postings {
                 _id
                 title
-                postAuthor
+                category
+                platform
                 publisher
+                genre
                 condition
                 description
+                postAuthor
                 createdAt
             }
         }
@@ -38,10 +41,13 @@ export const QUERY_MYPROFILE = gql`
             postings {
                 _id
                 title
-                postAuthor
+                category
+                platform
                 publisher
+                genre
                 condition
                 description
+                postAuthor
                 createdAt
             }
         }
@@ -53,10 +59,13 @@ export const QUERY_POSTINGS = gql`
         postings {
             _id
             title
-            postAuthor
+            category
+            platform
             publisher
+            genre
             condition
             description
+            postAuthor
             createdAt
         }
     }
@@ -67,10 +76,13 @@ export const QUERY_SINGLE_POSTING = gql`
         posting(postingId: $postingId) {
             _id
             title
-            postAuthor
+            category
+            platform
             publisher
+            genre
             condition
             description
+            postAuthor
             createdAt
         }
     }

@@ -59,11 +59,14 @@ const resolvers = {
             return { token, user };
         },
 
-        addPosting: async (parent, { title, publisher, condition, description }, context) => {
+        addPosting: async (parent, { title, category, platform, publisher, genre, condition, description }, context) => {
             if (context.user) {
                 const posting = await Posting.create({
                     title,
+                    category,
+                    platform,
                     publisher,
+                    genre,
                     condition,
                     description,
                     postAuthor: context.user.username,
@@ -71,12 +74,13 @@ const resolvers = {
 
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { postings: posting._id } }
+                    { $addToSet: { postings: posting._id } }
                 );
 
                 return posting;
             }
-            throw new AuthenticationError('You must log ing!!');
+            throw new AuthenticationError('You need to be logged in!');
+            
         },
         removePosting: async (parent, { postingId }, context) => {
             if (context.user) {
@@ -92,7 +96,7 @@ const resolvers = {
 
                 return posting;
             }
-            throw new AuthenticationError('You must log ing!!');
+            throw new AuthenticationError('You must logged in!!');
         },
     },
 };

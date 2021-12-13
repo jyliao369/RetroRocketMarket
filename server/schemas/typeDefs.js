@@ -12,10 +12,13 @@ const typeDefs = gql`
     type Posting {
         _id: ID
         title: String
-        postAuthor: String
+        category: String
+        platform: String
         publisher: String
+        genre: String
         condition: String
         description: String
+        postAuthor: String
         createdAt: String
     }
 
@@ -40,8 +43,8 @@ const typeDefs = gql`
 
         login(email: String!, password: String!): Auth
 
-        addPosting(title: String!, publisher: String!, condition: String!, description: String!): Posting
-        removePosting(postingId: ID!): Posting
+        addPosting(title: String!, category: String!, platform: String!, publisher: String!, genre: String!, condition: String!, description: String!, postAuthor: String): Posting
+        removePosting(postingId: String!): Posting
     }
 `;
 

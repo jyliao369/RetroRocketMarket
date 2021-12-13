@@ -5,13 +5,16 @@ import { useMutation } from '@apollo/client';
 import { ADD_POSTING } from '../../utils/mutations';
 import { QUERY_POSTINGS, QUERY_MYPROFILE } from '../../utils/queries';
 
-import Auth from '../../utils/auth';
+// import Auth from '../../utils/auth';
 
 const GameForm = () => {
 
     const [ newPosting, setNewPosting] = useState({
         title: '',
+        category: '',
+        platform: '',
         publisher:'',
+        genre: '',
         condition:'',
         description:'',
     });
@@ -20,22 +23,7 @@ const GameForm = () => {
         setNewPosting({ ...newPosting, [event.target.name]: event.target.value})
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        try {
-            const { data } = await addPosting({
-                variables: {
-                    newPosting,
-                    postAuthor: Auth.getProfile.data.username,
-                },
-            });
-
-            setNewPosting('');
-        }   catch (err) {
-            console.error(err);
-        }
-    };
+    console.log(newPosting);
 
     const [addPosting, {error}] = useMutation(ADD_POSTING, {
         update(cache, { data: { addPosting } }) {
@@ -57,7 +45,23 @@ const GameForm = () => {
             });
         },
     });
+    
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
+        try {
+            const { data } = await addPosting({
+                variables: {
+                    ...newPosting,
+                    // postAuthor: Auth.getProfile.data.username,
+                },
+            });
+
+            setNewPosting('');
+        }   catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <div>
@@ -71,8 +75,26 @@ const GameForm = () => {
                     onChange={handleChange}>
                 </input>
                 <input
+                    name="category"
+                    placeholder="Category"
+                    // value={publisher}
+                    onChange={handleChange}>
+                </input>
+                <input
+                    name="platform"
+                    placeholder="Platform"
+                    // value={publisher}
+                    onChange={handleChange}>
+                </input>
+                <input
                     name="publisher"
                     placeholder="Publisher"
+                    // value={publisher}
+                    onChange={handleChange}>
+                </input>
+                <input
+                    name="genre"
+                    placeholder="Genre"
                     // value={publisher}
                     onChange={handleChange}>
                 </input>

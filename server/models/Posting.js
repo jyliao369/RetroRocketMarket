@@ -7,12 +7,22 @@ const postingSchema = new Schema({
         required: true,
         trim: true,
     },
-    postAuthor: {
+    category: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    platform: {
         type: String,
         required: true,
         trim: true,
     },
     publisher: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    genre: {
         type: String,
         required: true,
         trim: true,
@@ -25,6 +35,11 @@ const postingSchema = new Schema({
     description: {
         type: String,
         required: true,
+        trim: true,
+    },
+    postAuthor: {
+        type: String,
+        required: false,
         trim: true,
     },
     createdAt: {
