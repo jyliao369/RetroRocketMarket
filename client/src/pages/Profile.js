@@ -2,20 +2,25 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // import PostingList from '../components/PostingList';
 import GameForm from '../components/GameForm';
 
 import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { QUERY_SINGLE_USER } from '../utils/queries';
 import { QUERY_MYPROFILE } from '../utils/queries';
-
-import { useMutation } from '@apollo/client';
 import { REMOVE_POSTING } from '../utils/mutations';
 
-import Auth from '../utils/auth';
+// Import Material UI components
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card'; 
 
+import Auth from '../utils/auth';
 
 const Profile = () => {
     const { userId } = useParams();
@@ -62,10 +67,6 @@ const Profile = () => {
         return <Redirect to="/myprofile" />;
     }
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     if (!user?.username) {
         return (
           <h4>
@@ -75,15 +76,17 @@ const Profile = () => {
         );
     }
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div>
-            <div className="userpage">
-                {user.username}
-                {user.email}
-                <div className="userposts">
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid item xs={12} md={10} sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
+                <Grid item md={8}>    
                     {postings.map((posting) => (
-                        <div key={posting._id}>
-                            <div className="post">
+                        <Card key={posting._id} elevation={4} sx={{ m:2 }}>
+                            <Grid item>
                                 <p>title: { posting.title }</p>
                                 <p>category: { posting.category }</p>
                                 <p>platform: { posting.platform }</p>
@@ -93,21 +96,19 @@ const Profile = () => {
                                 <p>descrip: { posting.description }</p>
                                 <p>date: { posting.createdAt }</p>
                                 <p>user: { posting.postAuthor }</p>
-                            </div>
-                            <div>
-                                <button id={posting._id} onClick={handleDelete}>delete</button>
-                            </div>
-                        </div>
+                            </Grid>
+                            <Grid item sx={{ m:1 }}>
+                                <button id={posting._id} onClick={handleDelete}>Delete</button>
+                            </Grid>
+                        </Card>
                     ))}
-                </div>
-                <div>
-                    <GameForm />
-                </div> 
-            </div>
-        </div>
+                </Grid>
+                <Grid item md={4} sx={{ m:1 }}>
+                    <GameForm/>
+                </Grid>
+            </Grid>
+        </Box>
     );
-    
-
 };
 
 export default Profile;

@@ -17,6 +17,10 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.3",
+    "@mui/styled-engine": "^5.2.0",
     "graphql": "^15.7.2"
   }
 }
