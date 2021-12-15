@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_POSTING = gql`
-    mutation addPosting($title:String!, $category:String!, $platform:String!, $publisher:String!, $genre:String!, $condition:String!, $description:String!) {
-        addPosting(title: $title, category: $category, platform: $platform, publisher: $publisher, genre: $genre, condition: $condition, description: $description) {
+    mutation addPosting($title:String!, $category:String!, $platform:String!, $publisher:String!, $genre:String!, $condition:String!, $description:String!, $imageid:String) {
+        addPosting(title: $title, category: $category, platform: $platform, publisher: $publisher, genre: $genre, condition: $condition, description: $description, imageid: $imageid ) {
             title
             category
             platform
@@ -34,6 +34,7 @@ export const ADD_POSTING = gql`
             genre
             condition
             description
+            imageid
             postAuthor
             createdAt
         }
@@ -51,6 +52,7 @@ export const REMOVE_POSTING = gql`
             genre
             condition
             description
+            imageid
             postAuthor
             createdAt
         }

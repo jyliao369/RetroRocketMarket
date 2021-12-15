@@ -25,6 +25,7 @@ export const QUERY_SINGLE_USER = gql`
                 genre
                 condition
                 description
+                imageid
                 postAuthor
                 createdAt
             }
@@ -47,6 +48,7 @@ export const QUERY_MYPROFILE = gql`
                 genre
                 condition
                 description
+                imageid
                 postAuthor
                 createdAt
             }
@@ -65,6 +67,7 @@ export const QUERY_POSTINGS = gql`
             genre
             condition
             description
+            imageid
             postAuthor
             createdAt
         }
@@ -82,6 +85,7 @@ export const QUERY_SINGLE_POSTING = gql`
             genre
             condition
             description
+            imageid
             postAuthor
             createdAt
         }

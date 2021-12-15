@@ -37,6 +37,10 @@ const postingSchema = new Schema({
         required: true,
         trim: true,
     },
+    imageid: {
+        type: String,
+        required: false,
+    },
     postAuthor: {
         type: String,
         required: false,

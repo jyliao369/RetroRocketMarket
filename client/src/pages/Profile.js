@@ -17,10 +17,12 @@ import { REMOVE_POSTING } from '../utils/mutations';
 // Import Material UI components
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card'; 
 
 import Auth from '../utils/auth';
+
+import { Image } from 'cloudinary-react';
 
 const Profile = () => {
     const { userId } = useParams();
@@ -85,17 +87,41 @@ const Profile = () => {
             <Grid item xs={12} md={10} sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
                 <Grid item md={8}>    
                     {postings.map((posting) => (
-                        <Card key={posting._id} elevation={4} sx={{ m:2 }}>
-                            <Grid item>
-                                <p>title: { posting.title }</p>
-                                <p>category: { posting.category }</p>
-                                <p>platform: { posting.platform }</p>
-                                <p>publisher: { posting.publisher }</p>
-                                <p>genre: { posting.genre }</p>
-                                <p>condition: { posting.condition }</p>
-                                <p>descrip: { posting.description }</p>
-                                <p>date: { posting.createdAt }</p>
-                                <p>user: { posting.postAuthor }</p>
+                        <Card key={posting._id} elevation={4} sx={{ display: 'flex', flexDirection: 'row', m:2 }}>
+                            <Grid item xs={3} sx={{ display: 'flex', p: 2 }}>
+                                { posting.imageid ? (
+                                    <Image
+                                        width="100%"
+                                        cloudName="du119g90a" 
+                                        public_id={ posting.imageid }
+                                    />
+                                ): (
+                                    // <Image 
+                                    //     width="100%"
+                                    //     cloudName="du119g90a" 
+                                    // />
+                                    <h1>No Image</h1>
+                                )}
+                            </Grid>
+                            <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Grid>
+                                    <h2>title: { posting.title }</h2>
+                                </Grid>
+                                <br/>
+                                <Grid item sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Grid item>
+                                        <p>category: { posting.category }</p>
+                                        <p>platform: { posting.platform }</p>
+                                        <p>publisher: { posting.publisher }</p>
+                                        <p>genre: { posting.genre }</p>
+                                    </Grid>
+                                    <Grid>
+                                        <p>condition: { posting.condition }</p>
+                                        <p>Description: { posting.description }</p>
+                                        <p>date: { posting.createdAt }</p>
+                                        {/* <p>user: { posting.postAuthor }</p> */}
+                                    </Grid>
+                                </Grid>
                             </Grid>
                             <Grid item sx={{ m:1 }}>
                                 <button id={posting._id} onClick={handleDelete}>Delete</button>

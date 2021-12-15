@@ -59,7 +59,7 @@ const resolvers = {
             return { token, user };
         },
 
-        addPosting: async (parent, { title, category, platform, publisher, genre, condition, description }, context) => {
+        addPosting: async (parent, { title, category, platform, publisher, genre, condition, description, imageid }, context) => {
             if (context.user) {
                 const posting = await Posting.create({
                     title,
@@ -69,6 +69,7 @@ const resolvers = {
                     genre,
                     condition,
                     description,
+                    imageid,
                     postAuthor: context.user.username,
                 });
 

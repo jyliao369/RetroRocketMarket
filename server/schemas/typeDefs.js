@@ -18,6 +18,7 @@ const typeDefs = gql`
         genre: String
         condition: String
         description: String
+        imageid: String
         postAuthor: String
         createdAt: String
     }
@@ -43,7 +44,7 @@ const typeDefs = gql`
 
         login(email: String!, password: String!): Auth
 
-        addPosting(title: String!, category: String!, platform: String!, publisher: String!, genre: String!, condition: String!, description: String!, postAuthor: String): Posting
+        addPosting(title: String!, category: String!, platform: String!, publisher: String!, genre: String!, condition: String!, description: String!, imageid: String, postAuthor: String): Posting
         removePosting(postingId: String!): Posting
     }
 `;

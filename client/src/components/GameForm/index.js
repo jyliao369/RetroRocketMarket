@@ -15,6 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 
 // import Auth from '../../utils/auth';
 
+import Axios from 'axios';
+// import { Image } from 'cloudinary-react';
+
 const GameForm = () => {
 
     let category = ['Games', 'Consoles', 'Accessories', 'Figure', 'TCG'];
@@ -31,13 +34,6 @@ const GameForm = () => {
                  'Real-Time Strategy', 'Racing', 'Sports', 'Open World', 'Simulation', 'Horror'];
     let condition = ['New', 'Complete', 'Loose', 'Broken', 'Adventure'];
 
-    console.log('array')
-    console.log(category);
-    console.log(platform);
-    console.log(publisher);
-    console.log(genre);
-    console.log(condition);
-
     const [ newPosting, setNewPosting] = useState({
         title: '',
         category: '',
@@ -46,6 +42,7 @@ const GameForm = () => {
         genre: '',
         condition:'',
         description:'',
+        imageid:'',
     });
 
     const handleChange = (event) => {
@@ -53,6 +50,29 @@ const GameForm = () => {
     };
 
     console.log(newPosting);
+
+    const [imageSelected, setImageSelected] = useState('');
+
+    const uploadImage =(file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'yun8815z');
+
+        Axios.post(
+            'https://api.cloudinary.com/v1_1/du119g90a/image/upload',
+            formData
+        ).then((response) => {
+            console.log("response");
+            console.log(response);
+            console.log("public ID");
+            console.log(response.data.public_id);
+
+            setNewPosting((prevState) => ({
+                ...prevState,
+                imageid: response.data.public_id,
+            }))
+        });
+    };
 
     const [addPosting, {error}] = useMutation(ADD_POSTING, {
         update(cache, { data: { addPosting } }) {
@@ -171,12 +191,35 @@ const GameForm = () => {
                             <TextField
                                 sx={{ m: 2 }}
                                 multiline
-                                rows={10}
+                                rows={5}
                                 label='Description'
                                 name='description'
                                 placeholder='Description'
                                 onChange={handleChange}
                             />
+                        </Grid>
+                        <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 2 }}>
+                            <Grid item xs={10}>
+                                {imageSelected ? (
+                                    <img 
+                                        src={URL.createObjectURL(imageSelected)} 
+                                        width='100%' 
+                                        alt=""
+                                    ></img>
+                                ) : (
+                                    <h1>No Image</h1>
+                                )}
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <input 
+                                    title=" "
+                                    type="file" 
+                                    onChange={(event) => {
+                                        uploadImage(event.target.files[0]);
+                                        setImageSelected(event.target.files[0]);
+                                    }}
+                                />
+                            </Grid>
                         </Grid>
                         <Grid sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
                             <button onClick={handleSubmit} type='submit'>Add Post</button>
