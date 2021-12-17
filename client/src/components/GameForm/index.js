@@ -115,10 +115,10 @@ const GameForm = () => {
     return (
         <Box>
             <Grid>
-                <Paper elevation={4}>
+                <Paper elevation={5}>
                     <Grid>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Grid item sx={{ display: 'flex', justifyContent: 'center', m: 2.5 }}>
                                 <h1>New Posting</h1>
                             </Grid>
                             <TextField
@@ -221,7 +221,7 @@ const GameForm = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
+                        <Grid sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
                             <button onClick={handleSubmit} type='submit'>Add Post</button>
                         </Grid>
                     </Grid>

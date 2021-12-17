@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // import PostingList from '../components/PostingList';
 import GameForm from '../components/GameForm';
@@ -87,49 +88,58 @@ const Profile = () => {
             <Grid item xs={12} md={10} sx={{ display: 'flex', flexDirection: 'row', m: 1 }}>
                 <Grid item md={8}>    
                     {postings.map((posting) => (
-                        <Card key={posting._id} elevation={4} sx={{ display: 'flex', flexDirection: 'row', m:2 }}>
-                            <Grid item xs={3} sx={{ display: 'flex', p: 2 }}>
-                                { posting.imageid ? (
-                                    <Image
-                                        width="100%"
-                                        cloudName="du119g90a" 
-                                        public_id={ posting.imageid }
-                                    />
-                                ): (
-                                    // <Image 
-                                    //     width="100%"
-                                    //     cloudName="du119g90a" 
-                                    // />
-                                    <h1>No Image</h1>
-                                )}
-                            </Grid>
-                            <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                                <Grid>
-                                    <h2>title: { posting.title }</h2>
-                                </Grid>
-                                <br/>
-                                <Grid item sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Grid item>
-                                        <p>category: { posting.category }</p>
-                                        <p>platform: { posting.platform }</p>
-                                        <p>publisher: { posting.publisher }</p>
-                                        <p>genre: { posting.genre }</p>
+                        <Card key={posting._id} elevation={5} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', m:2 }}>
+                            <Link to={`/shop/${ posting._id }`} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', m:2 }}>
+                                <Grid item sx={{ display: 'flex', flexDirection: 'row' }}>
+                                    <Grid item xs={4} sx={{ display: 'flex', m: 1.50 }}>
+                                        { posting.imageid ? (
+                                            <Image
+                                                width="100%"
+                                                cloudName="du119g90a" 
+                                                public_id={ posting.imageid }
+                                            />
+                                        ): (
+                                            <Image 
+                                                width="100%"
+                                                cloudName="du119g90a" 
+                                                public_id='https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg'
+                                            />
+                                        )}
                                     </Grid>
-                                    <Grid>
-                                        <p>condition: { posting.condition }</p>
-                                        <p>Description: { posting.description }</p>
-                                        <p>date: { posting.createdAt }</p>
-                                        {/* <p>user: { posting.postAuthor }</p> */}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Grid item sx={{ m:1 }}>
+                                    <Grid item sx={{ display: 'flex', flexDirection: 'column', m: 1.25, width: 725 }}>
+                                        <Grid item>
+                                            <h1>{ posting.title }</h1>
+                                        </Grid>
+                                        <br/>
+                                        <Grid item sx={{ fontSize: 17 }}>
+                                            <Grid item sx={{ display: 'flex', flexDirection: 'row', }}>
+                                                <Grid item sx={{ mr: 15 }}> 
+                                                    <p>Category: { posting.category }</p>
+                                                    <p>Platform: { posting.platform }</p>
+                                                    <p>Condition: { posting.condition }</p>
+                                                </Grid>
+                                                <Grid item>
+                                                    <p>Publisher: { posting.publisher }</p>
+                                                    <p>Genre: { posting.genre }</p>
+                                                    <p>Date: { posting.createdAt }</p>
+                                                </Grid>
+                                            </Grid>
+                                            <br/>
+                                            <Grid>
+                                                <p>Description: { posting.description }</p>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>           
+                                </Grid>  
+                            </Link>
+                            <Grid item sx={{ display: 'flex', flexDirection: 'column', m:1 }}>
                                 <button id={posting._id} onClick={handleDelete}>Delete</button>
+                                <button id={posting._id}>Update</button>
                             </Grid>
                         </Card>
                     ))}
                 </Grid>
-                <Grid item md={4} sx={{ m:1 }}>
+                <Grid item md={4} sx={{ m: 1.75 }}>
                     <GameForm/>
                 </Grid>
             </Grid>
