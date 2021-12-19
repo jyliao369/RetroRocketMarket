@@ -1,11 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { useMutation } from '@apollo/client';
-import { ADD_POSTING } from '../../utils/mutations';
-import { QUERY_POSTINGS } from '../../utils/queries';
-import { QUERY_MYPROFILE } from '../../utils/queries';
+import { UPDATE_POSTING } from '../../utils/mutations';
 
 // Import Material UI components
 import Box from '@mui/material/Box';
@@ -14,102 +12,60 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-// import Auth from '../../utils/auth';
+const UpdateForm = (props) => {
 
-import Axios from 'axios';
-// import { Image } from 'cloudinary-react';
-
-const GameForm = () => {
-
-    let category = ['undefined', 'Games', 'Console', 'Accessories', 'Action Figures', 'TCG', 'Board Games', 'Figurines'];
-    let platform = ['undefined', 'NES', 'SNES', 'N64', 'GameCube', 'Wii', 'Wii U', 'Switch',
+    let category = ['undefined','Games', 'Console', 'Accessories', 'Action Figures', 'TCG', 'Board Games', 'Figurines'];
+    let platform = ['undefined','NES', 'SNES', 'N64', 'GameCube', 'Wii', 'Wii U', 'Switch',
                     'GameBoy/Color', 'GameBoy Advance', 'Nintendo DS', 'Nintendo 3DS',
                     'PS1', 'PS2', 'PS3', 'PS4', 'PS5', 'PSP', 'PSVita',
                     'Xbox', 'Xbox 360', 'Xbox One', 'Xbox Series',
                     'Genesis', 'Game Gear', 'Sega CD', '32X', 'Sega Saturn', 'DreamCast',
                     ];
-    let publisher = ['undefined', 'Nintendo', 'Microsoft', 'Sony', 'Bandai Namco', 'Ubisoft', 'EA Games',
+    let publisher = ['undefined','Nintendo', 'Microsoft', 'Sony', 'Bandai Namco', 'Ubisoft', 'EA Games',
                      'Square Enix', 'Konami', 'Sega', 'Capcom'];
-    let genre = ['undefined', 'Platform', 'FPS', 'Survival Horror', 'Metroidvania', 'Visual Novels', 'Action RPG',
+    let genre = ['undefined','Platform', 'FPS', 'Survival Horror', 'Metroidvania', 'Visual Novels', 'Action RPG',
                  'RougeLikes', 'JRPG', 'Simulation', 'Fighting', 'Party', 'Turn-Based Strategy',
                  'Real-Time Strategy', 'Racing', 'Sports', 'Open World', 'Simulation', 'Horror'];
-    let condition = ['undefined', 'New', 'Complete', 'Loose', 'Broken', 'Adventure'];
+    let condition = ['undefined','New', 'Complete', 'Loose', 'Broken', 'Adventure'];
 
-    const [ newPosting, setNewPosting] = useState({
-        title: '',
-        category: '',
-        platform: '',
-        publisher:'',
-        genre: '',
-        condition:'',
-        description:'',
-        imageid:'',
+    console.log('props.posting');
+    console.log(props.posting);
+
+    useEffect(() => {
+        setUpdatePosting({...props.posting})
+    }, [props.posting]);
+
+
+    const [ updatedPosting, setUpdatePosting ] = useState({
+        postingId: props.posting._id,
+        title: props.posting.title,
+        category: props.posting.category,
+        platform: props.posting.platform,
+        publisher: props.posting.publisher,
+        genre: props.posting.genre,
+        condition: props.posting.condition,
+        description: props.posting.description,
+        imageid: props.posting.imageid,
     });
 
-    const handleChange = (event) => {
-        setNewPosting({ ...newPosting, [event.target.name]: event.target.value})
+    const handleUpdate = (event) => {
+        setUpdatePosting({ ...updatedPosting, [event.target.name]: event.target.value})
     };
 
-    console.log(newPosting);
+    console.log('updatedposting');
+    console.log(updatedPosting);
 
-    const [imageSelected, setImageSelected] = useState('');
+    const [updatePosting] = useMutation(UPDATE_POSTING);
 
-    const uploadImage =(file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'yun8815z');
-
-        Axios.post(
-            'https://api.cloudinary.com/v1_1/du119g90a/image/upload',
-            formData
-        ).then((response) => {
-            console.log("response");
-            console.log(response);
-            console.log("public ID");
-            console.log(response.data.public_id);
-
-            setNewPosting((prevState) => ({
-                ...prevState,
-                imageid: response.data.public_id,
-            }))
-        });
-    };
-
-    const [addPosting] = useMutation(ADD_POSTING, {
-        update(cache, { data: { addPosting } }) {
-            try {
-                const { postings } = cache.readQuery({ query: QUERY_POSTINGS });
-
-                cache.writeQuery({
-                    query: QUERY_POSTINGS,
-                    data: { postings: [addPosting, ...postings] },
-                });
-            }   catch (e) {
-                console.error(e);
-            }
-
-            const { myprofile } = cache.readQuery({ query: QUERY_MYPROFILE });
-            cache.writeQuery({
-                query: QUERY_MYPROFILE,
-                data: { myprofile: { ...myprofile, postings: [...myprofile.postings, addPosting] } },
-            });
-        },
-    });
-    
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const confirmUpdate = async (event) => {
+        let postingId = updatedPosting._id
 
         try {
-            const { data } = await addPosting({
-                variables: {
-                    ...newPosting,
-                    // postAuthor: Auth.getProfile.data.username,
-                },
-            });
-
-            setNewPosting('');
-        }   catch (err) {
-            console.error(err);
+            updatePosting({
+                variables: { postingId, ...updatedPosting }
+            })
+        } catch (e) {
+            console.log(e);
         }
     };
 
@@ -120,14 +76,15 @@ const GameForm = () => {
                     <Grid>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                             <Grid item sx={{ display: 'flex', justifyContent: 'center', m: 2.5 }}>
-                                <h1>New Posting</h1>
+                                <h1>Update Posting</h1>
                             </Grid>
                             <TextField
                                 sx={{ m: 2 }}
                                 label='Title'
                                 name='title'
                                 placeholder='Title'
-                                onChange={handleChange}
+                                defaultValue={props.posting.title ?? " "}
+                                onChange={handleUpdate}
                             />
                             <TextField
                                 select
@@ -135,10 +92,11 @@ const GameForm = () => {
                                 label='Category'
                                 name='category'
                                 placeholder='Category'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.category ?? " "}
                             >
                                 {category.map((category) => (
-                                    <MenuItem key={category} value={category}>{category}</MenuItem>
+                                    <MenuItem value={category}>{category}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
@@ -147,10 +105,11 @@ const GameForm = () => {
                                 label='Platform'
                                 name='platform'
                                 placeholder='Platform'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.platform ?? " "}
                             >
                                 {platform.map((platform) => (
-                                    <MenuItem key={platform} value={platform}>{platform}</MenuItem>
+                                    <MenuItem value={platform}>{platform}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
@@ -159,10 +118,11 @@ const GameForm = () => {
                                 label='Publisher'
                                 name='publisher'
                                 placeholder='Publisher'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.publisher ?? " "}
                             >
                                 {publisher.map((publisher) => (
-                                    <MenuItem key={publisher} value={publisher}>{publisher}</MenuItem>
+                                    <MenuItem value={publisher}>{publisher}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
@@ -171,10 +131,11 @@ const GameForm = () => {
                                 label='Genre'
                                 name='genre'
                                 placeholder='Genre'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.genre ?? " "}
                             >
                                 {genre.map((genre) => (
-                                    <MenuItem key={genre} value={genre}>{genre}</MenuItem>
+                                    <MenuItem value={genre}>{genre}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
@@ -183,10 +144,11 @@ const GameForm = () => {
                                 label='Condition'
                                 name='condition'
                                 placeholder='Condition'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.condition ?? " "}
                             >
                                 {condition.map((condition) => (
-                                    <MenuItem key={condition} value={condition}>{condition}</MenuItem>
+                                    <MenuItem value={condition}>{condition}</MenuItem>
                                 ))}
                             </TextField>
                             <TextField
@@ -196,10 +158,11 @@ const GameForm = () => {
                                 label='Description'
                                 name='description'
                                 placeholder='Description'
-                                onChange={handleChange}
+                                onChange={handleUpdate}
+                                defaultValue={props.posting.description ?? " "}
                             />
                         </Grid>
-                        <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 2 }}>
+                        {/* <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 2 }}>
                             <Grid item xs={10}>
                                 {imageSelected ? (
                                     <img 
@@ -221,9 +184,9 @@ const GameForm = () => {
                                     }}
                                 />
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                         <Grid sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-                            <button onClick={handleSubmit} type='submit'>Add Post</button>
+                            <button onClick={confirmUpdate} type='submit'>Update Post</button>
                         </Grid>
                     </Grid>
                 </Paper>
@@ -232,4 +195,4 @@ const GameForm = () => {
     );
 };
 
-export default GameForm;
+export default UpdateForm;

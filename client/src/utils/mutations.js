@@ -58,3 +58,21 @@ export const REMOVE_POSTING = gql`
         }
     }
 `
+
+export const UPDATE_POSTING = gql`
+    mutation updatePosting($postingId:String!, $title:String, $category:String, $platform:String, $publisher:String, $genre:String, $condition:String, $description:String, $imageid:String) {
+        updatePosting(postingId:$postingId, title:$title, category:$category, platform:$platform, publisher:$publisher, genre:$genre, condition:$condition, description:$description, imageid:$imageid) {
+            _id
+            title
+            category
+            platform
+            publisher
+            genre
+            condition
+            description
+            imageid
+            postAuthor
+            createdAt
+        }
+    }
+`

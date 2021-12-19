@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
@@ -38,10 +38,12 @@ const Profile = () => {
     const user = data?.myprofile || data?.user || {};
     const postings = user.postings;
 
-    const [ userpostings, setUserPostings ] = useState(postings);
+    console.log(postings);
+
+    // const [ userpostings, setUserPostings ] = useState(postings);
     
-    console.log('user postings');
-    console.log(userpostings);
+    // console.log('user postings');
+    // console.log(userpostings);
 
     // THIS SHOULD BE ABLE DELETE POSTING THE USER MADE
     const [ removePosting ] = useMutation(REMOVE_POSTING);
@@ -61,11 +63,6 @@ const Profile = () => {
         }
     };
 
-    useEffect(() => {
-        setUserPostings(postings);
-    }, [postings]);
-
-
     if (Auth.loggedIn() && Auth.getProfile().data._id === userId) {
         return <Redirect to="/myprofile" />;
     }
@@ -79,7 +76,7 @@ const Profile = () => {
         );
     }
 
-    if (loading) {
+    if (postings === undefined || loading) {
         return <div>Loading...</div>;
     }
 
@@ -134,7 +131,7 @@ const Profile = () => {
                             </Link>
                             <Grid item sx={{ display: 'flex', flexDirection: 'column', m:1 }}>
                                 <button id={posting._id} onClick={handleDelete}>Delete</button>
-                                <button id={posting._id}>Update</button>
+                                <button><Link to={`/update/${ posting._id }`} /*id={posting._id}*/>Update</Link></button>
                             </Grid>
                         </Card>
                     ))}

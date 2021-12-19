@@ -99,6 +99,19 @@ const resolvers = {
             }
             throw new AuthenticationError('You must logged in!!');
         },
+        updatePosting: async (parent, { postingId, title, category, platform, publisher, genre, condition, description, imageid }, context) => {
+            const posting = await Posting.find({ id: postingId });
+            if (!posting) {
+                throw new Error(`No posting matches the id: ${postingId}`);
+            }
+
+            await Posting.findOneAndUpdate(
+                { _id: postingId },
+                { $set: { title: title, category: category, platform: platform, publisher: publisher, genre: genre, condition: condition, description: description, imageid: imageid } }
+            );
+
+            return posting;
+        },
     },
 };
 

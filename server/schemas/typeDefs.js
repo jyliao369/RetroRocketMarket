@@ -46,6 +46,8 @@ const typeDefs = gql`
 
         addPosting(title: String!, category: String!, platform: String!, publisher: String!, genre: String!, condition: String!, description: String!, imageid: String, postAuthor: String): Posting
         removePosting(postingId: String!): Posting
+
+        updatePosting(postingId: String!, title: String, category: String, platform: String, publisher: String, genre: String, condition: String, description: String, imageid: String): Posting
     }
 `;
 

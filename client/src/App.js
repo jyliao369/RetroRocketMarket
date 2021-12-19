@@ -18,6 +18,7 @@ import Posting from './pages/Posting';
 import Header from './components/Header';
 
 import Box from '@mui/material/Box';
+import Updatepage from './pages/Updatepage';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -70,6 +71,10 @@ function App() {
 
           <Route exact path="/shop/:postingId">
             <Posting />
+          </Route>
+
+          <Route exact path ="/update/:postingId">
+            <Updatepage />
           </Route>
         </Box>
 

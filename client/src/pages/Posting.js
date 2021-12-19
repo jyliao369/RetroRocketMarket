@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
-import { useMutation } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 
 import { QUERY_SINGLE_POSTING } from '../utils/queries';
 
@@ -62,6 +62,10 @@ const Posting = () => {
                 }
             </Box>
         )
+    }
+
+    if (loading) {
+        return <Box>Grabbing Posts</Box>;
     }
 
     return (
