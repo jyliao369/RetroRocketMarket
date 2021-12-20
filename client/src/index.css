@@ -1767,3 +1767,8 @@ label form [type='radio'] {
   display: flex;
   flex-direction: column;
 }
+
+.my-masonry-grid {
+  display: flex;
+  width: auto;
+}
