@@ -1,37 +1,37 @@
-import React from 'react';
+import React from "react";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Home from './pages/Home';
-import Shoppage from './pages/Shoppage'
-import Login from './pages/Login';
-import Signup from './pages/Signup'
-import Profile from './pages/Profile';
-import Posting from './pages/Posting';
+import Home from "./pages/Home";
+import Shoppage from "./pages/Shoppage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import Posting from "./pages/Posting";
 
-import Header from './components/Header';
+import Header from "./components/Header";
 
-import Box from '@mui/material/Box';
-import Updatepage from './pages/Updatepage';
+import Box from "@mui/material/Box";
+import Updatepage from "./pages/Updatepage";
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
+  const token = localStorage.getItem("id_token");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -45,7 +45,6 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-
         <Header />
 
         <Box>
@@ -56,7 +55,7 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-          
+
           <Route exact path="/signup">
             <Signup />
           </Route>
@@ -73,11 +72,10 @@ function App() {
             <Posting />
           </Route>
 
-          <Route exact path ="/update/:postingId">
+          <Route exact path="/update/:postingId">
             <Updatepage />
           </Route>
         </Box>
-
       </Router>
     </ApolloProvider>
   );

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React from "react";
+import { useQuery } from "@apollo/client";
 
-import ProfileList from '../components/ProfileList';
-import { QUERY_USER } from '../utils/queries';
+import ProfileList from "../components/ProfileList";
+import { QUERY_USER } from "../utils/queries";
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_USER);
@@ -17,10 +17,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <ProfileList
-              users={users}
-              title="Placeholder Title"
-            />
+            <ProfileList users={users} title="Placeholder Title" />
           )}
         </div>
       </div>
