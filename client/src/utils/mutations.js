@@ -32,6 +32,12 @@ export const ADD_POSTING = gql`
     $publisher: String!
     $genre: String!
     $condition: String!
+    $accessory: String!
+    $accessoryCheck: String!
+    $cardGame: String!
+    $cardSale: String!
+    $figurineManufacture: String!
+    $figureManufacture: String!
     $description: String!
     $imageid: String
   ) {
@@ -42,6 +48,12 @@ export const ADD_POSTING = gql`
       publisher: $publisher
       genre: $genre
       condition: $condition
+      accessory: $accessory
+      accessoryCheck: $accessoryCheck
+      cardGame: $cardGame
+      cardSale: $cardSale
+      figurineManufacture: $figurineManufacture
+      figureManufacture: $figureManufacture
       description: $description
       imageid: $imageid
     ) {
@@ -51,6 +63,12 @@ export const ADD_POSTING = gql`
       publisher
       genre
       condition
+      accessory
+      accessoryCheck
+      cardGame
+      cardSale
+      figurineManufacture
+      figureManufacture
       description
       imageid
       postAuthor
@@ -69,6 +87,12 @@ export const REMOVE_POSTING = gql`
       publisher
       genre
       condition
+      accessory
+      accessoryCheck
+      cardGame
+      cardSale
+      figurineManufacture
+      figureManufacture
       description
       imageid
       postAuthor
@@ -86,6 +110,12 @@ export const UPDATE_POSTING = gql`
     $publisher: String
     $genre: String
     $condition: String
+    $accessory: String
+    $accessoryCheck: String
+    $cardGame: String
+    $cardSale: String
+    $figurineManufacture: String
+    $figureManufacture: String
     $description: String
     $imageid: String
   ) {
@@ -97,6 +127,12 @@ export const UPDATE_POSTING = gql`
       publisher: $publisher
       genre: $genre
       condition: $condition
+      accessory: $accessory
+      accessoryCheck: $accessoryCheck
+      cardGame: $cardGame
+      cardSale: $cardSale
+      figurineManufacture: $figurineManufacture
+      figureManufacture: $figureManufacture
       description: $description
       imageid: $imageid
     ) {
@@ -107,6 +143,12 @@ export const UPDATE_POSTING = gql`
       publisher
       genre
       condition
+      accessory
+      accessoryCheck
+      cardGame
+      cardSale
+      figurineManufacture
+      figureManufacture
       description
       imageid
       postAuthor

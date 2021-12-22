@@ -112,20 +112,29 @@ const Profile = () => {
                 }}
               >
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
-                  <Grid item xs={4} sx={{ display: "flex", m: 1.5 }}>
-                    {posting.imageid ? (
-                      <Image
-                        width="100%"
-                        cloudName="du119g90a"
-                        public_id={posting.imageid}
-                      />
-                    ) : (
-                      <Image
-                        width="100%"
-                        cloudName="du119g90a"
-                        public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                      />
-                    )}
+                  <Grid item md={3} sx={{ display: "flex" }}>
+                    {(function () {
+                      if (
+                        posting.imageid === null ||
+                        posting.imageid === "N/A"
+                      ) {
+                        return (
+                          <Image
+                            width="100%"
+                            cloudName="du119g90a"
+                            public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                          />
+                        );
+                      } else {
+                        return (
+                          <Image
+                            width="100%"
+                            cloudName="du119g90a"
+                            public_id={posting.imageid}
+                          />
+                        );
+                      }
+                    })()}
                   </Grid>
                   <Grid
                     item

@@ -17,6 +17,12 @@ const typeDefs = gql`
     publisher: String
     genre: String
     condition: String
+    accessory: String
+    accessoryCheck: String
+    cardGame: String
+    cardSale: String
+    figurineManufacture: String
+    figureManufacture: String
     description: String
     imageid: String
     postAuthor: String
@@ -51,6 +57,12 @@ const typeDefs = gql`
       publisher: String!
       genre: String!
       condition: String!
+      accessory: String!
+      accessoryCheck: String!
+      cardGame: String!
+      cardSale: String!
+      figurineManufacture: String!
+      figureManufacture: String!
       description: String!
       imageid: String
       postAuthor: String
@@ -65,6 +77,12 @@ const typeDefs = gql`
       publisher: String
       genre: String
       condition: String
+      accessory: String
+      accessoryCheck: String
+      cardGame: String
+      cardSale: String
+      figurineManufacture: String
+      figureManufacture: String
       description: String
       imageid: String
     ): Posting

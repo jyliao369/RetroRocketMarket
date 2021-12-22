@@ -164,24 +164,47 @@ const UpdateForm = (props) => {
     "Bandai Namco Arts",
   ];
 
-  console.log("props.posting");
-  console.log(props.posting);
+  // console.log("props.posting");
+  // console.log(props.posting);
+
+  const [updatedPosting, setUpdatePosting] = useState({
+    title: "N/A",
+    category: "N/A",
+    platform: "N/A",
+    publisher: "N/A",
+    genre: "N/A",
+    condition: "N/A",
+    accessory: "N/A",
+    accessoryCheck: "N/A",
+    cardGame: "N/A",
+    cardSale: "N/A",
+    figurineManufacture: "N/A",
+    figureManufacture: "N/A",
+    description: "N/A",
+    imageid: "N/A",
+  });
 
   useEffect(() => {
     setUpdatePosting({ ...props.posting });
   }, [props.posting]);
 
-  const [updatedPosting, setUpdatePosting] = useState({
-    postingId: props.posting._id,
-    title: props.posting.title,
-    category: props.posting.category,
-    platform: props.posting.platform,
-    publisher: props.posting.publisher,
-    genre: props.posting.genre,
-    condition: props.posting.condition,
-    description: props.posting.description,
-    imageid: props.posting.imageid,
-  });
+  // const [updatedPosting, setUpdatePosting] = useState({
+  //   postingId: props.posting._id,
+  //   title: props.posting.title,
+  //   category: props.posting.category,
+  //   platform: props.posting.platform,
+  //   publisher: props.posting.publisher,
+  //   genre: props.posting.genre,
+  //   condition: props.posting.condition,
+  //   accessory: props.posting.accessory,
+  //   accessoryCheck: props.posting.accessoryCheck,
+  //   cardGame: props.posting.cardGame,
+  //   cardSale: props.posting.cardSale,
+  //   figurineManufacture: props.posting.figurineManufacture,
+  //   figureManufacture: props.posting.figureManufacture,
+  //   description: props.posting.description,
+  //   imageid: props.posting.imageid,
+  // });
 
   const handleUpdate = (event) => {
     setUpdatePosting({
@@ -377,7 +400,7 @@ const UpdateForm = (props) => {
                         name="accessories"
                         placeholder="Accessories"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.accessories ?? " "}
                       >
                         {accessories.map((accessories) => (
                           <MenuItem key={accessories} value={accessories}>
@@ -389,10 +412,10 @@ const UpdateForm = (props) => {
                         select
                         sx={{ m: 2 }}
                         label="First of Third Party"
-                        name="officialCheck"
+                        name="accessoryCheck"
                         placeholder="Third/First Party"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.accessoryCheck ?? " "}
                       >
                         {officialCheck.map((officialCheck) => (
                           <MenuItem key={officialCheck} value={officialCheck}>
@@ -410,10 +433,10 @@ const UpdateForm = (props) => {
                         select
                         sx={{ m: 2 }}
                         label="Which Card Game?"
-                        name="cardgame"
+                        name="cardGame"
                         placeholder="Card Game"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.cardGame ?? " "}
                       >
                         {cardGames.map((cardGames) => (
                           <MenuItem key={cardGames} value={cardGames}>
@@ -428,7 +451,7 @@ const UpdateForm = (props) => {
                         name="cardSale"
                         placeholder="Card Sale"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.cardSale ?? " "}
                       >
                         {cardSale.map((cardSale) => (
                           <MenuItem key={cardSale} value={cardSale}>
@@ -443,7 +466,7 @@ const UpdateForm = (props) => {
                         name="publisher"
                         placeholder="Card Publisher"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.publisher ?? " "}
                       >
                         {cardPublisher.map((cardPublisher) => (
                           <MenuItem key={cardPublisher} value={cardPublisher}>
@@ -461,10 +484,10 @@ const UpdateForm = (props) => {
                         select
                         sx={{ m: 2 }}
                         label="Manufacture"
-                        name="manufacture"
+                        name="figureManufacture"
                         placeholder="Action Figure Manufacture"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.figureManufacture ?? " "}
                       >
                         {AFMakers.map((AFMakers) => (
                           <MenuItem key={AFMakers} value={AFMakers}>
@@ -482,10 +505,10 @@ const UpdateForm = (props) => {
                         select
                         sx={{ m: 2 }}
                         label="Manufacture"
-                        name="figureManufacture"
+                        name="figurineManufacture"
                         placeholder="Figurine Manufacture"
                         onChange={handleUpdate}
-                        // defaultValue={}
+                        defaultValue={props.posting.figurineManufacture ?? " "}
                       >
                         {AFMakers.map((figurineMaker) => (
                           <MenuItem key={figurineMaker} value={figurineMaker}>
@@ -510,14 +533,7 @@ const UpdateForm = (props) => {
             </Grid>
           </Grid>
           <Grid item sx={{ display: "flex", flexDirection: "column", m: 1 }}>
-            {/* <button id={posting._id} onClick={handleDelete}>
-                  Delete
-                </button> */}
-            <button>
-              <Link to={`/update/${props.posting._id}`} /*id={posting._id}*/>
-                Update
-              </Link>
-            </button>
+            <button onClick={confirmUpdate}>Update</button>
           </Grid>
         </Paper>
       </Grid>

@@ -28,9 +28,9 @@ const PostForm = () => {
     "Trading Card Game",
     "Board Game",
     "Figurines",
-    "undefined",
+    "N/A",
   ];
-  let condition = ["New", "Used", "Complete", "Loose", "Broken", "undefined"];
+  let condition = ["New", "Used", "Complete", "Loose", "Broken", "N/A"];
   // THIS IS FOR GAMES AND CONSOLES
   let platform = [
     "NES",
@@ -61,7 +61,7 @@ const PostForm = () => {
     "32X",
     "Sega Saturn",
     "DreamCast",
-    "undefined",
+    "N/A",
   ];
   let publisher = [
     "Nintendo",
@@ -74,7 +74,7 @@ const PostForm = () => {
     "Konami",
     "Sega",
     "Capcom",
-    "undefined",
+    "N/A",
   ];
   let genre = [
     "Platform",
@@ -93,9 +93,8 @@ const PostForm = () => {
     "Racing",
     "Sports",
     "Open World",
-    "Simulation",
     "Horror",
-    "undefined",
+    "N/A",
   ];
   // THESE ARE FOR ACCESSORIES
   let accessories = [
@@ -106,6 +105,7 @@ const PostForm = () => {
     "CD Cases",
     "Cartridge Cases",
     "Add-Ons/Peripherals",
+    "N/A",
   ];
   let officialCheck = ["First Party", "Third Party", "Custom"];
   // THESE ARE FOR TRADING CARD GAMES
@@ -122,6 +122,7 @@ const PostForm = () => {
     "Star Wars Destiny",
     "Ashes: Rise of the Phoenixborn",
     "Game of Thrones: The Card Game",
+    "N/A",
   ];
   let cardSale = [
     "Single Card",
@@ -129,6 +130,7 @@ const PostForm = () => {
     "Boxed Booster Pack",
     "Boxed Set",
     "Custom Collection",
+    "N/A",
   ];
   let cardPublisher = [
     "Wizards of the Coast",
@@ -142,6 +144,7 @@ const PostForm = () => {
     "Hasbro",
     "Fantasy Flight Games",
     "Plaid Hat Games",
+    "N/A",
   ];
   // THESE ARE COMMON ACTION FIGURE MAKERS
   let AFMakers = [
@@ -155,6 +158,7 @@ const PostForm = () => {
     "Diamond Select Toys",
     "Hot Toys",
     "Play Arts Kai",
+    "N/A",
   ];
   // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
   let figurineMaker = [
@@ -168,20 +172,41 @@ const PostForm = () => {
     "Stronger",
     "Aniplex",
     "Bandai Namco Arts",
+    "N/A",
   ];
 
   const [newPosting, setNewPosting] = useState({
-    title: "",
-    category: "",
-    platform: "",
-    publisher: "",
-    genre: "",
-    condition: "",
-    description: "",
-    imageid: "",
+    title: "N/A",
+    category: "N/A",
+    platform: "N/A",
+    publisher: "N/A",
+    genre: "N/A",
+    condition: "N/A",
+    accessory: "N/A",
+    accessoryCheck: "N/A",
+    cardGame: "N/A",
+    cardSale: "N/A",
+    figurineManufacture: "N/A",
+    figureManufacture: "N/A",
+    description: "N/A",
+    imageid: "N/A",
   });
 
   const handleChange = (event) => {
+    setNewPosting({
+      // ...newPosting,
+      platform: "N/A",
+      publisher: "N/A",
+      genre: "N/A",
+      accessory: "N/A",
+      accessoryCheck: "N/A",
+      cardGame: "N/A",
+      cardSale: "N/A",
+      figurineManufacture: "N/A",
+      figureManufacture: "N/A",
+      description: "N/A",
+      imageid: "N/A",
+    });
     setNewPosting({ ...newPosting, [event.target.name]: event.target.value });
   };
 
@@ -393,6 +418,20 @@ const PostForm = () => {
                 if (newPosting.category === "Accessories") {
                   return (
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Platform"
+                        name="platform"
+                        placeholder="Platform"
+                        onChange={handleChange}
+                      >
+                        {platform.map((platform) => (
+                          <MenuItem key={platform} value={platform}>
+                            {platform}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                       <TextField
                         select
                         sx={{ m: 2 }}

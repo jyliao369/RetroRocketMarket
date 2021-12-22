@@ -24,6 +24,12 @@ export const QUERY_SINGLE_USER = gql`
         publisher
         genre
         condition
+        accessory
+        accessoryCheck
+        cardGame
+        cardSale
+        figurineManufacture
+        figureManufacture
         description
         imageid
         postAuthor
@@ -47,6 +53,12 @@ export const QUERY_MYPROFILE = gql`
         publisher
         genre
         condition
+        accessory
+        accessoryCheck
+        cardGame
+        cardSale
+        figurineManufacture
+        figureManufacture
         description
         imageid
         postAuthor
@@ -66,6 +78,12 @@ export const QUERY_POSTINGS = gql`
       publisher
       genre
       condition
+      accessory
+      accessoryCheck
+      cardGame
+      cardSale
+      figurineManufacture
+      figureManufacture
       description
       imageid
       postAuthor
@@ -84,6 +102,12 @@ export const QUERY_SINGLE_POSTING = gql`
       publisher
       genre
       condition
+      accessory
+      accessoryCheck
+      cardGame
+      cardSale
+      figurineManufacture
+      figureManufacture
       description
       imageid
       postAuthor

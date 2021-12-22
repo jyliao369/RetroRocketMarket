@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -45,34 +46,68 @@ const Shoppage = () => {
     700: 1,
   };
 
+  const [checked, setChecked] = useState(false);
+
+  const toggleCheckbox = (event) => {
+    setChecked(event.target.checked);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <Box
-      sx={{ display: "flex", justifyContent: "center", background: "#F1F2EE" }}
-    >
-      <Grid
-        item
-        xs={8}
+    <Box>
+      <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
           justifyContent: "center",
+          background: "#F1F2EE",
         }}
       >
-        <Masonry
-          breakpointCols={breakpoints}
-          sx={{ display: "flex", width: "auto" }}
+        <Grid
+          item
+          xs={8}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
         >
-          {postings.map((posting) => (
-            <Grid /*item key={posting._id} md={2.25} xs={6}*/ sx={{ m: 1.5 }}>
-              <Card elevation={4}>
-                <Link to={`/shop/${posting._id}`}>
-                  <Grid item sx={{ p: 1 }}>
-                    {posting.imageid ? (
+          <Masonry
+            breakpointCols={breakpoints}
+            sx={{ display: "flex", width: "auto" }}
+          >
+            {postings.map((posting) => (
+              <Grid /*item key={posting._id} md={2.25} xs={6}*/ sx={{ m: 1.5 }}>
+                <Card elevation={4}>
+                  <Link to={`/shop/${posting._id}`}>
+                    <Grid item sx={{ p: 1 }}>
+                      {(function () {
+                        if (
+                          posting.imageid === null ||
+                          posting.imageid === "N/A"
+                        ) {
+                          return (
+                            <Image
+                              width="100%"
+                              cloudName="du119g90a"
+                              public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                            />
+                          );
+                        } else {
+                          return (
+                            <Image
+                              width="100%"
+                              cloudName="du119g90a"
+                              public_id={posting.imageid}
+                            />
+                          );
+                        }
+                      })()}
+
+                      {/* {posting.imageid ? (
                       <Image
                         width="100%"
                         cloudName="du119g90a"
@@ -84,34 +119,35 @@ const Shoppage = () => {
                         cloudName="du119g90a"
                         public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
                       />
-                    )}
-                  </Grid>
-                  <Grid item sx={{ p: 1 }}>
-                    <Typography variant="h6">{posting.title}</Typography>
-                    <br />
-                    <Typography>Category: {posting.category}</Typography>
-                    <Typography>Platform: {posting.platform}</Typography>
-                    <Typography>Condition: {posting.condition}</Typography>
+                    )} */}
+                    </Grid>
+                    <Grid item sx={{ p: 1 }}>
+                      <Typography variant="h6">{posting.title}</Typography>
+                      <br />
+                      <Typography>Category: {posting.category}</Typography>
+                      <Typography>Platform: {posting.platform}</Typography>
+                      <Typography>Condition: {posting.condition}</Typography>
 
-                    {/* <p>{ posting.postAuthor }</p>
+                      {/* <p>{ posting.postAuthor }</p>
                                         <p>{ posting.publisher }</p>
                                         <p>{ posting.createdAt }</p>
                                         <p>{ posting.description }</p> */}
+                    </Grid>
+                  </Link>
+                  <Grid>
+                    <button id={posting._id} onClick={handleDelete}>
+                      Delete
+                    </button>
+                    <button>
+                      <Link to={`/update/${posting._id}`}>Update</Link>
+                    </button>
                   </Grid>
-                </Link>
-                <Grid>
-                  <button id={posting._id} onClick={handleDelete}>
-                    Delete
-                  </button>
-                  <button>
-                    <Link to={`/update/${posting._id}`}>Update</Link>
-                  </button>
-                </Grid>
-              </Card>
-            </Grid>
-          ))}
-        </Masonry>
-      </Grid>
+                </Card>
+              </Grid>
+            ))}
+          </Masonry>
+        </Grid>
+      </Box>
     </Box>
   );
 };

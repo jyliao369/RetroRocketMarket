@@ -32,6 +32,36 @@ const postingSchema = new Schema({
     required: true,
     trim: true,
   },
+  accessory: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  accessoryCheck: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  cardGame: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  cardSale: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  figurineManufacture: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  figureManufacture: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   description: {
     type: String,
     required: true,
