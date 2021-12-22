@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // import PostingList from '../components/PostingList';
-import GameForm from "../components/GameForm";
+import PostForm from "../components/PostForm";
 
 import { useQuery } from "@apollo/client";
 import { useMutation } from "@apollo/client";
@@ -178,7 +178,7 @@ const Profile = () => {
           ))}
         </Grid>
         <Grid item md={4} sx={{ m: 1.75 }}>
-          <GameForm />
+          <PostForm />
         </Grid>
       </Grid>
     </Box>

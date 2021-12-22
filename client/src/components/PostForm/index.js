@@ -21,15 +21,17 @@ import Axios from "axios";
 
 const PostForm = () => {
   let category = [
-    "Games",
     "Console",
+    "Games",
     "Accessories",
     "Action Figures",
-    "TCG",
-    "Board Games",
+    "Trading Card Game",
+    "Board Game",
     "Figurines",
     "undefined",
   ];
+  let condition = ["New", "Used", "Complete", "Loose", "Broken", "undefined"];
+  // THIS IS FOR GAMES AND CONSOLES
   let platform = [
     "NES",
     "SNES",
@@ -95,13 +97,77 @@ const PostForm = () => {
     "Horror",
     "undefined",
   ];
-  let condition = [
-    "New",
-    "Complete",
-    "Loose",
-    "Broken",
-    "Adventure",
-    "undefined",
+  // THESE ARE FOR ACCESSORIES
+  let accessories = [
+    "Game Controller",
+    "Memory Cards",
+    "Audio/Video Cable",
+    "Console Cases",
+    "CD Cases",
+    "Cartridge Cases",
+    "Add-Ons/Peripherals",
+  ];
+  let officialCheck = ["First Party", "Third Party", "Custom"];
+  // THESE ARE FOR TRADING CARD GAMES
+  let cardGames = [
+    "Magic: The Gathering",
+    "Pokemong Trading Card Game",
+    "Yu-Gi-Oh! Trading Card Gane",
+    "Dungeons and Dragons Icons of the Realms",
+    "Cardfight!! Vanguard",
+    "Dragon Ball Super",
+    "Final Fantasy Trading Card Game",
+    "Weiss Schwarz",
+    "Transformers TCG",
+    "Star Wars Destiny",
+    "Ashes: Rise of the Phoenixborn",
+    "Game of Thrones: The Card Game",
+  ];
+  let cardSale = [
+    "Single Card",
+    "Single Booster Pack",
+    "Boxed Booster Pack",
+    "Boxed Set",
+    "Custom Collection",
+  ];
+  let cardPublisher = [
+    "Wizards of the Coast",
+    "Pokemong USA",
+    "Konami",
+    "Score Entertainment",
+    "Mattel",
+    "Bushiroad",
+    "Bandai Namco",
+    "Square Enix",
+    "Hasbro",
+    "Fantasy Flight Games",
+    "Plaid Hat Games",
+  ];
+  // THESE ARE COMMON ACTION FIGURE MAKERS
+  let AFMakers = [
+    "Hasbro",
+    "Mattel",
+    "Bandai Spirits",
+    "McFarlane Toys",
+    "NECA",
+    "Hot Toys",
+    "DC Multiverse",
+    "Diamond Select Toys",
+    "Hot Toys",
+    "Play Arts Kai",
+  ];
+  // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
+  let figurineMaker = [
+    "Good Smile Company",
+    "Megahouse",
+    "Kotobukiya",
+    "Max Factory",
+    "Alter",
+    "BanPresto",
+    "Orange Rouge",
+    "Stronger",
+    "Aniplex",
+    "Bandai Namco Arts",
   ];
 
   const [newPosting, setNewPosting] = useState({
@@ -324,40 +390,122 @@ const PostForm = () => {
                     </Box>
                   );
                 }
-                if (newPosting.category === "TCG") {
-                  return (
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <TextField
-                        select
-                        sx={{ m: 2 }}
-                        label="Publisher"
-                        name="publisher"
-                        placeholder="Publisher"
-                        onChange={handleChange}
-                      >
-                        {publisher.map((publisher) => (
-                          <MenuItem key={publisher} value={publisher}>
-                            {publisher}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-                  );
-                }
                 if (newPosting.category === "Accessories") {
                   return (
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <TextField
                         select
                         sx={{ m: 2 }}
-                        label="Publisher"
-                        name="publisher"
-                        placeholder="Publisher"
+                        label="Accessories"
+                        name="accessories"
+                        placeholder="Accessories"
                         onChange={handleChange}
                       >
-                        {publisher.map((publisher) => (
-                          <MenuItem key={publisher} value={publisher}>
-                            {publisher}
+                        {accessories.map((accessories) => (
+                          <MenuItem key={accessories} value={accessories}>
+                            {accessories}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="First of Third Party"
+                        name="officialCheck"
+                        placeholder="Third/First Party"
+                        onChange={handleChange}
+                      >
+                        {officialCheck.map((officialCheck) => (
+                          <MenuItem key={officialCheck} value={officialCheck}>
+                            {officialCheck}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (newPosting.category === "Trading Card Game") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Which Card Game?"
+                        name="cardgame"
+                        placeholder="Card Game"
+                        onChange={handleChange}
+                      >
+                        {cardGames.map((cardGames) => (
+                          <MenuItem key={cardGames} value={cardGames}>
+                            {cardGames}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Single, Booster or Boxed"
+                        name="cardSale"
+                        placeholder="Card Sale"
+                        onChange={handleChange}
+                      >
+                        {cardSale.map((cardSale) => (
+                          <MenuItem key={cardSale} value={cardSale}>
+                            {cardSale}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Publisher"
+                        name="publisher"
+                        placeholder="Card Publisher"
+                        onChange={handleChange}
+                      >
+                        {cardPublisher.map((cardPublisher) => (
+                          <MenuItem key={cardPublisher} value={cardPublisher}>
+                            {cardPublisher}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (newPosting.category === "Action Figures") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Manufacture"
+                        name="manufacture"
+                        placeholder="Action Figure Manufacture"
+                        onChange={handleChange}
+                      >
+                        {AFMakers.map((AFMakers) => (
+                          <MenuItem key={AFMakers} value={AFMakers}>
+                            {AFMakers}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (newPosting.category === "Figurines") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Manufacture"
+                        name="figureManufacture"
+                        placeholder="Figurine Manufacture"
+                        onChange={handleChange}
+                      >
+                        {figurineMaker.map((figurineMaker) => (
+                          <MenuItem key={figurineMaker} value={figurineMaker}>
+                            {figurineMaker}
                           </MenuItem>
                         ))}
                       </TextField>

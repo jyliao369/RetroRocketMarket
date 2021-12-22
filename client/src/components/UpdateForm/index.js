@@ -15,17 +15,18 @@ import MenuItem from "@mui/material/MenuItem";
 
 const UpdateForm = (props) => {
   let category = [
-    "undefined",
-    "Games",
     "Console",
+    "Games",
     "Accessories",
     "Action Figures",
-    "TCG",
-    "Board Games",
+    "Trading Card Game",
+    "Board Game",
     "Figurines",
-  ];
-  let platform = [
     "undefined",
+  ];
+  let condition = ["New", "Used", "Complete", "Loose", "Broken", "undefined"];
+  // THIS IS FOR GAMES AND CONSOLES
+  let platform = [
     "NES",
     "SNES",
     "N64",
@@ -54,9 +55,9 @@ const UpdateForm = (props) => {
     "32X",
     "Sega Saturn",
     "DreamCast",
+    "undefined",
   ];
   let publisher = [
-    "undefined",
     "Nintendo",
     "Microsoft",
     "Sony",
@@ -67,9 +68,9 @@ const UpdateForm = (props) => {
     "Konami",
     "Sega",
     "Capcom",
+    "undefined",
   ];
   let genre = [
-    "undefined",
     "Platform",
     "FPS",
     "Survival Horror",
@@ -88,14 +89,79 @@ const UpdateForm = (props) => {
     "Open World",
     "Simulation",
     "Horror",
-  ];
-  let condition = [
     "undefined",
-    "New",
-    "Complete",
-    "Loose",
-    "Broken",
-    "Adventure",
+  ];
+  // THESE ARE FOR ACCESSORIES
+  let accessories = [
+    "Game Controller",
+    "Memory Cards",
+    "Audio/Video Cable",
+    "Console Cases",
+    "CD Cases",
+    "Cartridge Cases",
+    "Add-Ons/Peripherals",
+  ];
+  let officialCheck = ["First Party", "Third Party", "Custom"];
+  // THESE ARE FOR TRADING CARD GAMES
+  let cardGames = [
+    "Magic: The Gathering",
+    "Pokemong Trading Card Game",
+    "Yu-Gi-Oh! Trading Card Gane",
+    "Dungeons and Dragons Icons of the Realms",
+    "Cardfight!! Vanguard",
+    "Dragon Ball Super",
+    "Final Fantasy Trading Card Game",
+    "Weiss Schwarz",
+    "Transformers TCG",
+    "Star Wars Destiny",
+    "Ashes: Rise of the Phoenixborn",
+    "Game of Thrones: The Card Game",
+  ];
+  let cardSale = [
+    "Single Card",
+    "Single Booster Pack",
+    "Boxed Booster Pack",
+    "Boxed Set",
+    "Custom Collection",
+  ];
+  let cardPublisher = [
+    "Wizards of the Coast",
+    "Pokemong USA",
+    "Konami",
+    "Score Entertainment",
+    "Mattel",
+    "Bushiroad",
+    "Bandai Namco",
+    "Square Enix",
+    "Hasbro",
+    "Fantasy Flight Games",
+    "Plaid Hat Games",
+  ];
+  // THESE ARE COMMON ACTION FIGURE MAKERS
+  let AFMakers = [
+    "Hasbro",
+    "Mattel",
+    "Bandai Spirits",
+    "McFarlane Toys",
+    "NECA",
+    "Hot Toys",
+    "DC Multiverse",
+    "Diamond Select Toys",
+    "Hot Toys",
+    "Play Arts Kai",
+  ];
+  // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
+  let figurineMaker = [
+    "Good Smile Company",
+    "Megahouse",
+    "Kotobukiya",
+    "Max Factory",
+    "Alter",
+    "BanPresto",
+    "Orange Rouge",
+    "Stronger",
+    "Aniplex",
+    "Bandai Namco Arts",
   ];
 
   console.log("props.posting");
@@ -286,42 +352,144 @@ const UpdateForm = (props) => {
                     </Box>
                   );
                 }
-                if (updatedPosting.category === "TCG") {
-                  return (
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <TextField
-                        select
-                        sx={{ m: 2 }}
-                        label="Publisher"
-                        name="publisher"
-                        placeholder="Publisher"
-                        onChange={handleUpdate}
-                        defaultValue={props.posting.publisher ?? " "}
-                      >
-                        {publisher.map((publisher) => (
-                          <MenuItem key={publisher} value={publisher}>
-                            {publisher}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Box>
-                  );
-                }
                 if (updatedPosting.category === "Accessories") {
                   return (
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <TextField
                         select
                         sx={{ m: 2 }}
+                        label="Platform"
+                        name="platform"
+                        placeholder="Platform"
+                        onChange={handleUpdate}
+                        defaultValue={props.posting.platform ?? " "}
+                      >
+                        {platform.map((platform) => (
+                          <MenuItem key={platform} value={platform}>
+                            {platform}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Accessories"
+                        name="accessories"
+                        placeholder="Accessories"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {accessories.map((accessories) => (
+                          <MenuItem key={accessories} value={accessories}>
+                            {accessories}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="First of Third Party"
+                        name="officialCheck"
+                        placeholder="Third/First Party"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {officialCheck.map((officialCheck) => (
+                          <MenuItem key={officialCheck} value={officialCheck}>
+                            {officialCheck}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (updatedPosting.category === "Trading Card Game") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Which Card Game?"
+                        name="cardgame"
+                        placeholder="Card Game"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {cardGames.map((cardGames) => (
+                          <MenuItem key={cardGames} value={cardGames}>
+                            {cardGames}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Single, Booster or Boxed"
+                        name="cardSale"
+                        placeholder="Card Sale"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {cardSale.map((cardSale) => (
+                          <MenuItem key={cardSale} value={cardSale}>
+                            {cardSale}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
                         label="Publisher"
                         name="publisher"
-                        placeholder="Publisher"
+                        placeholder="Card Publisher"
                         onChange={handleUpdate}
-                        defaultValue={props.posting.publisher ?? " "}
+                        // defaultValue={}
                       >
-                        {publisher.map((publisher) => (
-                          <MenuItem key={publisher} value={publisher}>
-                            {publisher}
+                        {cardPublisher.map((cardPublisher) => (
+                          <MenuItem key={cardPublisher} value={cardPublisher}>
+                            {cardPublisher}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (updatedPosting.category === "Action Figures") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Manufacture"
+                        name="manufacture"
+                        placeholder="Action Figure Manufacture"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {AFMakers.map((AFMakers) => (
+                          <MenuItem key={AFMakers} value={AFMakers}>
+                            {AFMakers}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                }
+                if (updatedPosting.category === "Figurines") {
+                  return (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <TextField
+                        select
+                        sx={{ m: 2 }}
+                        label="Manufacture"
+                        name="figureManufacture"
+                        placeholder="Figurine Manufacture"
+                        onChange={handleUpdate}
+                        // defaultValue={}
+                      >
+                        {AFMakers.map((figurineMaker) => (
+                          <MenuItem key={figurineMaker} value={figurineMaker}>
+                            {figurineMaker}
                           </MenuItem>
                         ))}
                       </TextField>
