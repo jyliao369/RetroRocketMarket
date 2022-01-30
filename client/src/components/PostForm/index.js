@@ -19,162 +19,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Axios from "axios";
 // import { Image } from 'cloudinary-react';
 
-const PostForm = () => {
-  let category = [
-    "Console",
-    "Games",
-    "Accessories",
-    "Action Figures",
-    "Trading Card Game",
-    "Board Game",
-    "Figurines",
-    "N/A",
-  ];
-  let condition = ["New", "Used", "Complete", "Loose", "Broken", "N/A"];
-  // THIS IS FOR GAMES AND CONSOLES
-  let platform = [
-    "NES",
-    "SNES",
-    "N64",
-    "GameCube",
-    "Wii",
-    "Wii U",
-    "Switch",
-    "GameBoy/Color",
-    "GameBoy Advance",
-    "Nintendo DS",
-    "Nintendo 3DS",
-    "PS1",
-    "PS2",
-    "PS3",
-    "PS4",
-    "PS5",
-    "PSP",
-    "PSVita",
-    "Xbox",
-    "Xbox 360",
-    "Xbox One",
-    "Xbox Series",
-    "Genesis",
-    "Game Gear",
-    "Sega CD",
-    "32X",
-    "Sega Saturn",
-    "DreamCast",
-    "N/A",
-  ];
-  let publisher = [
-    "Nintendo",
-    "Microsoft",
-    "Sony",
-    "Bandai Namco",
-    "Ubisoft",
-    "EA Games",
-    "Square Enix",
-    "Konami",
-    "Sega",
-    "Capcom",
-    "N/A",
-  ];
-  let genre = [
-    "Platform",
-    "FPS",
-    "Survival Horror",
-    "Metroidvania",
-    "Visual Novels",
-    "Action RPG",
-    "RougeLikes",
-    "JRPG",
-    "Simulation",
-    "Fighting",
-    "Party",
-    "Turn-Based Strategy",
-    "Real-Time Strategy",
-    "Racing",
-    "Sports",
-    "Open World",
-    "Horror",
-    "N/A",
-  ];
-  // THESE ARE FOR ACCESSORIES
-  let accessories = [
-    "Game Controller",
-    "Memory Cards",
-    "Audio/Video Cable",
-    "Console Cases",
-    "CD Cases",
-    "Cartridge Cases",
-    "Add-Ons/Peripherals",
-    "N/A",
-  ];
-  let officialCheck = ["First Party", "Third Party", "Custom"];
-  // THESE ARE FOR TRADING CARD GAMES
-  let cardGames = [
-    "Magic: The Gathering",
-    "Pokemong Trading Card Game",
-    "Yu-Gi-Oh! Trading Card Gane",
-    "Dungeons and Dragons Icons of the Realms",
-    "Cardfight!! Vanguard",
-    "Dragon Ball Super",
-    "Final Fantasy Trading Card Game",
-    "Weiss Schwarz",
-    "Transformers TCG",
-    "Star Wars Destiny",
-    "Ashes: Rise of the Phoenixborn",
-    "Game of Thrones: The Card Game",
-    "N/A",
-  ];
-  let cardSale = [
-    "Single Card",
-    "Single Booster Pack",
-    "Boxed Booster Pack",
-    "Boxed Set",
-    "Custom Collection",
-    "N/A",
-  ];
-  let cardPublisher = [
-    "Wizards of the Coast",
-    "Pokemong USA",
-    "Konami",
-    "Score Entertainment",
-    "Mattel",
-    "Bushiroad",
-    "Bandai Namco",
-    "Square Enix",
-    "Hasbro",
-    "Fantasy Flight Games",
-    "Plaid Hat Games",
-    "N/A",
-  ];
-  // THESE ARE COMMON ACTION FIGURE MAKERS
-  let AFMakers = [
-    "Hasbro",
-    "Mattel",
-    "Bandai Spirits",
-    "McFarlane Toys",
-    "NECA",
-    "Hot Toys",
-    "DC Multiverse",
-    "Diamond Select Toys",
-    "Hot Toys",
-    "Play Arts Kai",
-    "N/A",
-  ];
-  // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
-  let figurineMaker = [
-    "Good Smile Company",
-    "Megahouse",
-    "Kotobukiya",
-    "Max Factory",
-    "Alter",
-    "BanPresto",
-    "Orange Rouge",
-    "Stronger",
-    "Aniplex",
-    "Bandai Namco Arts",
-    "N/A",
-  ];
+import * as dataList from "../../components/data";
 
+const PostForm = () => {
   const [newPosting, setNewPosting] = useState({
     title: "N/A",
     category: "N/A",
@@ -312,7 +159,7 @@ const PostForm = () => {
                 placeholder="Condition"
                 onChange={handleChange}
               >
-                {condition.map((condition) => (
+                {dataList.condition.map((condition) => (
                   <MenuItem key={condition} value={condition}>
                     {condition}
                   </MenuItem>
@@ -326,7 +173,7 @@ const PostForm = () => {
                 placeholder="Category"
                 onChange={handleChange}
               >
-                {category.map((category) => (
+                {dataList.category.map((category) => (
                   <MenuItem key={category} value={category}>
                     {category}
                   </MenuItem>
@@ -344,7 +191,7 @@ const PostForm = () => {
                         placeholder="Platform"
                         onChange={handleChange}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -358,7 +205,7 @@ const PostForm = () => {
                         placeholder="Publisher"
                         onChange={handleChange}
                       >
-                        {publisher.map((publisher) => (
+                        {dataList.publisher.map((publisher) => (
                           <MenuItem key={publisher} value={publisher}>
                             {publisher}
                           </MenuItem>
@@ -378,7 +225,7 @@ const PostForm = () => {
                         placeholder="Platform"
                         onChange={handleChange}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -392,7 +239,7 @@ const PostForm = () => {
                         placeholder="Publisher"
                         onChange={handleChange}
                       >
-                        {publisher.map((publisher) => (
+                        {dataList.publisher.map((publisher) => (
                           <MenuItem key={publisher} value={publisher}>
                             {publisher}
                           </MenuItem>
@@ -406,7 +253,7 @@ const PostForm = () => {
                         placeholder="Genre"
                         onChange={handleChange}
                       >
-                        {genre.map((genre) => (
+                        {dataList.genre.map((genre) => (
                           <MenuItem key={genre} value={genre}>
                             {genre}
                           </MenuItem>
@@ -426,7 +273,7 @@ const PostForm = () => {
                         placeholder="Platform"
                         onChange={handleChange}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -440,7 +287,7 @@ const PostForm = () => {
                         placeholder="Accessories"
                         onChange={handleChange}
                       >
-                        {accessories.map((accessories) => (
+                        {dataList.accessories.map((accessories) => (
                           <MenuItem key={accessories} value={accessories}>
                             {accessories}
                           </MenuItem>
@@ -454,7 +301,7 @@ const PostForm = () => {
                         placeholder="Third/First Party"
                         onChange={handleChange}
                       >
-                        {officialCheck.map((officialCheck) => (
+                        {dataList.officialCheck.map((officialCheck) => (
                           <MenuItem key={officialCheck} value={officialCheck}>
                             {officialCheck}
                           </MenuItem>
@@ -470,11 +317,11 @@ const PostForm = () => {
                         select
                         sx={{ m: 2 }}
                         label="Which Card Game?"
-                        name="cardgame"
+                        name="cardGame"
                         placeholder="Card Game"
                         onChange={handleChange}
                       >
-                        {cardGames.map((cardGames) => (
+                        {dataList.cardGames.map((cardGames) => (
                           <MenuItem key={cardGames} value={cardGames}>
                             {cardGames}
                           </MenuItem>
@@ -488,7 +335,7 @@ const PostForm = () => {
                         placeholder="Card Sale"
                         onChange={handleChange}
                       >
-                        {cardSale.map((cardSale) => (
+                        {dataList.cardSale.map((cardSale) => (
                           <MenuItem key={cardSale} value={cardSale}>
                             {cardSale}
                           </MenuItem>
@@ -502,7 +349,7 @@ const PostForm = () => {
                         placeholder="Card Publisher"
                         onChange={handleChange}
                       >
-                        {cardPublisher.map((cardPublisher) => (
+                        {dataList.cardPublisher.map((cardPublisher) => (
                           <MenuItem key={cardPublisher} value={cardPublisher}>
                             {cardPublisher}
                           </MenuItem>
@@ -522,7 +369,7 @@ const PostForm = () => {
                         placeholder="Action Figure Manufacture"
                         onChange={handleChange}
                       >
-                        {AFMakers.map((AFMakers) => (
+                        {dataList.AFMakers.map((AFMakers) => (
                           <MenuItem key={AFMakers} value={AFMakers}>
                             {AFMakers}
                           </MenuItem>
@@ -542,7 +389,7 @@ const PostForm = () => {
                         placeholder="Figurine Manufacture"
                         onChange={handleChange}
                       >
-                        {figurineMaker.map((figurineMaker) => (
+                        {dataList.figurineMaker.map((figurineMaker) => (
                           <MenuItem key={figurineMaker} value={figurineMaker}>
                             {figurineMaker}
                           </MenuItem>

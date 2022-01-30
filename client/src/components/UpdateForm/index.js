@@ -13,157 +13,9 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-const UpdateForm = (props) => {
-  let category = [
-    "Console",
-    "Games",
-    "Accessories",
-    "Action Figures",
-    "Trading Card Game",
-    "Board Game",
-    "Figurines",
-    "undefined",
-  ];
-  let condition = ["New", "Used", "Complete", "Loose", "Broken", "undefined"];
-  // THIS IS FOR GAMES AND CONSOLES
-  let platform = [
-    "NES",
-    "SNES",
-    "N64",
-    "GameCube",
-    "Wii",
-    "Wii U",
-    "Switch",
-    "GameBoy/Color",
-    "GameBoy Advance",
-    "Nintendo DS",
-    "Nintendo 3DS",
-    "PS1",
-    "PS2",
-    "PS3",
-    "PS4",
-    "PS5",
-    "PSP",
-    "PSVita",
-    "Xbox",
-    "Xbox 360",
-    "Xbox One",
-    "Xbox Series",
-    "Genesis",
-    "Game Gear",
-    "Sega CD",
-    "32X",
-    "Sega Saturn",
-    "DreamCast",
-    "undefined",
-  ];
-  let publisher = [
-    "Nintendo",
-    "Microsoft",
-    "Sony",
-    "Bandai Namco",
-    "Ubisoft",
-    "EA Games",
-    "Square Enix",
-    "Konami",
-    "Sega",
-    "Capcom",
-    "undefined",
-  ];
-  let genre = [
-    "Platform",
-    "FPS",
-    "Survival Horror",
-    "Metroidvania",
-    "Visual Novels",
-    "Action RPG",
-    "RougeLikes",
-    "JRPG",
-    "Simulation",
-    "Fighting",
-    "Party",
-    "Turn-Based Strategy",
-    "Real-Time Strategy",
-    "Racing",
-    "Sports",
-    "Open World",
-    "Simulation",
-    "Horror",
-    "undefined",
-  ];
-  // THESE ARE FOR ACCESSORIES
-  let accessories = [
-    "Game Controller",
-    "Memory Cards",
-    "Audio/Video Cable",
-    "Console Cases",
-    "CD Cases",
-    "Cartridge Cases",
-    "Add-Ons/Peripherals",
-  ];
-  let officialCheck = ["First Party", "Third Party", "Custom"];
-  // THESE ARE FOR TRADING CARD GAMES
-  let cardGames = [
-    "Magic: The Gathering",
-    "Pokemong Trading Card Game",
-    "Yu-Gi-Oh! Trading Card Gane",
-    "Dungeons and Dragons Icons of the Realms",
-    "Cardfight!! Vanguard",
-    "Dragon Ball Super",
-    "Final Fantasy Trading Card Game",
-    "Weiss Schwarz",
-    "Transformers TCG",
-    "Star Wars Destiny",
-    "Ashes: Rise of the Phoenixborn",
-    "Game of Thrones: The Card Game",
-  ];
-  let cardSale = [
-    "Single Card",
-    "Single Booster Pack",
-    "Boxed Booster Pack",
-    "Boxed Set",
-    "Custom Collection",
-  ];
-  let cardPublisher = [
-    "Wizards of the Coast",
-    "Pokemong USA",
-    "Konami",
-    "Score Entertainment",
-    "Mattel",
-    "Bushiroad",
-    "Bandai Namco",
-    "Square Enix",
-    "Hasbro",
-    "Fantasy Flight Games",
-    "Plaid Hat Games",
-  ];
-  // THESE ARE COMMON ACTION FIGURE MAKERS
-  let AFMakers = [
-    "Hasbro",
-    "Mattel",
-    "Bandai Spirits",
-    "McFarlane Toys",
-    "NECA",
-    "Hot Toys",
-    "DC Multiverse",
-    "Diamond Select Toys",
-    "Hot Toys",
-    "Play Arts Kai",
-  ];
-  // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
-  let figurineMaker = [
-    "Good Smile Company",
-    "Megahouse",
-    "Kotobukiya",
-    "Max Factory",
-    "Alter",
-    "BanPresto",
-    "Orange Rouge",
-    "Stronger",
-    "Aniplex",
-    "Bandai Namco Arts",
-  ];
+import * as dataList from "../data";
 
+const UpdateForm = (props) => {
   // console.log("props.posting");
   // console.log(props.posting);
 
@@ -187,24 +39,6 @@ const UpdateForm = (props) => {
   useEffect(() => {
     setUpdatePosting({ ...props.posting });
   }, [props.posting]);
-
-  // const [updatedPosting, setUpdatePosting] = useState({
-  //   postingId: props.posting._id,
-  //   title: props.posting.title,
-  //   category: props.posting.category,
-  //   platform: props.posting.platform,
-  //   publisher: props.posting.publisher,
-  //   genre: props.posting.genre,
-  //   condition: props.posting.condition,
-  //   accessory: props.posting.accessory,
-  //   accessoryCheck: props.posting.accessoryCheck,
-  //   cardGame: props.posting.cardGame,
-  //   cardSale: props.posting.cardSale,
-  //   figurineManufacture: props.posting.figurineManufacture,
-  //   figureManufacture: props.posting.figureManufacture,
-  //   description: props.posting.description,
-  //   imageid: props.posting.imageid,
-  // });
 
   const handleUpdate = (event) => {
     setUpdatePosting({
@@ -266,7 +100,7 @@ const UpdateForm = (props) => {
                 onChange={handleUpdate}
                 defaultValue={props.posting.condition ?? " "}
               >
-                {condition.map((condition) => (
+                {dataList.condition.map((condition) => (
                   <MenuItem key={condition} value={condition}>
                     {condition}
                   </MenuItem>
@@ -281,7 +115,7 @@ const UpdateForm = (props) => {
                 onChange={handleUpdate}
                 defaultValue={props.posting.category ?? " "}
               >
-                {category.map((category) => (
+                {dataList.category.map((category) => (
                   <MenuItem key={category} value={category}>
                     {category}
                   </MenuItem>
@@ -300,7 +134,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.platform ?? " "}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -315,7 +149,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.publisher ?? " "}
                       >
-                        {publisher.map((publisher) => (
+                        {dataList.publisher.map((publisher) => (
                           <MenuItem key={publisher} value={publisher}>
                             {publisher}
                           </MenuItem>
@@ -336,7 +170,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.platform ?? " "}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -351,7 +185,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.publisher ?? " "}
                       >
-                        {publisher.map((publisher) => (
+                        {dataList.publisher.map((publisher) => (
                           <MenuItem key={publisher} value={publisher}>
                             {publisher}
                           </MenuItem>
@@ -366,7 +200,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.genre ?? " "}
                       >
-                        {genre.map((genre) => (
+                        {dataList.genre.map((genre) => (
                           <MenuItem key={genre} value={genre}>
                             {genre}
                           </MenuItem>
@@ -387,7 +221,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.platform ?? " "}
                       >
-                        {platform.map((platform) => (
+                        {dataList.platform.map((platform) => (
                           <MenuItem key={platform} value={platform}>
                             {platform}
                           </MenuItem>
@@ -402,7 +236,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.accessories ?? " "}
                       >
-                        {accessories.map((accessories) => (
+                        {dataList.accessories.map((accessories) => (
                           <MenuItem key={accessories} value={accessories}>
                             {accessories}
                           </MenuItem>
@@ -417,7 +251,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.accessoryCheck ?? " "}
                       >
-                        {officialCheck.map((officialCheck) => (
+                        {dataList.officialCheck.map((officialCheck) => (
                           <MenuItem key={officialCheck} value={officialCheck}>
                             {officialCheck}
                           </MenuItem>
@@ -438,7 +272,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.cardGame ?? " "}
                       >
-                        {cardGames.map((cardGames) => (
+                        {dataList.cardGames.map((cardGames) => (
                           <MenuItem key={cardGames} value={cardGames}>
                             {cardGames}
                           </MenuItem>
@@ -453,7 +287,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.cardSale ?? " "}
                       >
-                        {cardSale.map((cardSale) => (
+                        {dataList.cardSale.map((cardSale) => (
                           <MenuItem key={cardSale} value={cardSale}>
                             {cardSale}
                           </MenuItem>
@@ -468,7 +302,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.publisher ?? " "}
                       >
-                        {cardPublisher.map((cardPublisher) => (
+                        {dataList.cardPublisher.map((cardPublisher) => (
                           <MenuItem key={cardPublisher} value={cardPublisher}>
                             {cardPublisher}
                           </MenuItem>
@@ -489,7 +323,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.figureManufacture ?? " "}
                       >
-                        {AFMakers.map((AFMakers) => (
+                        {dataList.AFMakers.map((AFMakers) => (
                           <MenuItem key={AFMakers} value={AFMakers}>
                             {AFMakers}
                           </MenuItem>
@@ -510,7 +344,7 @@ const UpdateForm = (props) => {
                         onChange={handleUpdate}
                         defaultValue={props.posting.figurineManufacture ?? " "}
                       >
-                        {AFMakers.map((figurineMaker) => (
+                        {dataList.figurineMaker.map((figurineMaker) => (
                           <MenuItem key={figurineMaker} value={figurineMaker}>
                             {figurineMaker}
                           </MenuItem>
