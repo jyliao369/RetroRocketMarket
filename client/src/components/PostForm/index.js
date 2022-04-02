@@ -365,7 +365,7 @@ const PostForm = () => {
                         select
                         sx={{ m: 2 }}
                         label="Manufacture"
-                        name="manufacture"
+                        name="figureManufacture"
                         placeholder="Action Figure Manufacture"
                         onChange={handleChange}
                       >

@@ -152,6 +152,7 @@ let AFMakers = [
   "Diamond Select Toys",
   "Hot Toys",
   "Play Arts Kai",
+  "POP!",
   "N/A",
 ];
 // THESE ARE COMMON FIGURINE MAKERS MOSTLY ARE GEARED TOWARD ANIME
