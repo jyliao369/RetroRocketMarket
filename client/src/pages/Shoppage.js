@@ -12,13 +12,9 @@ import { REMOVE_POSTING } from "../utils/mutations";
 // Import Material UI components
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { Image } from "cloudinary-react";
@@ -27,15 +23,40 @@ import * as dataList from "../components/data";
 
 const Shoppage = () => {
   const { loading, data } = useQuery(QUERY_POSTINGS);
-  const postings = data?.postings || [];
+  const allPostings = data?.postings || [];
 
-  let allPostings = postings;
+  const [postings, setPostings] = useState(allPostings);
 
-  const [disPostings, setPostings] = useState(allPostings);
+  let index = 1;
 
   useEffect(() => {
-    setPostings(disPostings);
-  }, [postings]);
+    setPostings(allPostings);
+  }, [allPostings]);
+
+  // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
+  const [currentPosts, setCurrentPosts] = useState("");
+  let currentListings = [];
+
+  for (let a = 1; a <= 15; a++) {
+    currentListings.push(postings[a - 1]);
+  }
+
+  console.log("test");
+  console.log(currentListings);
+
+  const ForBackListing = (direction) => {
+    if (direction === "next") {
+      console.log("next");
+      index++;
+      for (let a = 15 * (index + 1); a < 15 * index; a++) {
+        currentListings.push(postings[a]);
+      }
+    } else if (direction === "previous") {
+      for (let a = 15 * (index - 1); a < 15 * index; a++) {
+        currentListings.push(postings[a]);
+      }
+    }
+  };
 
   const [removePosting] = useMutation(REMOVE_POSTING);
 
@@ -55,7 +76,7 @@ const Shoppage = () => {
   };
 
   const handleFilter = async (key) => {
-    let fitleredPost = postings.filter(
+    let filteredPost = allPostings.filter(
       (posting) =>
         posting.category === key ||
         posting.condition === key ||
@@ -70,12 +91,12 @@ const Shoppage = () => {
         posting.AFMakers === key ||
         posting.figureManufacture === key
     );
-    console.log(fitleredPost);
-    // setPostings(fitleredPost);
+    console.log(filteredPost);
+    setPostings(filteredPost);
   };
 
-  const showAll = async (event) => {
-    setPostings(postings);
+  const showAll = () => {
+    setPostings(allPostings);
   };
 
   const breakpoints = {
@@ -138,16 +159,28 @@ const Shoppage = () => {
   return (
     <Box>
       <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-        <Paper sx={{ display: "flex", width: "80%" }}>
+        <Paper square elevation={5} sx={{ display: "flex", width: "70%" }}>
           <Grid
             item
             sx={{
               width: "25%",
-              borderStyle: "solid",
-              borderWidth: "1px",
-              borderColor: "gray",
             }}
           >
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                p: "10px",
+              }}
+            >
+              <Grid>
+                <h2>Filter</h2>
+              </Grid>
+              <Grid onClick={showAll}>
+                <h2>Reset</h2>
+              </Grid>
+            </Grid>
             <Grid sx={{ p: "10px" }}>
               <Grid onClick={() => showFilters("category")}>
                 <h2>Category</h2>
@@ -271,60 +304,76 @@ const Shoppage = () => {
             <hr />
           </Grid>
 
-          <Grid
-            item
-            sx={{
-              width: "75%",
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              borderStyle: "solid",
-              borderWidth: "1px",
-              borderColor: "gray",
-            }}
-          >
-            {allPostings.map((posting) => (
-              <Grid
-                sx={{
-                  width: "33.333333%",
-                  borderStyle: "solid",
-                  borderWidth: "1px",
-                  borderColor: "gray",
-                }}
-              >
-                <Grid item sx={{ p: "10px" }}>
-                  <Link to={`/shop/${posting._id}`}>
-                    {(function () {
-                      if (
-                        posting.imageid === null ||
-                        posting.imageid === "N/A"
-                      ) {
-                        return (
-                          <Image
-                            width="100%"
-                            cloudName="du119g90a"
-                            public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image
-                            width="100%"
-                            cloudName="du119g90a"
-                            public_id={posting.imageid}
-                          />
-                        );
-                      }
-                    })()}
-                  </Link>
-                </Grid>
-
-                <Grid item sx={{ p: "10px" }}>
-                  <h4>{posting.title}</h4>
-                  <h4>Price: </h4>
-                </Grid>
+          <Grid item sx={{ width: "75%" }}>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                p: "10px",
+              }}
+            >
+              <Grid onClick={() => ForBackListing("previous")}>
+                <h2>Previous</h2>
               </Grid>
-            ))}
+              <Grid onClick={() => ForBackListing("next")}>
+                <h2>Next</h2>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                borderStyle: "solid",
+                borderWidth: "1px",
+                borderColor: "gray",
+              }}
+            >
+              {postings.map((posting) => (
+                <Grid
+                  sx={{
+                    width: "33.333333%",
+                    borderStyle: "solid",
+                    borderWidth: "1px",
+                    borderColor: "gray",
+                  }}
+                >
+                  <Grid item sx={{ p: "10px" }}>
+                    <Link to={`/shop/${posting._id}`}>
+                      {(function () {
+                        if (
+                          posting.imageid === null ||
+                          posting.imageid === "N/A"
+                        ) {
+                          return (
+                            <Image
+                              width="100%"
+                              cloudName="du119g90a"
+                              public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                            />
+                          );
+                        } else {
+                          return (
+                            <Image
+                              width="100%"
+                              cloudName="du119g90a"
+                              public_id={posting.imageid}
+                            />
+                          );
+                        }
+                      })()}
+                    </Link>
+                  </Grid>
+
+                  <Grid item sx={{ p: "10px" }}>
+                    <h3>{posting.title}</h3>
+                    <h3>Price: </h3>
+                  </Grid>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Paper>
       </Grid>
