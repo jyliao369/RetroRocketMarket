@@ -150,7 +150,6 @@ let AFMakers = [
   "Hot Toys",
   "DC Multiverse",
   "Diamond Select Toys",
-  "Hot Toys",
   "Play Arts Kai",
   "POP!",
   "N/A",

@@ -15,7 +15,7 @@ import Grid from "@mui/material/Grid";
 import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 import { Image } from "cloudinary-react";
 
@@ -25,55 +25,76 @@ const Shoppage = () => {
   const { loading, data } = useQuery(QUERY_POSTINGS);
   const allPostings = data?.postings || [];
 
+  const [currentPostings, setCurrentPostings] = useState(allPostings);
   const [postings, setPostings] = useState(allPostings);
 
-  let index = 1;
+  let numListing = 12;
 
   useEffect(() => {
     setPostings(allPostings);
   }, [allPostings]);
 
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
-  const [currentPosts, setCurrentPosts] = useState("");
-  let currentListings = [];
 
-  for (let a = 1; a <= 15; a++) {
-    currentListings.push(postings[a - 1]);
+  let currentListings = [];
+  for (let a = 0; a < 5; a++) {
+    currentListings.push(postings[a]);
   }
 
-  console.log("test");
-  console.log(currentListings);
+  let [pageIndex, setPageIndex] = useState(0);
 
   const ForBackListing = (direction) => {
     if (direction === "next") {
-      console.log("next");
-      index++;
-      for (let a = 15 * (index + 1); a < 15 * index; a++) {
-        currentListings.push(postings[a]);
+      currentListings = [];
+      pageIndex++;
+      for (
+        let a = numListing * pageIndex;
+        a < numListing * (pageIndex + 1);
+        a++
+      ) {
+        currentListings.push(allPostings[a]);
       }
-    } else if (direction === "previous") {
-      for (let a = 15 * (index - 1); a < 15 * index; a++) {
-        currentListings.push(postings[a]);
+      // setCurrentPostings(currentListings);
+      console.log(pageIndex);
+      setPageIndex(pageIndex);
+      console.log(currentListings);
+      setPostings(currentListings);
+    }
+
+    if (direction === "previous") {
+      currentListings = [];
+      pageIndex--;
+      for (
+        let a = numListing * pageIndex;
+        a < numListing * (pageIndex + 1);
+        a++
+      ) {
+        currentListings.push(allPostings[a]);
       }
+      // setCurrentPostings(currentListings);
+      console.log(pageIndex);
+      setPageIndex(pageIndex);
+      console.log(currentListings);
+      setPostings(currentListings);
     }
   };
 
   const [removePosting] = useMutation(REMOVE_POSTING);
 
-  const handleDelete = async (event) => {
-    let postingId = event.target.id;
-    console.log(postingId);
+  // const handleDelete = async (event) => {
+  //   let postingId = event.target.id;
+  //   console.log(postingId);
 
-    try {
-      await removePosting({
-        variables: { postingId },
-      });
-      console.log("Posting succesfully deleted");
-    } catch (e) {
-      console.error(e);
-      console.log(`It didn't work`);
-    }
-  };
+  //   try {
+  //     await removePosting({
+  //       variables: { postingId },
+  //     });
+  //     console.log("Posting succesfully deleted");
+  //   } catch (e) {
+  //     console.error(e);
+  //     console.log(`It didn't work`);
+  //   }
+  // };
 
   const handleFilter = async (key) => {
     let filteredPost = allPostings.filter(
@@ -99,10 +120,10 @@ const Shoppage = () => {
     setPostings(allPostings);
   };
 
-  const breakpoints = {
-    default: 4,
-    700: 1,
-  };
+  // const breakpoints = {
+  //   default: 4,
+  //   700: 1,
+  // };
 
   const theme = createTheme();
 
@@ -270,7 +291,9 @@ const Shoppage = () => {
               <Collapse in={cardgameFilter}>
                 <Grid sx={{ mt: "10px" }}>
                   {dataList.cardGames.map((games) => (
-                    <p>{games}</p>
+                    <div key={games} onClick={() => handleFilter(games)}>
+                      <p>{games}</p>
+                    </div>
                   ))}
                 </Grid>
               </Collapse>
@@ -283,7 +306,9 @@ const Shoppage = () => {
               <Collapse in={AFFilter}>
                 <Grid sx={{ mt: "10px" }}>
                   {dataList.AFMakers.map((maker) => (
-                    <p>{maker}</p>
+                    <div key={maker} onClick={() => handleFilter(maker)}>
+                      <p>{maker}</p>
+                    </div>
                   ))}
                 </Grid>
               </Collapse>
@@ -296,7 +321,9 @@ const Shoppage = () => {
               <Collapse in={FMFIlter}>
                 <Grid sx={{ mt: "10px" }}>
                   {dataList.figurineMaker.map((maker) => (
-                    <p>{maker}</p>
+                    <div key={maker} onClick={() => handleFilter(maker)}>
+                      <p>{maker}</p>
+                    </div>
                   ))}
                 </Grid>
               </Collapse>
@@ -313,9 +340,18 @@ const Shoppage = () => {
                 p: "10px",
               }}
             >
-              <Grid onClick={() => ForBackListing("previous")}>
+              {pageIndex === 0 ? (
+                <Grid>
+                  <h2>Done</h2>
+                </Grid>
+              ) : (
+                <Grid onClick={() => ForBackListing("previous")}>
+                  <h2>Previous</h2>
+                </Grid>
+              )}
+              {/* <Grid onClick={() => ForBackListing("previous")}>
                 <h2>Previous</h2>
-              </Grid>
+              </Grid> */}
               <Grid onClick={() => ForBackListing("next")}>
                 <h2>Next</h2>
               </Grid>
@@ -333,6 +369,7 @@ const Shoppage = () => {
             >
               {postings.map((posting) => (
                 <Grid
+                  key={posting.id}
                   sx={{
                     width: "33.333333%",
                     borderStyle: "solid",
