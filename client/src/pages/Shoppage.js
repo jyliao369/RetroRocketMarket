@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
+import Slider from "@mui/material/Slider";
 import { createTheme } from "@mui/material/styles";
 
 import { Image } from "cloudinary-react";
@@ -33,6 +34,7 @@ const Shoppage = () => {
     if (allPostings.length === 0) {
       setIsLoading(true);
     } else {
+      setCurrentPostings(allPostings);
       let currentListings = [];
       for (let a = 0; a < 12; a++) {
         currentListings.push(allPostings[a]);
@@ -42,23 +44,17 @@ const Shoppage = () => {
     }
   }, [allPostings]);
 
+  console.log("page index" + Math.trunc(currentPostings.length / 12));
+
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
-  // console.log("current postings");
-  // console.log(postings);
-
-  let currentListings = [];
-  for (let a = 0; a < 12; a++) {
-    currentListings.push(postings[a]);
-  }
-
   let [pageIndex, setPageIndex] = useState(0);
-
+  let currentListings = [];
   const ForBackListing = (direction) => {
     if (direction === "next") {
       currentListings = [];
       pageIndex++;
       for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
-        currentListings.push(allPostings[a]);
+        currentListings.push(currentPostings[a]);
       }
       // setCurrentPostings(currentListings);
       console.log(pageIndex);
@@ -71,7 +67,7 @@ const Shoppage = () => {
       currentListings = [];
       pageIndex--;
       for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
-        currentListings.push(allPostings[a]);
+        currentListings.push(currentPostings[a]);
       }
       // setCurrentPostings(currentListings);
       console.log(pageIndex);
@@ -115,18 +111,28 @@ const Shoppage = () => {
         posting.figureManufacture === key
     );
     console.log(filteredPost);
+    setPageIndex(0);
     setCurrentPostings(filteredPost);
-    setPostings(filteredPost);
+    let currentListings = [];
+    for (let a = 0; a < 12; a++) {
+      if (filteredPost[a]) {
+        currentListings.push(filteredPost[a]);
+      } else {
+        break;
+      }
+    }
+    setPostings(currentListings);
   };
 
   const showAll = () => {
-    setPostings(allPostings);
+    setPageIndex(0);
+    let currentListings = [];
+    for (let a = 0; a < 12; a++) {
+      currentListings.push(allPostings[a]);
+    }
+    setCurrentPostings(allPostings);
+    setPostings(currentListings);
   };
-
-  // const breakpoints = {
-  //   default: 4,
-  //   700: 1,
-  // };
 
   const theme = createTheme();
 
@@ -187,12 +193,23 @@ const Shoppage = () => {
           <Paper
             square
             elevation={5}
-            sx={{ display: "flex", width: "70%", mt: "10px", mb: "20px" }}
+            sx={{
+              display: "flex",
+              width: "70%",
+              mt: "10px",
+              mb: "50px",
+              height: "1331",
+            }}
           >
             <Grid
               item
               sx={{
+                display: "flex",
+                flexDirection: "column",
                 width: "25%",
+                borderStyle: "solid",
+                borderWidth: "thin",
+                borderColor: "#C0C0C0",
               }}
             >
               <Grid
@@ -201,6 +218,9 @@ const Shoppage = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   p: "10px",
+                  borderBottom: "solid",
+                  borderWidth: "thin",
+                  borderColor: "#C0C0C0",
                 }}
               >
                 <Grid>
@@ -210,139 +230,146 @@ const Shoppage = () => {
                   <h2>Reset</h2>
                 </Grid>
               </Grid>
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("category")}>
-                  <h2>Category</h2>
+              <Grid item sx={{ overflowY: "auto", height: "1000px" }}>
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("category")}>
+                    <h3>Category</h3>
+                  </Grid>
+                  <Collapse in={categoryFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.category.map((category) => (
+                        <div
+                          key={category}
+                          onClick={() => handleFilter(category)}
+                        >
+                          <p>{category}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={categoryFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.category.map((category) => (
-                      <div
-                        key={category}
-                        onClick={() => handleFilter(category)}
-                      >
-                        <p>{category}</p>
-                      </div>
-                    ))}
-                  </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid>
-                  <Grid item>
-                    <h2>Price</h2>
-                  </Grid>
-                  <Grid
-                    item
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      mt: "10px",
-                    }}
-                  >
-                    <TextField sx={{ width: "125px" }} size="small" />
-                    <TextField sx={{ width: "125px" }} size="small" />
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid>
+                    <Grid item>
+                      <h3>Price</h3>
+                    </Grid>
+                    <Grid
+                      item
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mt: "20px",
+                        ml: "20px",
+                        mr: "20px",
+                      }}
+                    >
+                      <TextField sx={{ width: "125px" }} size="small" />
+                      <TextField sx={{ width: "125px" }} size="small" />
+                    </Grid>
+                    <Grid item sx={{ mt: "20px", ml: "30px", mr: "30px" }}>
+                      <Slider />
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("system")}>
-                  <h2>System</h2>
-                </Grid>
-                <Collapse in={platformFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.platform.map((platform) => (
-                      <div
-                        key={platform}
-                        onClick={() => handleFilter(platform)}
-                      >
-                        <p>{platform}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("system")}>
+                    <h3>System</h3>
                   </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("accessories")}>
-                  <h2>Accessories</h2>
+                  <Collapse in={platformFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.platform.map((platform) => (
+                        <div
+                          key={platform}
+                          onClick={() => handleFilter(platform)}
+                        >
+                          <p>{platform}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={accessoryFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.accessories.map((accessory) => (
-                      <div
-                        key={accessory}
-                        onClick={() => handleFilter(accessory)}
-                      >
-                        <p>{accessory}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("accessories")}>
+                    <h3>Accessories</h3>
                   </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("genre")}>
-                  <h2>Genre</h2>
+                  <Collapse in={accessoryFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.accessories.map((accessory) => (
+                        <div
+                          key={accessory}
+                          onClick={() => handleFilter(accessory)}
+                        >
+                          <p>{accessory}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={genreFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.genre.map((genre) => (
-                      <div key={genre} onClick={() => handleFilter(genre)}>
-                        <p>{genre}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("genre")}>
+                    <h3>Genre</h3>
                   </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("cardGame")}>
-                  <h2>Card Games</h2>
+                  <Collapse in={genreFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.genre.map((genre) => (
+                        <div key={genre} onClick={() => handleFilter(genre)}>
+                          <p>{genre}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={cardgameFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.cardGames.map((games) => (
-                      <div key={games} onClick={() => handleFilter(games)}>
-                        <p>{games}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("cardGame")}>
+                    <h3>Card Games</h3>
                   </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("AF")}>
-                  <h2>Action Figure Maker</h2>
+                  <Collapse in={cardgameFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.cardGames.map((games) => (
+                        <div key={games} onClick={() => handleFilter(games)}>
+                          <p>{games}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={AFFilter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.AFMakers.map((maker) => (
-                      <div key={maker} onClick={() => handleFilter(maker)}>
-                        <p>{maker}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("AF")}>
+                    <h3>Action Figure Maker</h3>
                   </Grid>
-                </Collapse>
-              </Grid>
-              <hr />
-              <Grid sx={{ p: "10px" }}>
-                <Grid onClick={() => showFilters("FM")}>
-                  <h2>Figurine Maker</h2>
+                  <Collapse in={AFFilter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.AFMakers.map((maker) => (
+                        <div key={maker} onClick={() => handleFilter(maker)}>
+                          <p>{maker}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
                 </Grid>
-                <Collapse in={FMFIlter}>
-                  <Grid sx={{ mt: "10px" }}>
-                    {dataList.figurineMaker.map((maker) => (
-                      <div key={maker} onClick={() => handleFilter(maker)}>
-                        <p>{maker}</p>
-                      </div>
-                    ))}
+                <hr />
+                <Grid sx={{ p: "10px" }}>
+                  <Grid onClick={() => showFilters("FM")}>
+                    <h3>Figurine Maker</h3>
                   </Grid>
-                </Collapse>
+                  <Collapse in={FMFIlter}>
+                    <Grid sx={{ mt: "10px" }}>
+                      {dataList.figurineMaker.map((maker) => (
+                        <div key={maker} onClick={() => handleFilter(maker)}>
+                          <p>{maker}</p>
+                        </div>
+                      ))}
+                    </Grid>
+                  </Collapse>
+                </Grid>
+                <hr />
               </Grid>
-              <hr />
             </Grid>
 
             <Grid item sx={{ width: "75%" }}>
@@ -352,6 +379,9 @@ const Shoppage = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   p: "10px",
+                  borderStyle: "solid",
+                  borderWidth: "thin",
+                  borderColor: "#C0C0C0",
                 }}
               >
                 {pageIndex === 0 ? (
@@ -363,35 +393,41 @@ const Shoppage = () => {
                     <h2>Previous</h2>
                   </Grid>
                 )}
-                {/* <Grid onClick={() => ForBackListing("previous")}>
-                <h2>Previous</h2>
-              </Grid> */}
-                <Grid onClick={() => ForBackListing("next")}>
-                  <h2>Next</h2>
-                </Grid>
+                {pageIndex === Math.trunc(currentPostings.length / 12) - 1 ? (
+                  <Grid>
+                    <h2>Done</h2>
+                  </Grid>
+                ) : (
+                  <Grid onClick={() => ForBackListing("next")}>
+                    <h2>Next</h2>
+                  </Grid>
+                )}
               </Grid>
+
               <Grid
                 item
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   flexWrap: "wrap",
-                  borderStyle: "solid",
-                  borderWidth: "1px",
-                  borderColor: "gray",
                 }}
               >
                 {postings.map((posting) => (
                   <Grid
                     key={posting._id}
                     sx={{
-                      width: "33.333333%",
+                      width: "33.33%",
                       borderStyle: "solid",
-                      borderWidth: "1px",
-                      borderColor: "gray",
+                      borderWidth: "thin",
+                      borderColor: "#C0C0C0",
                     }}
                   >
-                    <Grid item sx={{ p: "10px" }}>
+                    <Grid
+                      item
+                      sx={{
+                        p: "10px",
+                      }}
+                    >
                       <Link to={`/shop/${posting._id}`}>
                         {(function () {
                           if (
@@ -419,8 +455,9 @@ const Shoppage = () => {
                     </Grid>
 
                     <Grid item sx={{ p: "10px" }}>
-                      <h3>{posting.title}</h3>
-                      <h3>Price: </h3>
+                      <h5>{posting.title}</h5>
+                      <br />
+                      <h4>Price: </h4>
                     </Grid>
                   </Grid>
                 ))}
