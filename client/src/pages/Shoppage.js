@@ -28,16 +28,16 @@ const Shoppage = () => {
   const [currentPostings, setCurrentPostings] = useState(allPostings);
   const [postings, setPostings] = useState(allPostings);
 
-  let numListing = 12;
-
   useEffect(() => {
     setPostings(allPostings);
   }, [allPostings]);
 
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
+  // console.log("current postings");
+  // console.log(postings);
 
   let currentListings = [];
-  for (let a = 0; a < 5; a++) {
+  for (let a = 0; a < 12; a++) {
     currentListings.push(postings[a]);
   }
 
@@ -47,11 +47,7 @@ const Shoppage = () => {
     if (direction === "next") {
       currentListings = [];
       pageIndex++;
-      for (
-        let a = numListing * pageIndex;
-        a < numListing * (pageIndex + 1);
-        a++
-      ) {
+      for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
         currentListings.push(allPostings[a]);
       }
       // setCurrentPostings(currentListings);
@@ -64,11 +60,7 @@ const Shoppage = () => {
     if (direction === "previous") {
       currentListings = [];
       pageIndex--;
-      for (
-        let a = numListing * pageIndex;
-        a < numListing * (pageIndex + 1);
-        a++
-      ) {
+      for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
         currentListings.push(allPostings[a]);
       }
       // setCurrentPostings(currentListings);
@@ -113,6 +105,7 @@ const Shoppage = () => {
         posting.figureManufacture === key
     );
     console.log(filteredPost);
+    setCurrentPostings(filteredPost);
     setPostings(filteredPost);
   };
 
@@ -180,7 +173,11 @@ const Shoppage = () => {
   return (
     <Box>
       <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-        <Paper square elevation={5} sx={{ display: "flex", width: "70%" }}>
+        <Paper
+          square
+          elevation={5}
+          sx={{ display: "flex", width: "70%", mt: "10px", mb: "20px" }}
+        >
           <Grid
             item
             sx={{
@@ -369,7 +366,7 @@ const Shoppage = () => {
             >
               {postings.map((posting) => (
                 <Grid
-                  key={posting.id}
+                  key={posting._id}
                   sx={{
                     width: "33.333333%",
                     borderStyle: "solid",
@@ -414,581 +411,6 @@ const Shoppage = () => {
           </Grid>
         </Paper>
       </Grid>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-      {/* <Grid item sx={{ background: "#EDE6F1" }}>
-        <Grid
-          item
-          sx={{ display: "flex", justifyContent: "center", pt: 1.5, pb: 1.5 }}
-        >
-          <Button
-            variant="contained"
-            size="small"
-            onClick={showAll}
-            sx={{ mr: 1, ml: 1 }}
-          >
-            Show All
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleVGFilterExpand}
-            sx={{ mr: 1, ml: 1 }}
-          >
-            Video Game/Consoles
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleTCFilterExpand}
-            sx={{ mr: 1, ml: 1 }}
-          >
-            Trading Cards
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleAFFilterExpand}
-            sx={{ mr: 1, ml: 1 }}
-          >
-            Action Figure
-          </Button>
-        </Grid>
-        <Collapse in={VGFilter}>
-          <Grid
-            item
-            sx={{ display: "flex", justifyContent: "center", mb: 1.5 }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              value="Games"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Games
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Console"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Consoles
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Accessories"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Accessories
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={handleadvVGFilterExpand}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              More Options
-            </Button>
-          </Grid>
-          <Collapse in={advVGFilter}>
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mb: 1.5,
-                mt: 1.5,
-              }}
-            >
-              <TextField
-                select
-                helperText="Select a Platform"
-                onChange={handleFilter}
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.platform.map((platform) => (
-                  <MenuItem key={platform} value={platform}>
-                    {platform}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Select a Genre"
-                onChange={handleFilter}
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.genre.map((genre) => (
-                  <MenuItem key={genre} value={genre}>
-                    {genre}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Select a Publisher"
-                onChange={handleFilter}
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.publisher.map((publisher) => (
-                  <MenuItem key={publisher} value={publisher}>
-                    {publisher}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Select an Accessory"
-                onChange={handleFilter}
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.accessories.map((accessory) => (
-                  <MenuItem key={accessory} value={accessory}>
-                    {accessory}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Collapse>
-        </Collapse>
-        <Collapse in={TCFilter}>
-          <Grid
-            item
-            sx={{ display: "flex", justifyContent: "center", mb: 1.5 }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              value="Pokemon Trading Card Game"
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Pokemon
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Yu-Gi-Oh! Trading Card Game"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Yu-Gi-Oh!
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Magic: The Gathering"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Magic
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Star Wars Destiny"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Final Fantasy
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Final Fantasy Trading Card Game"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Star Wars
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={handleadvTCFilterExpand}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              More Options
-            </Button>
-          </Grid>
-          <Collapse in={advTCFilter}>
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mb: 1.5,
-                mt: 1.5,
-              }}
-            >
-              <TextField
-                select
-                helperText="Select a Card Game"
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.cardGames.map((game) => (
-                  <MenuItem key={game} value={game} onChange={handleFilter}>
-                    {game}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Single or Boxed"
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.cardSale.map((sale) => (
-                  <MenuItem key={sale} value={sale} onChange={handleFilter}>
-                    {sale}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Card Publisher"
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.cardPublisher.map((publisher) => (
-                  <MenuItem
-                    key={publisher}
-                    value={publisher}
-                    onChange={handleFilter}
-                  >
-                    {publisher}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Collapse>
-        </Collapse>
-        <Collapse in={AFFilter}>
-          <Grid
-            item
-            sx={{ display: "flex", justifyContent: "center", mb: 1.5 }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              value="Good Smile Company"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Good Smile Company
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Orange Rouge"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Orange Rouge
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Bandai"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Bandai
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="Hasbro"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              Hasbro
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="McFarlane Toys"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              McFarlane Toys
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              value="POP!"
-              onClick={handleFilter}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              POP!
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={handleadvAFFilterExpand}
-              sx={{ mr: 1, ml: 1 }}
-            >
-              More Options
-            </Button>
-          </Grid>
-          <Collapse in={advAFFilter}>
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mb: 1.5,
-                mt: 1.5,
-              }}
-            >
-              <TextField
-                select
-                helperText="Select a Action Figure Brand"
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.AFMakers.map((publisher) => (
-                  <MenuItem
-                    key={publisher}
-                    value={publisher}
-                    onChange={handleFilter}
-                  >
-                    {publisher}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                helperText="Select a Figurine Brand"
-                sx={{ mr: 1, ml: 1 }}
-              >
-                {dataList.figurineMaker.map((publisher) => (
-                  <MenuItem
-                    key={publisher}
-                    value={publisher}
-                    onChange={handleFilter}
-                  >
-                    {publisher}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Collapse>
-        </Collapse>
-      </Grid> */}
-
-      {/* <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          background: "#897394",
-        }}
-      >
-        <Grid
-          item
-          md={9}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <Masonry
-              breakpointCols={breakpoints}
-              sx={{ display: "flex", width: "auto" }}
-            >
-              {disPostings.map((posting) => (
-                <Grid sx={{ m: 1.5 }}>
-                  <Card elevation={4}>
-                    <Grid item sx={{ p: 1 }}>
-                      <Link to={`/shop/${posting._id}`}>
-                        {(function () {
-                          if (
-                            posting.imageid === null ||
-                            posting.imageid === "N/A"
-                          ) {
-                            return (
-                              <Image
-                                width="100%"
-                                cloudName="du119g90a"
-                                public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                              />
-                            );
-                          } else {
-                            return (
-                              <Image
-                                width="100%"
-                                cloudName="du119g90a"
-                                public_id={posting.imageid}
-                              />
-                            );
-                          }
-                        })()}
-                      </Link>
-                    </Grid>
-                    <Grid
-                      item
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        pt: 1,
-                        pb: 1,
-                        pl: 2,
-                        pr: 2,
-                        height: 200,
-                      }}
-                    >
-                      <ThemeProvider theme={theme}>
-                        <Grid item>
-                          <Typography variant="h1">{posting.title}</Typography>
-                        </Grid>
-                      </ThemeProvider>
-
-                      {(function () {
-                        if (posting.category === "Console") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Platform: {posting.platform}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        } else if (posting.category === "Games") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Platform: {posting.platform}
-                              </Typography>
-                              <Typography variant="info">
-                                Genre: {posting.genre}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        } else if (posting.category === "Accessories") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Platform: {posting.platform}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        } else if (posting.category === "Trading Card Game") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Card Game: {posting.cardGame}
-                              </Typography>
-                              <Typography variant="info">
-                                Card Sale: {posting.cardSale}
-                              </Typography>
-                              <Typography variant="info">
-                                Publisher: {posting.publisher}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        } else if (posting.category === "Action Figures") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Brand: {posting.figureManufacture}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        } else if (posting.category === "Figurines") {
-                          return (
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "column" }}
-                            >
-                              <Typography variant="info">
-                                Category: {posting.category}
-                              </Typography>
-                              <Typography variant="info">
-                                Brand: {posting.figurineManufacture}
-                              </Typography>
-                              <Typography variant="info">
-                                Condition: {posting.condition}
-                              </Typography>
-                            </Grid>
-                          );
-                        }
-                      })()}
-                    </Grid>
-
-                    <Grid>
-                      <Button id={posting._id} onClick={handleDelete}>
-                        Delete
-                      </Button>
-                      <Button>
-                        <Link to={`/update/${posting._id}`}>Update</Link>
-                      </Button>
-                    </Grid>
-                  </Card>
-                </Grid>
-              ))}
-            </Masonry>
-          </ThemeProvider>
-        </Grid>
-      </Box> */}
     </Box>
   );
 };
