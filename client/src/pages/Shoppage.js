@@ -25,11 +25,21 @@ const Shoppage = () => {
   const { loading, data } = useQuery(QUERY_POSTINGS);
   const allPostings = data?.postings || [];
 
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPostings, setCurrentPostings] = useState(allPostings);
   const [postings, setPostings] = useState(allPostings);
 
   useEffect(() => {
-    setPostings(allPostings);
+    if (allPostings.length === 0) {
+      setIsLoading(true);
+    } else {
+      let currentListings = [];
+      for (let a = 0; a < 12; a++) {
+        currentListings.push(allPostings[a]);
+      }
+      setPostings(currentListings);
+      setIsLoading(false);
+    }
   }, [allPostings]);
 
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
@@ -166,251 +176,259 @@ const Shoppage = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Box>
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-        <Paper
-          square
-          elevation={5}
-          sx={{ display: "flex", width: "70%", mt: "10px", mb: "20px" }}
-        >
-          <Grid
-            item
-            sx={{
-              width: "25%",
-            }}
+      {isLoading ? (
+        <Grid>
+          <h1>Loading...</h1>
+        </Grid>
+      ) : (
+        <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+          <Paper
+            square
+            elevation={5}
+            sx={{ display: "flex", width: "70%", mt: "10px", mb: "20px" }}
           >
             <Grid
               item
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                p: "10px",
+                width: "25%",
               }}
             >
-              <Grid>
-                <h2>Filter</h2>
-              </Grid>
-              <Grid onClick={showAll}>
-                <h2>Reset</h2>
-              </Grid>
-            </Grid>
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("category")}>
-                <h2>Category</h2>
-              </Grid>
-              <Collapse in={categoryFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.category.map((category) => (
-                    <div key={category} onClick={() => handleFilter(category)}>
-                      <p>{category}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid>
-                <Grid item>
-                  <h2>Price</h2>
-                </Grid>
-                <Grid
-                  item
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    mt: "10px",
-                  }}
-                >
-                  <TextField sx={{ width: "125px" }} size="small" />
-                  <TextField sx={{ width: "125px" }} size="small" />
-                </Grid>
-              </Grid>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("system")}>
-                <h2>System</h2>
-              </Grid>
-              <Collapse in={platformFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.platform.map((platform) => (
-                    <div key={platform} onClick={() => handleFilter(platform)}>
-                      <p>{platform}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("accessories")}>
-                <h2>Accessories</h2>
-              </Grid>
-              <Collapse in={accessoryFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.accessories.map((accessory) => (
-                    <div
-                      key={accessory}
-                      onClick={() => handleFilter(accessory)}
-                    >
-                      <p>{accessory}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("genre")}>
-                <h2>Genre</h2>
-              </Grid>
-              <Collapse in={genreFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.genre.map((genre) => (
-                    <div key={genre} onClick={() => handleFilter(genre)}>
-                      <p>{genre}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("cardGame")}>
-                <h2>Card Games</h2>
-              </Grid>
-              <Collapse in={cardgameFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.cardGames.map((games) => (
-                    <div key={games} onClick={() => handleFilter(games)}>
-                      <p>{games}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("AF")}>
-                <h2>Action Figure Maker</h2>
-              </Grid>
-              <Collapse in={AFFilter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.AFMakers.map((maker) => (
-                    <div key={maker} onClick={() => handleFilter(maker)}>
-                      <p>{maker}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-            <Grid sx={{ p: "10px" }}>
-              <Grid onClick={() => showFilters("FM")}>
-                <h2>Figurine Maker</h2>
-              </Grid>
-              <Collapse in={FMFIlter}>
-                <Grid sx={{ mt: "10px" }}>
-                  {dataList.figurineMaker.map((maker) => (
-                    <div key={maker} onClick={() => handleFilter(maker)}>
-                      <p>{maker}</p>
-                    </div>
-                  ))}
-                </Grid>
-              </Collapse>
-            </Grid>
-            <hr />
-          </Grid>
-
-          <Grid item sx={{ width: "75%" }}>
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                p: "10px",
-              }}
-            >
-              {pageIndex === 0 ? (
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  p: "10px",
+                }}
+              >
                 <Grid>
-                  <h2>Done</h2>
+                  <h2>Filter</h2>
                 </Grid>
-              ) : (
-                <Grid onClick={() => ForBackListing("previous")}>
-                  <h2>Previous</h2>
+                <Grid onClick={showAll}>
+                  <h2>Reset</h2>
                 </Grid>
-              )}
-              {/* <Grid onClick={() => ForBackListing("previous")}>
+              </Grid>
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("category")}>
+                  <h2>Category</h2>
+                </Grid>
+                <Collapse in={categoryFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.category.map((category) => (
+                      <div
+                        key={category}
+                        onClick={() => handleFilter(category)}
+                      >
+                        <p>{category}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid>
+                  <Grid item>
+                    <h2>Price</h2>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: "10px",
+                    }}
+                  >
+                    <TextField sx={{ width: "125px" }} size="small" />
+                    <TextField sx={{ width: "125px" }} size="small" />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("system")}>
+                  <h2>System</h2>
+                </Grid>
+                <Collapse in={platformFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.platform.map((platform) => (
+                      <div
+                        key={platform}
+                        onClick={() => handleFilter(platform)}
+                      >
+                        <p>{platform}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("accessories")}>
+                  <h2>Accessories</h2>
+                </Grid>
+                <Collapse in={accessoryFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.accessories.map((accessory) => (
+                      <div
+                        key={accessory}
+                        onClick={() => handleFilter(accessory)}
+                      >
+                        <p>{accessory}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("genre")}>
+                  <h2>Genre</h2>
+                </Grid>
+                <Collapse in={genreFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.genre.map((genre) => (
+                      <div key={genre} onClick={() => handleFilter(genre)}>
+                        <p>{genre}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("cardGame")}>
+                  <h2>Card Games</h2>
+                </Grid>
+                <Collapse in={cardgameFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.cardGames.map((games) => (
+                      <div key={games} onClick={() => handleFilter(games)}>
+                        <p>{games}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("AF")}>
+                  <h2>Action Figure Maker</h2>
+                </Grid>
+                <Collapse in={AFFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.AFMakers.map((maker) => (
+                      <div key={maker} onClick={() => handleFilter(maker)}>
+                        <p>{maker}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("FM")}>
+                  <h2>Figurine Maker</h2>
+                </Grid>
+                <Collapse in={FMFIlter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.figurineMaker.map((maker) => (
+                      <div key={maker} onClick={() => handleFilter(maker)}>
+                        <p>{maker}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+            </Grid>
+
+            <Grid item sx={{ width: "75%" }}>
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  p: "10px",
+                }}
+              >
+                {pageIndex === 0 ? (
+                  <Grid>
+                    <h2>Done</h2>
+                  </Grid>
+                ) : (
+                  <Grid onClick={() => ForBackListing("previous")}>
+                    <h2>Previous</h2>
+                  </Grid>
+                )}
+                {/* <Grid onClick={() => ForBackListing("previous")}>
                 <h2>Previous</h2>
               </Grid> */}
-              <Grid onClick={() => ForBackListing("next")}>
-                <h2>Next</h2>
+                <Grid onClick={() => ForBackListing("next")}>
+                  <h2>Next</h2>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  borderColor: "gray",
+                }}
+              >
+                {postings.map((posting) => (
+                  <Grid
+                    key={posting._id}
+                    sx={{
+                      width: "33.333333%",
+                      borderStyle: "solid",
+                      borderWidth: "1px",
+                      borderColor: "gray",
+                    }}
+                  >
+                    <Grid item sx={{ p: "10px" }}>
+                      <Link to={`/shop/${posting._id}`}>
+                        {(function () {
+                          if (
+                            posting.imageid === null ||
+                            posting.imageid === "N/A"
+                          ) {
+                            return (
+                              <Image
+                                width="100%"
+                                cloudName="du119g90a"
+                                public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                              />
+                            );
+                          } else {
+                            return (
+                              <Image
+                                width="100%"
+                                cloudName="du119g90a"
+                                public_id={posting.imageid}
+                              />
+                            );
+                          }
+                        })()}
+                      </Link>
+                    </Grid>
+
+                    <Grid item sx={{ p: "10px" }}>
+                      <h3>{posting.title}</h3>
+                      <h3>Price: </h3>
+                    </Grid>
+                  </Grid>
+                ))}
               </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                borderStyle: "solid",
-                borderWidth: "1px",
-                borderColor: "gray",
-              }}
-            >
-              {postings.map((posting) => (
-                <Grid
-                  key={posting._id}
-                  sx={{
-                    width: "33.333333%",
-                    borderStyle: "solid",
-                    borderWidth: "1px",
-                    borderColor: "gray",
-                  }}
-                >
-                  <Grid item sx={{ p: "10px" }}>
-                    <Link to={`/shop/${posting._id}`}>
-                      {(function () {
-                        if (
-                          posting.imageid === null ||
-                          posting.imageid === "N/A"
-                        ) {
-                          return (
-                            <Image
-                              width="100%"
-                              cloudName="du119g90a"
-                              public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                            />
-                          );
-                        } else {
-                          return (
-                            <Image
-                              width="100%"
-                              cloudName="du119g90a"
-                              public_id={posting.imageid}
-                            />
-                          );
-                        }
-                      })()}
-                    </Link>
-                  </Grid>
-
-                  <Grid item sx={{ p: "10px" }}>
-                    <h3>{posting.title}</h3>
-                    <h3>Price: </h3>
-                  </Grid>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
+          </Paper>
+        </Grid>
+      )}
     </Box>
   );
 };
