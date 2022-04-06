@@ -18,6 +18,10 @@ import Paper from "@mui/material/Paper";
 import Slider from "@mui/material/Slider";
 import { createTheme } from "@mui/material/styles";
 
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+
 import { Image } from "cloudinary-react";
 
 import * as dataList from "../components/data";
@@ -192,13 +196,13 @@ const Shoppage = () => {
         <Grid item sx={{ display: "flex", justifyContent: "center" }}>
           <Paper
             square
-            elevation={5}
+            elevation={12}
             sx={{
               display: "flex",
               width: "70%",
               mt: "10px",
               mb: "50px",
-              height: "1331",
+              height: "1331px",
             }}
           >
             <Grid
@@ -217,6 +221,7 @@ const Shoppage = () => {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center",
                   p: "10px",
                   borderBottom: "solid",
                   borderWidth: "thin",
@@ -227,23 +232,24 @@ const Shoppage = () => {
                   <h2>Filter</h2>
                 </Grid>
                 <Grid onClick={showAll}>
-                  <h2>Reset</h2>
+                  <CachedOutlinedIcon style={{ cursor: "pointer" }} />
                 </Grid>
               </Grid>
               <Grid item sx={{ overflowY: "auto", height: "1000px" }}>
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("category")}>
-                    <h3>Category</h3>
+                    <h3 style={{ cursor: "pointer" }}>Category</h3>
                   </Grid>
                   <Collapse in={categoryFilter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.category.map((category) => (
-                        <div
+                        <Grid
                           key={category}
                           onClick={() => handleFilter(category)}
+                          sx={{ mb: "7px" }}
                         >
-                          <p>{category}</p>
-                        </div>
+                          <p style={{ cursor: "pointer" }}>{category}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -275,17 +281,18 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("system")}>
-                    <h3>System</h3>
+                    <h3 style={{ cursor: "pointer" }}>System</h3>
                   </Grid>
                   <Collapse in={platformFilter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.platform.map((platform) => (
-                        <div
+                        <Grid
                           key={platform}
                           onClick={() => handleFilter(platform)}
+                          sx={{ mb: "7px" }}
                         >
-                          <p>{platform}</p>
-                        </div>
+                          <p style={{ cursor: "pointer" }}>{platform}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -293,7 +300,7 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("accessories")}>
-                    <h3>Accessories</h3>
+                    <h3 style={{ cursor: "pointer" }}>Accessories</h3>
                   </Grid>
                   <Collapse in={accessoryFilter}>
                     <Grid sx={{ mt: "10px" }}>
@@ -302,7 +309,7 @@ const Shoppage = () => {
                           key={accessory}
                           onClick={() => handleFilter(accessory)}
                         >
-                          <p>{accessory}</p>
+                          <p style={{ cursor: "pointer" }}>{accessory}</p>
                         </div>
                       ))}
                     </Grid>
@@ -311,14 +318,18 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("genre")}>
-                    <h3>Genre</h3>
+                    <h3 style={{ cursor: "pointer" }}>Genre</h3>
                   </Grid>
                   <Collapse in={genreFilter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.genre.map((genre) => (
-                        <div key={genre} onClick={() => handleFilter(genre)}>
-                          <p>{genre}</p>
-                        </div>
+                        <Grid
+                          key={genre}
+                          onClick={() => handleFilter(genre)}
+                          sx={{ mb: "7px" }}
+                        >
+                          <p style={{ cursor: "pointer" }}>{genre}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -326,14 +337,18 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("cardGame")}>
-                    <h3>Card Games</h3>
+                    <h3 style={{ cursor: "pointer" }}>Card Games</h3>
                   </Grid>
                   <Collapse in={cardgameFilter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.cardGames.map((games) => (
-                        <div key={games} onClick={() => handleFilter(games)}>
-                          <p>{games}</p>
-                        </div>
+                        <Grid
+                          key={games}
+                          onClick={() => handleFilter(games)}
+                          sx={{ mb: "7px" }}
+                        >
+                          <p style={{ cursor: "pointer" }}>{games}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -341,14 +356,18 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("AF")}>
-                    <h3>Action Figure Maker</h3>
+                    <h3 style={{ cursor: "pointer" }}>Action Figure Maker</h3>
                   </Grid>
                   <Collapse in={AFFilter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.AFMakers.map((maker) => (
-                        <div key={maker} onClick={() => handleFilter(maker)}>
-                          <p>{maker}</p>
-                        </div>
+                        <Grid
+                          key={maker}
+                          onClick={() => handleFilter(maker)}
+                          sx={{ mb: "7px" }}
+                        >
+                          <p style={{ cursor: "pointer" }}>{maker}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -356,14 +375,18 @@ const Shoppage = () => {
                 <hr />
                 <Grid sx={{ p: "10px" }}>
                   <Grid onClick={() => showFilters("FM")}>
-                    <h3>Figurine Maker</h3>
+                    <h3 style={{ cursor: "pointer" }}>Figurine Maker</h3>
                   </Grid>
                   <Collapse in={FMFIlter}>
                     <Grid sx={{ mt: "10px" }}>
                       {dataList.figurineMaker.map((maker) => (
-                        <div key={maker} onClick={() => handleFilter(maker)}>
-                          <p>{maker}</p>
-                        </div>
+                        <Grid
+                          key={maker}
+                          onClick={() => handleFilter(maker)}
+                          sx={{ mb: "7px" }}
+                        >
+                          <p style={{ cursor: "pointer" }}>{maker}</p>
+                        </Grid>
                       ))}
                     </Grid>
                   </Collapse>
@@ -377,6 +400,7 @@ const Shoppage = () => {
                 item
                 sx={{
                   display: "flex",
+                  alignItems: "center",
                   justifyContent: "space-between",
                   p: "10px",
                   borderStyle: "solid",
@@ -386,20 +410,30 @@ const Shoppage = () => {
               >
                 {pageIndex === 0 ? (
                   <Grid>
-                    <h2>Done</h2>
+                    <ArrowBackIosNewOutlinedIcon
+                      disabled
+                      style={{ cursor: "pointer" }}
+                    />
                   </Grid>
                 ) : (
                   <Grid onClick={() => ForBackListing("previous")}>
-                    <h2>Previous</h2>
+                    <ArrowBackIosNewOutlinedIcon
+                      style={{ cursor: "pointer" }}
+                    />
                   </Grid>
                 )}
                 {pageIndex === Math.trunc(currentPostings.length / 12) - 1 ? (
                   <Grid>
-                    <h2>Done</h2>
+                    <ArrowForwardIosOutlinedIcon
+                      disabled
+                      style={{ cursor: "pointer" }}
+                    />
                   </Grid>
                 ) : (
                   <Grid onClick={() => ForBackListing("next")}>
-                    <h2>Next</h2>
+                    <ArrowForwardIosOutlinedIcon
+                      style={{ cursor: "pointer" }}
+                    />
                   </Grid>
                 )}
               </Grid>
