@@ -52,9 +52,11 @@ const Signup = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "27%",
+          width: "20%",
           p: "10px",
-          height: "610px",
+          height: "650px",
+          position: "absolute",
+          mt: "-80px",
         }}
       >
         <Grid item sx={{ mt: "50px", mb: "50px" }}>

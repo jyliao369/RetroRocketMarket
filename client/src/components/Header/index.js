@@ -23,13 +23,16 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ height: "300px" }}>
+    <Box sx={{ height: "300px", background: "#FF7373" }}>
       <Paper
+        square
+        elevation={8}
         sx={{
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          background: "#FF7373",
         }}
       >
         <Grid

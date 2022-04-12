@@ -1,6 +1,6 @@
 import React from "react";
 // import { useEffect } from 'react';
-// import { useState } from 'react';
+import { useState } from "react";
 
 import { Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -18,8 +18,11 @@ import { REMOVE_POSTING } from "../utils/mutations";
 // Import Material UI components
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-// import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Button from "@mui/material/Button";
 
 import Auth from "../utils/auth";
 
@@ -40,10 +43,17 @@ const Profile = () => {
 
   console.log(postings);
 
-  // const [ userpostings, setUserPostings ] = useState(postings);
+  // THESE ARE FOR THE TABS
+  const [profileTab, setProfileTab] = useState(0);
 
-  // console.log('user postings');
-  // console.log(userpostings);
+  const hanldeProfileTabChange = (event, newValue) => {
+    setProfileTab(newValue);
+  };
+
+  function TabPanel(props) {
+    const { children, value, index } = props;
+    return <Box>{value === index && <div>{children}</div>}</Box>;
+  }
 
   // THIS SHOULD BE ABLE DELETE POSTING THE USER MADE
   const [removePosting] = useMutation(REMOVE_POSTING);
@@ -81,115 +91,153 @@ const Profile = () => {
   }
 
   return (
-    <Box
-      sx={{ display: "flex", justifyContent: "center", background: "#F1F2EE" }}
-    >
-      <Grid
-        item
-        xs={12}
-        md={10}
-        sx={{ display: "flex", flexDirection: "row", m: 1 }}
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Paper
+        elevation={8}
+        sx={{ width: "70%", mb: "100px", position: "absolute", mt: "-80px" }}
       >
-        <Grid item md={8}>
-          {postings.map((posting) => (
-            <Card
-              key={posting._id}
-              elevation={5}
+        <h1>How about that all that advice and she didnt even pay us a dime</h1>
+        <Grid>
+          <Tabs value={profileTab} onChange={hanldeProfileTabChange}>
+            <Tab label="Your Listings" />
+            <Tab label="Create New Posting" />
+            <Tab label="Update Account" />
+          </Tabs>
+        </Grid>
+
+        <TabPanel value={profileTab} index={0}>
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              height: "1150px",
+            }}
+          >
+            <Grid
+              item
               sx={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: "column",
                 justifyContent: "space-between",
-                m: 2,
+                width: "70%",
+                m: "15px",
               }}
             >
-              <Link
-                to={`/shop/${posting._id}`}
+              {postings.map((posting) => (
+                <Card
+                  key={posting._id}
+                  elevation={5}
+                  sx={{ display: "flex", flexDirection: "row" }}
+                >
+                  <Link
+                    to={`/shop/${posting._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Grid item sx={{ display: "flex" }}>
+                      <Grid
+                        item
+                        sx={{
+                          width: "200px",
+                          height: "150px",
+                        }}
+                      >
+                        {(function () {
+                          if (
+                            posting.imageid === null ||
+                            posting.imageid === "N/A"
+                          ) {
+                            return (
+                              <Grid>
+                                <Image
+                                  width="100%"
+                                  cloudName="du119g90a"
+                                  public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                                />
+                              </Grid>
+                            );
+                          } else {
+                            return (
+                              <Grid>
+                                <Image
+                                  width="100%"
+                                  cloudName="du119g90a"
+                                  public_id={posting.imageid}
+                                />
+                              </Grid>
+                            );
+                          }
+                        })()}
+                      </Grid>
+                      <Grid
+                        item
+                        sx={{ display: "flex", flexDirection: "column" }}
+                      >
+                        <Grid>
+                          <h1>{posting.title}</h1>
+                          <h5>Date: {posting.createdAt}</h5>
+                        </Grid>
+
+                        <Grid
+                          item
+                          sx={{ display: "flex", flexDirection: "row" }}
+                        >
+                          <Grid>
+                            <p>Category: {posting.category}</p>
+                            <p>Platform: {posting.platform}</p>
+                            <p>Condition: {posting.condition}</p>
+                          </Grid>
+                          <Grid>
+                            <p>Publisher: {posting.publisher}</p>
+                            <p>Genre: {posting.genre}</p>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Link>
+                  <Grid>
+                    <Button id={posting._id} onClick={handleDelete}>
+                      Delete
+                    </Button>
+                    <Button>
+                      <Link to={`/update/${posting._id}`} /*id={posting._id}*/>
+                        Update
+                      </Link>
+                    </Button>
+                  </Grid>
+                </Card>
+              ))}
+              <Grid
+                item
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  m: 2,
                 }}
               >
-                <Grid item sx={{ display: "flex", flexDirection: "row" }}>
-                  <Grid item md={3} sx={{ display: "flex" }}>
-                    {(function () {
-                      if (
-                        posting.imageid === null ||
-                        posting.imageid === "N/A"
-                      ) {
-                        return (
-                          <Image
-                            width="100%"
-                            cloudName="du119g90a"
-                            public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image
-                            width="100%"
-                            cloudName="du119g90a"
-                            public_id={posting.imageid}
-                          />
-                        );
-                      }
-                    })()}
-                  </Grid>
-                  <Grid
-                    item
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      m: 1.25,
-                      width: 725,
-                    }}
-                  >
-                    <Grid item>
-                      <h1>{posting.title}</h1>
-                    </Grid>
-                    <br />
-                    <Grid item sx={{ fontSize: 17 }}>
-                      <Grid item sx={{ display: "flex", flexDirection: "row" }}>
-                        <Grid item sx={{ mr: 15 }}>
-                          <p>Category: {posting.category}</p>
-                          <p>Platform: {posting.platform}</p>
-                          <p>Condition: {posting.condition}</p>
-                        </Grid>
-                        <Grid item>
-                          <p>Publisher: {posting.publisher}</p>
-                          <p>Genre: {posting.genre}</p>
-                          <p>Date: {posting.createdAt}</p>
-                        </Grid>
-                      </Grid>
-                      <br />
-                      <Grid>
-                        <p>Description: {posting.description}</p>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Link>
-              <Grid
-                item
-                sx={{ display: "flex", flexDirection: "column", m: 1 }}
-              >
-                <button id={posting._id} onClick={handleDelete}>
-                  Delete
-                </button>
-                <button>
-                  <Link to={`/update/${posting._id}`} /*id={posting._id}*/>
-                    Update
-                  </Link>
-                </button>
+                <Button variant="contained">Previous</Button>
+                <Button variant="contained">Next</Button>
               </Grid>
-            </Card>
-          ))}
-        </Grid>
-        <Grid item md={4} sx={{ m: 1.75 }}>
-          <PostForm />
-        </Grid>
-      </Grid>
+            </Grid>
+
+            <Paper elevation={5} sx={{ width: "30%", m: "15px" }}>
+              <Grid>
+                <h3>Statistics</h3>
+              </Grid>
+            </Paper>
+          </Grid>
+        </TabPanel>
+
+        <TabPanel value={profileTab} index={1}>
+          <Grid item sx={{ height: "1150px" }}>
+            <PostForm />
+          </Grid>
+        </TabPanel>
+
+        <TabPanel value={profileTab} index={2}>
+          Item Three
+        </TabPanel>
+      </Paper>
     </Box>
   );
 };

@@ -187,7 +187,7 @@ const Shoppage = () => {
   };
 
   return (
-    <Box>
+    <Box item sx={{ position: "absolute", mt: "-80px" }}>
       {isLoading ? (
         <Grid>
           <h1>Loading...</h1>
@@ -196,7 +196,7 @@ const Shoppage = () => {
         <Grid item sx={{ display: "flex", justifyContent: "center" }}>
           <Paper
             square
-            elevation={12}
+            elevation={18}
             sx={{
               display: "flex",
               width: "70%",
