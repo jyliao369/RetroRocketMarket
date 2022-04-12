@@ -187,215 +187,227 @@ const Shoppage = () => {
   };
 
   return (
-    <Box item sx={{ position: "absolute", mt: "-80px" }}>
-      {isLoading ? (
-        <Grid>
-          <h1>Loading...</h1>
-        </Grid>
-      ) : (
-        <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-          <Paper
-            square
-            elevation={18}
+    <Box>
+      <Grid
+        item
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          position: "relative",
+          mt: "-80px",
+        }}
+      >
+        <Paper
+          square
+          elevation={18}
+          sx={{
+            display: "flex",
+            width: "70%",
+            mt: "10px",
+            mb: "100px",
+            height: "1406px",
+          }}
+        >
+          <Grid
+            item
             sx={{
               display: "flex",
-              width: "70%",
-              mt: "10px",
-              mb: "50px",
-              height: "1331px",
+              flexDirection: "column",
+              width: "25%",
+              borderStyle: "solid",
+              borderWidth: "thin",
+              borderColor: "#C0C0C0",
             }}
           >
             <Grid
               item
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                width: "25%",
-                borderStyle: "solid",
+                justifyContent: "space-between",
+                alignItems: "center",
+                p: "10px",
+                borderBottom: "solid",
                 borderWidth: "thin",
                 borderColor: "#C0C0C0",
               }}
             >
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  p: "10px",
-                  borderBottom: "solid",
-                  borderWidth: "thin",
-                  borderColor: "#C0C0C0",
-                }}
-              >
-                <Grid>
-                  <h2>Filter</h2>
-                </Grid>
-                <Grid onClick={showAll}>
-                  <CachedOutlinedIcon style={{ cursor: "pointer" }} />
-                </Grid>
+              <Grid>
+                <h2>Filter</h2>
               </Grid>
-              <Grid item sx={{ overflowY: "auto", height: "1000px" }}>
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("category")}>
-                    <h3 style={{ cursor: "pointer" }}>Category</h3>
-                  </Grid>
-                  <Collapse in={categoryFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.category.map((category) => (
-                        <Grid
-                          key={category}
-                          onClick={() => handleFilter(category)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{category}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid>
-                    <Grid item>
-                      <h3>Price</h3>
-                    </Grid>
-                    <Grid
-                      item
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt: "20px",
-                        ml: "20px",
-                        mr: "20px",
-                      }}
-                    >
-                      <TextField sx={{ width: "125px" }} size="small" />
-                      <TextField sx={{ width: "125px" }} size="small" />
-                    </Grid>
-                    <Grid item sx={{ mt: "20px", ml: "30px", mr: "30px" }}>
-                      <Slider />
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("system")}>
-                    <h3 style={{ cursor: "pointer" }}>System</h3>
-                  </Grid>
-                  <Collapse in={platformFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.platform.map((platform) => (
-                        <Grid
-                          key={platform}
-                          onClick={() => handleFilter(platform)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{platform}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("accessories")}>
-                    <h3 style={{ cursor: "pointer" }}>Accessories</h3>
-                  </Grid>
-                  <Collapse in={accessoryFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.accessories.map((accessory) => (
-                        <div
-                          key={accessory}
-                          onClick={() => handleFilter(accessory)}
-                        >
-                          <p style={{ cursor: "pointer" }}>{accessory}</p>
-                        </div>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("genre")}>
-                    <h3 style={{ cursor: "pointer" }}>Genre</h3>
-                  </Grid>
-                  <Collapse in={genreFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.genre.map((genre) => (
-                        <Grid
-                          key={genre}
-                          onClick={() => handleFilter(genre)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{genre}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("cardGame")}>
-                    <h3 style={{ cursor: "pointer" }}>Card Games</h3>
-                  </Grid>
-                  <Collapse in={cardgameFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.cardGames.map((games) => (
-                        <Grid
-                          key={games}
-                          onClick={() => handleFilter(games)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{games}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("AF")}>
-                    <h3 style={{ cursor: "pointer" }}>Action Figure Maker</h3>
-                  </Grid>
-                  <Collapse in={AFFilter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.AFMakers.map((maker) => (
-                        <Grid
-                          key={maker}
-                          onClick={() => handleFilter(maker)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{maker}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
-                <Grid sx={{ p: "10px" }}>
-                  <Grid onClick={() => showFilters("FM")}>
-                    <h3 style={{ cursor: "pointer" }}>Figurine Maker</h3>
-                  </Grid>
-                  <Collapse in={FMFIlter}>
-                    <Grid sx={{ mt: "10px" }}>
-                      {dataList.figurineMaker.map((maker) => (
-                        <Grid
-                          key={maker}
-                          onClick={() => handleFilter(maker)}
-                          sx={{ mb: "7px" }}
-                        >
-                          <p style={{ cursor: "pointer" }}>{maker}</p>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Collapse>
-                </Grid>
-                <hr />
+              <Grid onClick={showAll}>
+                <CachedOutlinedIcon style={{ cursor: "pointer" }} />
               </Grid>
             </Grid>
+            <Grid item sx={{ overflowY: "auto", height: "1000px" }}>
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("category")}>
+                  <h3 style={{ cursor: "pointer" }}>Category</h3>
+                </Grid>
+                <Collapse in={categoryFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.category.map((category) => (
+                      <Grid
+                        key={category}
+                        onClick={() => handleFilter(category)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{category}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid>
+                  <Grid item>
+                    <h3>Price</h3>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: "20px",
+                      ml: "20px",
+                      mr: "20px",
+                    }}
+                  >
+                    <TextField sx={{ width: "125px" }} size="small" />
+                    <TextField sx={{ width: "125px" }} size="small" />
+                  </Grid>
+                  <Grid item sx={{ mt: "20px", ml: "30px", mr: "30px" }}>
+                    <Slider />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("system")}>
+                  <h3 style={{ cursor: "pointer" }}>System</h3>
+                </Grid>
+                <Collapse in={platformFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.platform.map((platform) => (
+                      <Grid
+                        key={platform}
+                        onClick={() => handleFilter(platform)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{platform}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("accessories")}>
+                  <h3 style={{ cursor: "pointer" }}>Accessories</h3>
+                </Grid>
+                <Collapse in={accessoryFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.accessories.map((accessory) => (
+                      <div
+                        key={accessory}
+                        onClick={() => handleFilter(accessory)}
+                      >
+                        <p style={{ cursor: "pointer" }}>{accessory}</p>
+                      </div>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("genre")}>
+                  <h3 style={{ cursor: "pointer" }}>Genre</h3>
+                </Grid>
+                <Collapse in={genreFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.genre.map((genre) => (
+                      <Grid
+                        key={genre}
+                        onClick={() => handleFilter(genre)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{genre}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("cardGame")}>
+                  <h3 style={{ cursor: "pointer" }}>Card Games</h3>
+                </Grid>
+                <Collapse in={cardgameFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.cardGames.map((games) => (
+                      <Grid
+                        key={games}
+                        onClick={() => handleFilter(games)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{games}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("AF")}>
+                  <h3 style={{ cursor: "pointer" }}>Action Figure Maker</h3>
+                </Grid>
+                <Collapse in={AFFilter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.AFMakers.map((maker) => (
+                      <Grid
+                        key={maker}
+                        onClick={() => handleFilter(maker)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{maker}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+              <Grid sx={{ p: "10px" }}>
+                <Grid onClick={() => showFilters("FM")}>
+                  <h3 style={{ cursor: "pointer" }}>Figurine Maker</h3>
+                </Grid>
+                <Collapse in={FMFIlter}>
+                  <Grid sx={{ mt: "10px" }}>
+                    {dataList.figurineMaker.map((maker) => (
+                      <Grid
+                        key={maker}
+                        onClick={() => handleFilter(maker)}
+                        sx={{ mb: "7px" }}
+                      >
+                        <p style={{ cursor: "pointer" }}>{maker}</p>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Collapse>
+              </Grid>
+              <hr />
+            </Grid>
+          </Grid>
 
-            <Grid item sx={{ width: "75%" }}>
+          <Grid
+            item
+            sx={{
+              width: "75%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Grid>
               <Grid
                 item
                 sx={{
@@ -438,68 +450,122 @@ const Shoppage = () => {
                 )}
               </Grid>
 
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                }}
-              >
-                {postings.map((posting) => (
-                  <Grid
-                    key={posting._id}
-                    sx={{
-                      width: "33.33%",
-                      borderStyle: "solid",
-                      borderWidth: "thin",
-                      borderColor: "#C0C0C0",
-                    }}
-                  >
+              {isLoading ? (
+                <Grid>
+                  <h1>Loading...</h1>
+                </Grid>
+              ) : (
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {postings.map((posting) => (
                     <Grid
-                      item
+                      key={posting._id}
                       sx={{
-                        p: "10px",
+                        width: "33.33%",
+                        borderStyle: "solid",
+                        borderWidth: "thin",
+                        borderColor: "#C0C0C0",
                       }}
                     >
-                      <Link to={`/shop/${posting._id}`}>
-                        {(function () {
-                          if (
-                            posting.imageid === null ||
-                            posting.imageid === "N/A"
-                          ) {
-                            return (
-                              <Image
-                                width="100%"
-                                cloudName="du119g90a"
-                                public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                              />
-                            );
-                          } else {
-                            return (
-                              <Image
-                                width="100%"
-                                cloudName="du119g90a"
-                                public_id={posting.imageid}
-                              />
-                            );
-                          }
-                        })()}
-                      </Link>
-                    </Grid>
+                      <Grid
+                        item
+                        sx={{
+                          width: "350px",
+                          height: "244.5px",
+                          p: "10px",
+                        }}
+                      >
+                        <Link to={`/shop/${posting._id}`}>
+                          {(function () {
+                            if (
+                              posting.imageid === null ||
+                              posting.imageid === "N/A"
+                            ) {
+                              return (
+                                <Image
+                                  width="100%"
+                                  cloudName="du119g90a"
+                                  public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
+                                />
+                              );
+                            } else {
+                              return (
+                                <Image
+                                  width="100%"
+                                  cloudName="du119g90a"
+                                  public_id={posting.imageid}
+                                />
+                              );
+                            }
+                          })()}
+                        </Link>
+                      </Grid>
 
-                    <Grid item sx={{ p: "10px" }}>
-                      <h5>{posting.title}</h5>
-                      <br />
-                      <h4>Price: </h4>
+                      <Grid
+                        item
+                        sx={{
+                          p: "10px",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          height: "80px",
+                        }}
+                      >
+                        <h5>{posting.title}</h5>
+                        <h4>Price: </h4>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                ))}
-              </Grid>
+                  ))}
+                </Grid>
+              )}
             </Grid>
-          </Paper>
-        </Grid>
-      )}
+
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: "10px",
+                borderStyle: "solid",
+                borderWidth: "thin",
+                borderColor: "#C0C0C0",
+              }}
+            >
+              {pageIndex === 0 ? (
+                <Grid>
+                  <ArrowBackIosNewOutlinedIcon
+                    disabled
+                    style={{ cursor: "pointer" }}
+                  />
+                </Grid>
+              ) : (
+                <Grid onClick={() => ForBackListing("previous")}>
+                  <ArrowBackIosNewOutlinedIcon style={{ cursor: "pointer" }} />
+                </Grid>
+              )}
+              {pageIndex === Math.trunc(currentPostings.length / 12) - 1 ? (
+                <Grid>
+                  <ArrowForwardIosOutlinedIcon
+                    disabled
+                    style={{ cursor: "pointer" }}
+                  />
+                </Grid>
+              ) : (
+                <Grid onClick={() => ForBackListing("next")}>
+                  <ArrowForwardIosOutlinedIcon style={{ cursor: "pointer" }} />
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     </Box>
   );
 };

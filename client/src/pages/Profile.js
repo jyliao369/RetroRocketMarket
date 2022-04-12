@@ -92,10 +92,7 @@ const Profile = () => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Paper
-        elevation={8}
-        sx={{ width: "70%", mb: "100px", position: "absolute", mt: "-80px" }}
-      >
+      <Paper elevation={8} sx={{ width: "70%", mb: "100px" }}>
         <h1>How about that all that advice and she didnt even pay us a dime</h1>
         <Grid>
           <Tabs value={profileTab} onChange={hanldeProfileTabChange}>

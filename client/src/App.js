@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Posting from "./pages/Posting";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import Box from "@mui/material/Box";
 import Updatepage from "./pages/Updatepage";
@@ -76,6 +77,8 @@ function App() {
             <Updatepage />
           </Route>
         </Box>
+
+        <Footer />
       </Router>
     </ApolloProvider>
   );

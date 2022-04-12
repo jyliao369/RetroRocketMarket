@@ -54,9 +54,10 @@ const Signup = () => {
           alignItems: "center",
           width: "20%",
           p: "10px",
-          height: "650px",
-          position: "absolute",
-          mt: "-80px",
+          height: "750px",
+          position: "relative",
+          mt: "-60px",
+          mb: "100px",
         }}
       >
         <Grid item sx={{ mt: "50px", mb: "50px" }}>
