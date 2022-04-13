@@ -40,7 +40,7 @@ const Shoppage = () => {
     } else {
       setCurrentPostings(allPostings);
       let currentListings = [];
-      for (let a = 0; a < 12; a++) {
+      for (let a = 0; a < 15; a++) {
         currentListings.push(allPostings[a]);
       }
       setPostings(currentListings);
@@ -57,7 +57,7 @@ const Shoppage = () => {
     if (direction === "next") {
       currentListings = [];
       pageIndex++;
-      for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
+      for (let a = 15 * pageIndex; a < 15 * (pageIndex + 1); a++) {
         currentListings.push(currentPostings[a]);
       }
       // setCurrentPostings(currentListings);
@@ -70,7 +70,7 @@ const Shoppage = () => {
     if (direction === "previous") {
       currentListings = [];
       pageIndex--;
-      for (let a = 12 * pageIndex; a < 12 * (pageIndex + 1); a++) {
+      for (let a = 15 * pageIndex; a < 15 * (pageIndex + 1); a++) {
         currentListings.push(currentPostings[a]);
       }
       // setCurrentPostings(currentListings);
@@ -193,8 +193,6 @@ const Shoppage = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          position: "relative",
-          mt: "-80px",
         }}
       >
         <Paper
@@ -203,9 +201,9 @@ const Shoppage = () => {
           sx={{
             display: "flex",
             width: "70%",
-            mt: "10px",
-            mb: "100px",
-            height: "1406px",
+            height: "1732px",
+            mt: "75px",
+            mb: "75px",
           }}
         >
           <Grid
@@ -238,7 +236,7 @@ const Shoppage = () => {
                 <CachedOutlinedIcon style={{ cursor: "pointer" }} />
               </Grid>
             </Grid>
-            <Grid item sx={{ overflowY: "auto", height: "1000px" }}>
+            <Grid item sx={{ overflowY: "auto" }}>
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("category")}>
                   <h3 style={{ cursor: "pointer" }}>Category</h3>
@@ -451,7 +449,10 @@ const Shoppage = () => {
               </Grid>
 
               {isLoading ? (
-                <Grid>
+                <Grid
+                  item
+                  sx={{ display: "flex", justifyContent: "center", mt: "50px" }}
+                >
                   <h1>Loading...</h1>
                 </Grid>
               ) : (
@@ -478,7 +479,7 @@ const Shoppage = () => {
                         sx={{
                           width: "350px",
                           height: "244.5px",
-                          p: "10px",
+                          p: "15px",
                         }}
                       >
                         <Link to={`/shop/${posting._id}`}>

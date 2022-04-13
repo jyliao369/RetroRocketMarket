@@ -136,7 +136,7 @@ const PostForm = () => {
           flexDirection: "column",
           alignItems: "center",
           m: "15px",
-          ml: "25px",
+          ml: "45px",
           maxHeight: "1024px",
         }}
       >
@@ -456,7 +456,8 @@ const PostForm = () => {
           alignItems: "center",
           width: "60%",
           m: "15px",
-          mr: "25px",
+          mr: "40px",
+          mb: "30px",
           height: "1110px",
         }}
       >

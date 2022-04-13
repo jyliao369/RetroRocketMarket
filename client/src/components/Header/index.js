@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ height: "300px", background: "#FF7373" }}>
+    <Box>
       <Paper
         square
         elevation={8}
@@ -41,7 +41,10 @@ const Header = () => {
           <Grid>
             <SearchOutlinedIcon sx={{ fontSize: "30px", m: "20px" }} />
           </Grid>
-          <TextField size="small" />
+          <TextField
+            sx={{ background: "white", borderRadius: "5px" }}
+            size="small"
+          />
         </Grid>
         <Grid item sx={{ p: "15px" }}>
           <h1>PopMarket!! Retro Rocket!!</h1>

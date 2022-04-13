@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useEffect } from 'react';
 import { useState } from "react";
 
@@ -26,7 +26,7 @@ import Button from "@mui/material/Button";
 
 import Auth from "../utils/auth";
 
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -38,10 +38,53 @@ const Profile = () => {
     }
   );
 
-  const user = data?.myprofile || data?.user || {};
-  const postings = user.postings;
+  const user = data?.myprofile || data?.user || [];
 
-  console.log(postings);
+  const [isLoading, setIsLoading] = useState(true);
+  const [postings, setPostings] = useState(user.postings);
+
+  useEffect(() => {
+    if (user.length === 0) {
+      setIsLoading(true);
+    } else {
+      let currentListings = [];
+      for (let a = 0; a < 6; a++) {
+        currentListings.push(user.postings[a]);
+      }
+      setIsLoading(false);
+      setPostings(currentListings);
+    }
+  }, [user]);
+
+  // console.log(postings);
+
+  // THIS SHOWS ONLY 6 LISTINGS PER PAGE
+  let currentListings = [];
+  let [pageIndex, setPageIndex] = useState(0);
+  const ForBackListing = (direction) => {
+    if (direction === "next") {
+      currentListings = [];
+      pageIndex++;
+      for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
+        if (user.postings[a]) {
+          currentListings.push(user.postings[a]);
+        }
+      }
+      setPageIndex(pageIndex);
+      console.log(currentListings);
+      setPostings(currentListings);
+    }
+    if (direction === "previous") {
+      currentListings = [];
+      pageIndex--;
+      for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
+        currentListings.push(user.postings[a]);
+      }
+      setPageIndex(pageIndex);
+      console.log(currentListings);
+      setPostings(currentListings);
+    }
+  };
 
   // THESE ARE FOR THE TABS
   const [profileTab, setProfileTab] = useState(0);
@@ -86,19 +129,19 @@ const Profile = () => {
     );
   }
 
-  if (postings === undefined || loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Paper elevation={8} sx={{ width: "70%", mb: "100px" }}>
-        <h1>How about that all that advice and she didnt even pay us a dime</h1>
-        <Grid>
+      <Paper elevation={8} sx={{ width: "70%", mt: "75px", mb: "75px" }}>
+        <Grid
+          item
+          sx={{
+            mb: "10px",
+          }}
+        >
           <Tabs value={profileTab} onChange={hanldeProfileTabChange}>
             <Tab label="Your Listings" />
             <Tab label="Create New Posting" />
-            <Tab label="Update Account" />
+            {/* <Tab label="Update Account" /> */}
           </Tabs>
         </Grid>
 
@@ -111,115 +154,221 @@ const Profile = () => {
               height: "1150px",
             }}
           >
-            <Grid
-              item
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                width: "70%",
-                m: "15px",
-              }}
-            >
-              {postings.map((posting) => (
-                <Card
-                  key={posting._id}
-                  elevation={5}
-                  sx={{ display: "flex", flexDirection: "row" }}
-                >
-                  <Link
-                    to={`/shop/${posting._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Grid item sx={{ display: "flex" }}>
-                      <Grid
-                        item
-                        sx={{
-                          width: "200px",
-                          height: "150px",
-                        }}
-                      >
-                        {(function () {
-                          if (
-                            posting.imageid === null ||
-                            posting.imageid === "N/A"
-                          ) {
-                            return (
-                              <Grid>
-                                <Image
-                                  width="100%"
-                                  cloudName="du119g90a"
-                                  public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                                />
-                              </Grid>
-                            );
-                          } else {
-                            return (
-                              <Grid>
-                                <Image
-                                  width="100%"
-                                  cloudName="du119g90a"
-                                  public_id={posting.imageid}
-                                />
-                              </Grid>
-                            );
-                          }
-                        })()}
-                      </Grid>
-                      <Grid
-                        item
-                        sx={{ display: "flex", flexDirection: "column" }}
-                      >
-                        <Grid>
-                          <h1>{posting.title}</h1>
-                          <h5>Date: {posting.createdAt}</h5>
-                        </Grid>
-
-                        <Grid
-                          item
-                          sx={{ display: "flex", flexDirection: "row" }}
-                        >
-                          <Grid>
-                            <p>Category: {posting.category}</p>
-                            <p>Platform: {posting.platform}</p>
-                            <p>Condition: {posting.condition}</p>
-                          </Grid>
-                          <Grid>
-                            <p>Publisher: {posting.publisher}</p>
-                            <p>Genre: {posting.genre}</p>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Link>
-                  <Grid>
-                    <Button id={posting._id} onClick={handleDelete}>
-                      Delete
-                    </Button>
-                    <Button>
-                      <Link to={`/update/${posting._id}`} /*id={posting._id}*/>
-                        Update
-                      </Link>
-                    </Button>
-                  </Grid>
-                </Card>
-              ))}
+            {isLoading ? (
               <Grid
                 item
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
+                  width: "70%",
+                  m: "15px",
+                  ml: "45px",
+                  mb: "30px",
                 }}
               >
-                <Button variant="contained">Previous</Button>
-                <Button variant="contained">Next</Button>
+                <h1>Retrieving listings</h1>
               </Grid>
-            </Grid>
+            ) : (
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  width: "70%",
+                  m: "15px",
+                  ml: "25px",
+                  mb: "14px",
+                  p: "15px",
+                  background: "rgb(134, 134, 134, 0.2)",
+                }}
+              >
+                <Grid>
+                  {postings.map((posting) => (
+                    <Card
+                      square
+                      key={posting._id}
+                      elevation={5}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        mb: "17px",
+                        borderStyle: "solid",
+                        borderColor: "rgb(64, 64, 64, .7)",
+                      }}
+                    >
+                      <Link
+                        to={`/shop/${posting._id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Grid item sx={{ display: "flex" }}>
+                          <Grid>
+                            {(function () {
+                              if (
+                                posting.imageid === null ||
+                                posting.imageid === "N/A"
+                              ) {
+                                return (
+                                  <Image
+                                    cloudName="du119g90a"
+                                    public_id="noimagegame_uvzgky"
+                                  >
+                                    <Transformation
+                                      width="200"
+                                      height="150"
+                                      crop="pad"
+                                    />
+                                  </Image>
+                                );
+                              } else {
+                                return (
+                                  <Image
+                                    width="100%"
+                                    height="100%"
+                                    cloudName="du119g90a"
+                                    public_id={posting.imageid}
+                                  >
+                                    <Transformation
+                                      width="200"
+                                      height="150"
+                                      crop="pad"
+                                    />
+                                  </Image>
+                                );
+                              }
+                            })()}
+                          </Grid>
 
-            <Paper elevation={5} sx={{ width: "30%", m: "15px" }}>
-              <Grid>
-                <h3>Statistics</h3>
+                          <Grid
+                            item
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              borderLeftStyle: "solid",
+                              borderColor: "rgb(64, 64, 64, .7)",
+                              pl: "10px",
+                            }}
+                          >
+                            <Grid>
+                              <h2>{posting.title}</h2>
+                              <h5>Date: {posting.createdAt}</h5>
+                            </Grid>
+                            <br />
+                            <Grid
+                              item
+                              sx={{ display: "flex", flexDirection: "row" }}
+                            >
+                              <Grid>
+                                <p>Category: {posting.category}</p>
+                                <p>Platform: {posting.platform}</p>
+                                <p>Condition: {posting.condition}</p>
+                              </Grid>
+                              <Grid>
+                                <p>Publisher: {posting.publisher}</p>
+                                <p>Genre: {posting.genre}</p>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                      {/* <Grid>
+                        <Button id={posting._id} onClick={handleDelete}>
+                          Delete
+                        </Button>
+                        <Button>
+                          <Link to={`/update/${posting._id}`}>Update</Link>
+                        </Button>
+                      </Grid> */}
+                    </Card>
+                  ))}
+                </Grid>
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Button
+                    onClick={() => ForBackListing("previous")}
+                    variant="contained"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    onClick={() => ForBackListing("next")}
+                    variant="contained"
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
+
+            <Paper
+              elevation={5}
+              sx={{
+                width: "30%",
+                m: "15px",
+                mr: "45px",
+                mb: "30px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "400px",
+              }}
+            >
+              <Grid
+                item
+                sx={{
+                  pt: "5px",
+                  pb: "5px",
+                  background: "#FFA4A4",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  borderTopRightRadius: "5px",
+                  borderTopLeftRadius: "5px",
+                  mb: "15px",
+                }}
+              >
+                <h2>Statistics</h2>
+              </Grid>
+              <Grid item sx={{ mb: "10px" }}>
+                <h2>Your Listings</h2>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  mb: "15px",
+                }}
+              >
+                <p>All Listings</p>
+                <p>Currently Selling</p>
+                <p>Sold Listings</p>
+              </Grid>
+              <Grid item sx={{ mb: "10px" }}>
+                <h2>Category</h2>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  mb: "15px",
+                }}
+              >
+                <p>Acessories</p>
+                <p>Consoles</p>
+                <p>Games</p>
+                <p>Action Figures</p>
+                <p>Figurines</p>
+                <p>Trading Cards</p>
               </Grid>
             </Paper>
           </Grid>
@@ -231,9 +380,9 @@ const Profile = () => {
           </Grid>
         </TabPanel>
 
-        <TabPanel value={profileTab} index={2}>
+        {/* <TabPanel value={profileTab} index={2}>
           Item Three
-        </TabPanel>
+        </TabPanel> */}
       </Paper>
     </Box>
   );
