@@ -22,7 +22,7 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 
-import { Image } from "cloudinary-react";
+import { Image, Transformation } from "cloudinary-react";
 
 import * as dataList from "../components/data";
 
@@ -58,7 +58,9 @@ const Shoppage = () => {
       currentListings = [];
       pageIndex++;
       for (let a = 15 * pageIndex; a < 15 * (pageIndex + 1); a++) {
-        currentListings.push(currentPostings[a]);
+        if (currentPostings[a]) {
+          currentListings.push(currentPostings[a]);
+        }
       }
       // setCurrentPostings(currentListings);
       console.log(pageIndex);
@@ -118,7 +120,7 @@ const Shoppage = () => {
     setPageIndex(0);
     setCurrentPostings(filteredPost);
     let currentListings = [];
-    for (let a = 0; a < 12; a++) {
+    for (let a = 0; a < 15; a++) {
       if (filteredPost[a]) {
         currentListings.push(filteredPost[a]);
       } else {
@@ -472,9 +474,51 @@ const Shoppage = () => {
                         borderStyle: "solid",
                         borderWidth: "thin",
                         borderColor: "#C0C0C0",
+                        height: "326.4px",
                       }}
                     >
-                      <Grid
+                      {(function () {
+                        if (
+                          posting.imageid === null ||
+                          posting.imageid === "N/A"
+                        ) {
+                          return (
+                            <Grid item sx={{ p: "10px", height: "220px" }}>
+                              <Image
+                                width="100%"
+                                height="100%"
+                                cloudName="du119g90a"
+                                public_id="noimagegame_uvzgky"
+                              />
+                            </Grid>
+                          );
+                        } else {
+                          return (
+                            <Grid
+                              item
+                              sx={{
+                                p: "10px",
+                                height: "220px",
+                              }}
+                            >
+                              <Image
+                                width="100%"
+                                height="100%"
+                                cloudName="du119g90a"
+                                public_id={posting.imageid}
+                              >
+                                <Transformation
+                                  height="1080"
+                                  width="1920"
+                                  crop="pad"
+                                />
+                              </Image>
+                            </Grid>
+                          );
+                        }
+                      })()}
+
+                      {/* <Grid
                         item
                         sx={{
                           width: "350px",
@@ -489,11 +533,13 @@ const Shoppage = () => {
                               posting.imageid === "N/A"
                             ) {
                               return (
-                                <Image
-                                  width="100%"
-                                  cloudName="du119g90a"
-                                  public_id="https://res.cloudinary.com/du119g90a/image/upload/v1639609335/noimagegame_uvzgky.jpg"
-                                />
+                                <Grid>
+                                  <Image
+                                    width="100%"
+                                    cloudName="du119g90a"
+                                    public_id="noimagegame_uvzgky"
+                                  />
+                                </Grid>
                               );
                             } else {
                               return (
@@ -506,19 +552,21 @@ const Shoppage = () => {
                             }
                           })()}
                         </Link>
-                      </Grid>
+                      </Grid> */}
 
                       <Grid
                         item
                         sx={{
-                          p: "10px",
+                          p: "15px",
+                          pl: "30px",
+                          pr: "30px",
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
-                          height: "80px",
+                          height: "32.5%",
                         }}
                       >
-                        <h5>{posting.title}</h5>
+                        <h4>{posting.title}</h4>
                         <h4>Price: </h4>
                       </Grid>
                     </Grid>
