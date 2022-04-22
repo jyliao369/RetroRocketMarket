@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-// import { useEffect } from 'react';
 import { useState } from "react";
 
 import { Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-// import PostingList from '../components/PostingList';
 import PostForm from "../components/PostForm";
 
 import { useQuery } from "@apollo/client";
@@ -38,53 +36,73 @@ const Profile = () => {
     }
   );
 
+  let [pageIndex, setPageIndex] = useState(0);
   const user = data?.myprofile || data?.user || [];
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [postings, setPostings] = useState(user.postings);
+  const allUserPostings = data?.myprofile.postings || data?.user || [];
+  const [isLoading, setIsLoading] = useState(false);
+  const [postings, setPostings] = useState(allUserPostings);
+  let currentListings = [];
 
   useEffect(() => {
-    if (user.length === 0) {
-      setIsLoading(true);
-    } else {
-      let currentListings = [];
-      for (let a = 0; a < 6; a++) {
-        currentListings.push(user.postings[a]);
-      }
-      setIsLoading(false);
-      setPostings(currentListings);
-    }
-  }, [user]);
+    setPostings(allUserPostings);
+  }, [allUserPostings]);
+
+  // for (let a = 0; a < 6; a++) {
+  //   currentListings.push(allUserPostings[a]);
+  // }
+  // setPostings(currentListings);
+  // console.log(currentListings);
+
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [postings, setPostings] = useState(allUserPostings);
+  // const [currentUserPostings, setCurrentUserPostings] = useState([]);
+
+  // let currentListings = [];
 
   // console.log(postings);
 
+  // useEffect(() => {
+  //   if (allUserPostings.length === 0) {
+  //     setIsLoading(true);
+  //   } else {
+  //     let currentListings = [];
+  //     for (let a = 0; a < 6; a++) {
+  //       currentListings.push(postings[a]);
+  //     }
+  //     setPostings(currentListings);
+  //     setIsLoading(false);
+  //   }
+  // }, [postings]);
+
+  // console.log("test");
+  // console.log(Math.ceil(allUserPostings.length / 6));
+  // console.log(pageIndex);
+
   // THIS SHOWS ONLY 6 LISTINGS PER PAGE
-  let currentListings = [];
-  let [pageIndex, setPageIndex] = useState(0);
-  const ForBackListing = (direction) => {
-    if (direction === "next") {
-      currentListings = [];
-      pageIndex++;
-      for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
-        if (user.postings[a]) {
-          currentListings.push(user.postings[a]);
-        }
-      }
-      setPageIndex(pageIndex);
-      console.log(currentListings);
-      setPostings(currentListings);
-    }
-    if (direction === "previous") {
-      currentListings = [];
-      pageIndex--;
-      for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
-        currentListings.push(user.postings[a]);
-      }
-      setPageIndex(pageIndex);
-      console.log(currentListings);
-      setPostings(currentListings);
-    }
-  };
+  // const ForBackListing = (direction) => {
+  //   if (direction === "next") {
+  //     currentListings = [];
+  //     pageIndex++;
+  //     for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
+  //       if (allUserPostings[a]) {
+  //         currentListings.push(allUserPostings[a]);
+  //       }
+  //     }
+  //     setPageIndex(pageIndex);
+  //     console.log(currentListings);
+  //     setPostings(currentListings);
+  //   }
+  //   if (direction === "previous") {
+  //     currentListings = [];
+  //     pageIndex--;
+  //     for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
+  //       currentListings.push(allUserPostings[a]);
+  //     }
+  //     setPageIndex(pageIndex);
+  //     console.log(currentListings);
+  //     setPostings(currentListings);
+  //   }
+  // };
 
   // THESE ARE FOR THE TABS
   const [profileTab, setProfileTab] = useState(0);
@@ -122,10 +140,17 @@ const Profile = () => {
 
   if (!user?.username) {
     return (
-      <h4>
-        You need to be logged in to see your profile page. Use the navigation
-        links above to sign up or log in!
-      </h4>
+      <Grid item sx={{ height: "100vh" }}>
+        <Grid
+          item
+          sx={{ display: "flex", justifyContent: "center", pt: "115px" }}
+        >
+          <h2>
+            You need to be logged in to see your profile page. Use the
+            navigation links above to sign up or log in!
+          </h2>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -154,36 +179,31 @@ const Profile = () => {
               height: "1150px",
             }}
           >
-            {isLoading ? (
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "70%",
-                  m: "15px",
-                  ml: "45px",
-                  mb: "30px",
-                }}
-              >
-                <h1>Retrieving listings</h1>
-              </Grid>
-            ) : (
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  width: "70%",
-                  m: "15px",
-                  ml: "25px",
-                  mb: "14px",
-                  p: "15px",
-                  background: "rgb(134, 134, 134, 0.2)",
-                }}
-              >
-                <Grid>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                width: "70%",
+                m: "15px",
+                ml: "25px",
+                mb: "14px",
+                p: "15px",
+                background: "rgb(134, 134, 134, 0.2)",
+              }}
+            >
+              {isLoading ? (
+                <Grid>goodbye</Grid>
+              ) : (
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                  }}
+                >
                   {postings.map((posting) => (
                     <Card
                       square
@@ -192,6 +212,7 @@ const Profile = () => {
                       sx={{
                         display: "flex",
                         flexDirection: "row",
+                        justifyContent: "space-between",
                         mb: "17px",
                         borderStyle: "solid",
                         borderColor: "rgb(64, 64, 64, .7)",
@@ -200,9 +221,19 @@ const Profile = () => {
                       <Link
                         to={`/shop/${posting._id}`}
                         style={{ textDecoration: "none" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                       >
-                        <Grid item sx={{ display: "flex" }}>
-                          <Grid>
+                        <Grid
+                          item
+                          sx={{ display: "flex", flexDirection: "row" }}
+                        >
+                          <Grid
+                            item
+                            sx={{
+                              borderRightStyle: "solid",
+                              borderColor: "rgb(64, 64, 64, .7)",
+                            }}
+                          >
                             {(function () {
                               if (
                                 posting.imageid === null ||
@@ -244,9 +275,7 @@ const Profile = () => {
                             sx={{
                               display: "flex",
                               flexDirection: "column",
-                              borderLeftStyle: "solid",
-                              borderColor: "rgb(64, 64, 64, .7)",
-                              pl: "10px",
+                              p: "5px",
                             }}
                           >
                             <Grid>
@@ -254,57 +283,156 @@ const Profile = () => {
                               <h5>Date: {posting.createdAt}</h5>
                             </Grid>
                             <br />
-                            <Grid
-                              item
-                              sx={{ display: "flex", flexDirection: "row" }}
-                            >
-                              <Grid>
-                                <p>Category: {posting.category}</p>
-                                <p>Platform: {posting.platform}</p>
-                                <p>Condition: {posting.condition}</p>
-                              </Grid>
-                              <Grid>
-                                <p>Publisher: {posting.publisher}</p>
-                                <p>Genre: {posting.genre}</p>
-                              </Grid>
-                            </Grid>
+                            {(function () {
+                              if (posting.category === "Console") {
+                                return (
+                                  <Grid
+                                    item
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                    }}
+                                  >
+                                    <Grid item sx={{ pr: "30px" }}>
+                                      <p>Category: {posting.category}</p>
+                                      <p>Platform: {posting.platform}</p>
+                                      <p>Platform: {posting.publisher}</p>
+                                    </Grid>
+                                    <Grid>
+                                      <p>Condition: {posting.condition}</p>
+                                    </Grid>
+                                  </Grid>
+                                );
+                              } else if (posting.category === "Games") {
+                                return (
+                                  <Grid
+                                    item
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                    }}
+                                  >
+                                    <Grid item sx={{ pr: "30px" }}>
+                                      <p>Category: {posting.category}</p>
+                                      <p>Platform: {posting.platform}</p>
+                                      <p>Publisher: {posting.publisher}</p>
+                                    </Grid>
+                                    <Grid>
+                                      <p>Genre: {posting.genre}</p>
+                                      <p>Condition: {posting.condition}</p>
+                                    </Grid>
+                                  </Grid>
+                                );
+                              } else if (posting.category === "Accessories") {
+                                return (
+                                  <Grid
+                                    item
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                    }}
+                                  >
+                                    <Grid item sx={{ pr: "30px" }}>
+                                      <p>Category: {posting.category}</p>
+                                      <p>Platform: {posting.platform}</p>
+                                      <p>Accessory: {posting.accessory}</p>
+                                    </Grid>
+                                    <Grid>
+                                      <p>
+                                        First/Third: {posting.accessoryCheck}
+                                      </p>
+                                      <p>Condition: {posting.condition}</p>
+                                    </Grid>
+                                  </Grid>
+                                );
+                              } else if (
+                                posting.category === "Action Figures"
+                              ) {
+                                return (
+                                  <Grid>
+                                    <p>Category: {posting.category}</p>
+                                    <p>Category: {posting.figureManufacture}</p>
+                                    <p>Condition: {posting.condition}</p>
+                                  </Grid>
+                                );
+                              } else if (
+                                posting.category === "Trading Card Game"
+                              ) {
+                                return (
+                                  <Grid
+                                    item
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                    }}
+                                  >
+                                    <Grid item sx={{ pr: "30px" }}>
+                                      <p>Category: {posting.category}</p>
+                                      <p>Single/Booster: {posting.cardSale}</p>
+                                      <p>Publisher: {posting.publisher}</p>
+                                    </Grid>
+                                    <Grid>
+                                      <p>Condition: {posting.condition}</p>
+                                    </Grid>
+                                  </Grid>
+                                );
+                              } else if (posting.category === "Board Game") {
+                                return (
+                                  <Grid>
+                                    <p>Category: {posting.category}</p>
+                                    <p>Condition: {posting.condition}</p>
+                                  </Grid>
+                                );
+                              } else if (posting.category === "Figurines") {
+                                return (
+                                  <Grid>
+                                    <p>Category: {posting.category}</p>
+                                    <p>
+                                      Manufacture: {posting.figurineManufacture}
+                                    </p>
+                                    <p>Condition: {posting.condition}</p>
+                                  </Grid>
+                                );
+                              }
+                            })()}
                           </Grid>
                         </Grid>
                       </Link>
-                      {/* <Grid>
-                        <Button id={posting._id} onClick={handleDelete}>
-                          Delete
-                        </Button>
-                        <Button>
-                          <Link to={`/update/${posting._id}`}>Update</Link>
-                        </Button>
-                      </Grid> */}
                     </Card>
                   ))}
                 </Grid>
-                <Grid
-                  item
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
+              )}
+
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                {pageIndex === 0 ? (
+                  <Button variant="contained">Previous</Button>
+                ) : (
                   <Button
-                    onClick={() => ForBackListing("previous")}
+                    // onClick={() => ForBackListing("previous")}
                     variant="contained"
                   >
                     Previous
                   </Button>
+                )}
+                {pageIndex === Math.ceil(allUserPostings.length / 6) - 1 ? (
+                  <Button variant="contained">Next</Button>
+                ) : (
                   <Button
-                    onClick={() => ForBackListing("next")}
+                    // onClick={() => ForBackListing("next")}
                     variant="contained"
                   >
                     Next
                   </Button>
-                </Grid>
+                )}
               </Grid>
-            )}
+            </Grid>
 
             <Paper
               elevation={5}

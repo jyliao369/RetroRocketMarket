@@ -31,8 +31,8 @@ const Shoppage = () => {
   const allPostings = data?.postings || [];
 
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPostings, setCurrentPostings] = useState(allPostings);
   const [postings, setPostings] = useState(allPostings);
+  const [currentPostings, setCurrentPostings] = useState(allPostings);
 
   useEffect(() => {
     if (allPostings.length === 0) {
@@ -48,7 +48,7 @@ const Shoppage = () => {
     }
   }, [allPostings]);
 
-  console.log("page index" + Math.trunc(currentPostings.length / 12));
+  console.log("page index: " + Math.trunc(currentPostings.length / 15));
 
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
   let [pageIndex, setPageIndex] = useState(0);
@@ -85,20 +85,20 @@ const Shoppage = () => {
 
   const [removePosting] = useMutation(REMOVE_POSTING);
 
-  // const handleDelete = async (event) => {
-  //   let postingId = event.target.id;
-  //   console.log(postingId);
+  const handleDelete = async (event) => {
+    let postingId = event.target.id;
+    console.log(postingId);
 
-  //   try {
-  //     await removePosting({
-  //       variables: { postingId },
-  //     });
-  //     console.log("Posting succesfully deleted");
-  //   } catch (e) {
-  //     console.error(e);
-  //     console.log(`It didn't work`);
-  //   }
-  // };
+    try {
+      await removePosting({
+        variables: { postingId },
+      });
+      console.log("Posting succesfully deleted");
+    } catch (e) {
+      console.error(e);
+      console.log(`It didn't work`);
+    }
+  };
 
   const handleFilter = async (key) => {
     let filteredPost = allPostings.filter(
@@ -434,7 +434,7 @@ const Shoppage = () => {
                     />
                   </Grid>
                 )}
-                {pageIndex === Math.trunc(currentPostings.length / 12) - 1 ? (
+                {pageIndex === Math.trunc(currentPostings.length / 15) ? (
                   <Grid>
                     <ArrowForwardIosOutlinedIcon
                       disabled
@@ -518,42 +518,6 @@ const Shoppage = () => {
                         }
                       })()}
 
-                      {/* <Grid
-                        item
-                        sx={{
-                          width: "350px",
-                          height: "244.5px",
-                          p: "15px",
-                        }}
-                      >
-                        <Link to={`/shop/${posting._id}`}>
-                          {(function () {
-                            if (
-                              posting.imageid === null ||
-                              posting.imageid === "N/A"
-                            ) {
-                              return (
-                                <Grid>
-                                  <Image
-                                    width="100%"
-                                    cloudName="du119g90a"
-                                    public_id="noimagegame_uvzgky"
-                                  />
-                                </Grid>
-                              );
-                            } else {
-                              return (
-                                <Image
-                                  width="100%"
-                                  cloudName="du119g90a"
-                                  public_id={posting.imageid}
-                                />
-                              );
-                            }
-                          })()}
-                        </Link>
-                      </Grid> */}
-
                       <Grid
                         item
                         sx={{
@@ -599,7 +563,7 @@ const Shoppage = () => {
                   <ArrowBackIosNewOutlinedIcon style={{ cursor: "pointer" }} />
                 </Grid>
               )}
-              {pageIndex === Math.trunc(currentPostings.length / 12) - 1 ? (
+              {pageIndex === Math.trunc(currentPostings.length / 15) ? (
                 <Grid>
                   <ArrowForwardIosOutlinedIcon
                     disabled
