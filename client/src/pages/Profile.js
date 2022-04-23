@@ -28,81 +28,50 @@ import { Image, Transformation } from "cloudinary-react";
 
 const Profile = () => {
   const { userId } = useParams();
-
   const { loading, data } = useQuery(
     userId ? QUERY_SINGLE_USER : QUERY_MYPROFILE,
     {
       variables: { userId: userId },
     }
   );
-
-  let [pageIndex, setPageIndex] = useState(0);
   const user = data?.myprofile || data?.user || [];
   const allUserPostings = data?.myprofile.postings || data?.user || [];
-  const [isLoading, setIsLoading] = useState(false);
-  const [postings, setPostings] = useState(allUserPostings);
-  let currentListings = [];
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [postings, setPostings] = useState([]);
+  let [pageIndex, setPageIndex] = useState(0);
+  let [min, setMin] = useState(0);
+  let [max, setMax] = useState(6);
 
   useEffect(() => {
-    setPostings(allUserPostings);
+    setPostings(allUserPostings.slice(min, max));
+    setIsLoading(false);
   }, [allUserPostings]);
 
-  // for (let a = 0; a < 6; a++) {
-  //   currentListings.push(allUserPostings[a]);
-  // }
-  // setPostings(currentListings);
-  // console.log(currentListings);
-
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [postings, setPostings] = useState(allUserPostings);
-  // const [currentUserPostings, setCurrentUserPostings] = useState([]);
-
-  // let currentListings = [];
-
-  // console.log(postings);
-
-  // useEffect(() => {
-  //   if (allUserPostings.length === 0) {
-  //     setIsLoading(true);
-  //   } else {
-  //     let currentListings = [];
-  //     for (let a = 0; a < 6; a++) {
-  //       currentListings.push(postings[a]);
-  //     }
-  //     setPostings(currentListings);
-  //     setIsLoading(false);
-  //   }
-  // }, [postings]);
-
-  // console.log("test");
-  // console.log(Math.ceil(allUserPostings.length / 6));
-  // console.log(pageIndex);
-
   // THIS SHOWS ONLY 6 LISTINGS PER PAGE
-  // const ForBackListing = (direction) => {
-  //   if (direction === "next") {
-  //     currentListings = [];
-  //     pageIndex++;
-  //     for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
-  //       if (allUserPostings[a]) {
-  //         currentListings.push(allUserPostings[a]);
-  //       }
-  //     }
-  //     setPageIndex(pageIndex);
-  //     console.log(currentListings);
-  //     setPostings(currentListings);
-  //   }
-  //   if (direction === "previous") {
-  //     currentListings = [];
-  //     pageIndex--;
-  //     for (let a = 6 * pageIndex; a < 6 * (pageIndex + 1); a++) {
-  //       currentListings.push(allUserPostings[a]);
-  //     }
-  //     setPageIndex(pageIndex);
-  //     console.log(currentListings);
-  //     setPostings(currentListings);
-  //   }
-  // };
+
+  const ForBackListing = (direction) => {
+    if (direction === "next") {
+      min += 6;
+      max += 5;
+      pageIndex++;
+
+      setPostings(allUserPostings.slice(min, max));
+      setMin(min);
+      setMax(max);
+      setPageIndex(pageIndex);
+    }
+    if (direction === "previous") {
+      min -= 6;
+      max -= 5;
+      pageIndex--;
+
+      setPostings(allUserPostings.slice(min, max));
+      setMin(min);
+      setMax(max);
+      setPageIndex(pageIndex);
+    }
+  };
 
   // THESE ARE FOR THE TABS
   const [profileTab, setProfileTab] = useState(0);
@@ -184,7 +153,7 @@ const Profile = () => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
+                // justifyContent: "space-between",
                 width: "70%",
                 m: "15px",
                 ml: "25px",
@@ -193,8 +162,43 @@ const Profile = () => {
                 background: "rgb(134, 134, 134, 0.2)",
               }}
             >
-              {isLoading ? (
-                <Grid>goodbye</Grid>
+              <Grid
+                item
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                {pageIndex === 0 ? (
+                  <Button variant="contained">Previous</Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={() => ForBackListing("previous")}
+                  >
+                    Previous
+                  </Button>
+                )}
+                {pageIndex === Math.ceil(allUserPostings.length / 6) - 1 ? (
+                  <Button variant="contained">Next</Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={() => ForBackListing("next")}
+                  >
+                    Next
+                  </Button>
+                )}
+              </Grid>
+
+              {allUserPostings.length === 0 ? (
+                <Grid
+                  item
+                  sx={{ display: "flex", justifyContent: "center", pt: "30px" }}
+                >
+                  <h3>You have no postings...</h3>
+                </Grid>
               ) : (
                 <Grid
                   item
@@ -213,7 +217,7 @@ const Profile = () => {
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "space-between",
-                        mb: "17px",
+                        mt: "17px",
                         borderStyle: "solid",
                         borderColor: "rgb(64, 64, 64, .7)",
                       }}
@@ -402,36 +406,6 @@ const Profile = () => {
                   ))}
                 </Grid>
               )}
-
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                {pageIndex === 0 ? (
-                  <Button variant="contained">Previous</Button>
-                ) : (
-                  <Button
-                    // onClick={() => ForBackListing("previous")}
-                    variant="contained"
-                  >
-                    Previous
-                  </Button>
-                )}
-                {pageIndex === Math.ceil(allUserPostings.length / 6) - 1 ? (
-                  <Button variant="contained">Next</Button>
-                ) : (
-                  <Button
-                    // onClick={() => ForBackListing("next")}
-                    variant="contained"
-                  >
-                    Next
-                  </Button>
-                )}
-              </Grid>
             </Grid>
 
             <Paper
