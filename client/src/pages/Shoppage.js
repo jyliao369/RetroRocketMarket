@@ -16,7 +16,6 @@ import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Slider from "@mui/material/Slider";
-import { createTheme } from "@mui/material/styles";
 
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
@@ -33,53 +32,41 @@ const Shoppage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [postings, setPostings] = useState(allPostings);
   const [currentPostings, setCurrentPostings] = useState(allPostings);
+  let [pageIndex, setPageIndex] = useState(0);
+  let [min, setMin] = useState(0);
+  let [max, setMax] = useState(15);
 
   useEffect(() => {
     if (allPostings.length === 0) {
       setIsLoading(true);
     } else {
       setCurrentPostings(allPostings);
-      let currentListings = [];
-      for (let a = 0; a < 15; a++) {
-        currentListings.push(allPostings[a]);
-      }
-      setPostings(currentListings);
+      setPostings(currentPostings.slice(min, max));
       setIsLoading(false);
     }
   }, [allPostings]);
 
-  console.log("page index: " + Math.trunc(currentPostings.length / 15));
-
   // THIS SHOULD SHOW ONLY 15 POSTS AT A TIME
-  let [pageIndex, setPageIndex] = useState(0);
-  let currentListings = [];
   const ForBackListing = (direction) => {
     if (direction === "next") {
-      currentListings = [];
+      min += 15;
+      max += 15;
       pageIndex++;
-      for (let a = 15 * pageIndex; a < 15 * (pageIndex + 1); a++) {
-        if (currentPostings[a]) {
-          currentListings.push(currentPostings[a]);
-        }
-      }
-      // setCurrentPostings(currentListings);
-      console.log(pageIndex);
-      setPageIndex(pageIndex);
-      console.log(currentListings);
-      setPostings(currentListings);
-    }
 
-    if (direction === "previous") {
-      currentListings = [];
-      pageIndex--;
-      for (let a = 15 * pageIndex; a < 15 * (pageIndex + 1); a++) {
-        currentListings.push(currentPostings[a]);
-      }
-      // setCurrentPostings(currentListings);
-      console.log(pageIndex);
+      setPostings(currentPostings.slice(min, max));
+      setMin(min);
+      setMax(max);
       setPageIndex(pageIndex);
-      console.log(currentListings);
-      setPostings(currentListings);
+    }
+    if (direction === "previous") {
+      min -= 15;
+      max -= 15;
+      pageIndex--;
+
+      setPostings(currentPostings.slice(min, max));
+      setMin(min);
+      setMax(max);
+      setPageIndex(pageIndex);
     }
   };
 
@@ -100,7 +87,12 @@ const Shoppage = () => {
     }
   };
 
-  const handleFilter = async (key) => {
+  const handleFilter = (key) => {
+    min = 0;
+    max = 15;
+    setMin(min);
+    setMax(max);
+    setPageIndex(0);
     let filteredPost = allPostings.filter(
       (posting) =>
         posting.category === key ||
@@ -116,18 +108,8 @@ const Shoppage = () => {
         posting.AFMakers === key ||
         posting.figureManufacture === key
     );
-    console.log(filteredPost);
-    setPageIndex(0);
+    setPostings(filteredPost.slice(min, max));
     setCurrentPostings(filteredPost);
-    let currentListings = [];
-    for (let a = 0; a < 15; a++) {
-      if (filteredPost[a]) {
-        currentListings.push(filteredPost[a]);
-      } else {
-        break;
-      }
-    }
-    setPostings(currentListings);
   };
 
   const showAll = () => {
@@ -138,21 +120,6 @@ const Shoppage = () => {
     }
     setCurrentPostings(allPostings);
     setPostings(currentListings);
-  };
-
-  const theme = createTheme();
-
-  theme.typography.h1 = {
-    fontFamily: "Cabin",
-    fontSize: "1.05em",
-    height: "4rem",
-    fontWeight: "bold",
-  };
-
-  theme.typography.info = {
-    fontFamily: "Alata",
-    fontSize: "1em",
-    height: "1.5rem",
   };
 
   // NEW CODE
@@ -422,10 +389,7 @@ const Shoppage = () => {
               >
                 {pageIndex === 0 ? (
                   <Grid>
-                    <ArrowBackIosNewOutlinedIcon
-                      disabled
-                      style={{ cursor: "pointer" }}
-                    />
+                    <ArrowBackIosNewOutlinedIcon />
                   </Grid>
                 ) : (
                   <Grid onClick={() => ForBackListing("previous")}>
@@ -434,12 +398,9 @@ const Shoppage = () => {
                     />
                   </Grid>
                 )}
-                {pageIndex === Math.trunc(currentPostings.length / 15) ? (
+                {pageIndex === Math.ceil(currentPostings.length / 15) - 1 ? (
                   <Grid>
-                    <ArrowForwardIosOutlinedIcon
-                      disabled
-                      style={{ cursor: "pointer" }}
-                    />
+                    <ArrowForwardIosOutlinedIcon />
                   </Grid>
                 ) : (
                   <Grid onClick={() => ForBackListing("next")}>
@@ -553,22 +514,16 @@ const Shoppage = () => {
             >
               {pageIndex === 0 ? (
                 <Grid>
-                  <ArrowBackIosNewOutlinedIcon
-                    disabled
-                    style={{ cursor: "pointer" }}
-                  />
+                  <ArrowBackIosNewOutlinedIcon />
                 </Grid>
               ) : (
                 <Grid onClick={() => ForBackListing("previous")}>
                   <ArrowBackIosNewOutlinedIcon style={{ cursor: "pointer" }} />
                 </Grid>
               )}
-              {pageIndex === Math.trunc(currentPostings.length / 15) ? (
+              {pageIndex === Math.ceil(currentPostings.length / 15) - 1 ? (
                 <Grid>
-                  <ArrowForwardIosOutlinedIcon
-                    disabled
-                    style={{ cursor: "pointer" }}
-                  />
+                  <ArrowForwardIosOutlinedIcon />
                 </Grid>
               ) : (
                 <Grid onClick={() => ForBackListing("next")}>

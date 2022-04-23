@@ -192,7 +192,7 @@ const Profile = () => {
                 )}
               </Grid>
 
-              {allUserPostings.length === 0 ? (
+              {postings.length === 0 ? (
                 <Grid
                   item
                   sx={{ display: "flex", justifyContent: "center", pt: "30px" }}
