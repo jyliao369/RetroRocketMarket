@@ -41,7 +41,7 @@ const Shoppage = () => {
       setIsLoading(true);
     } else {
       setCurrentPostings(allPostings);
-      setPostings(currentPostings.slice(min, max));
+      setPostings(allPostings.slice(min, max));
       setIsLoading(false);
     }
   }, [allPostings]);
