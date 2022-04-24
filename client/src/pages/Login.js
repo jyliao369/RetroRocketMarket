@@ -123,7 +123,9 @@ const Login = (props) => {
           )}
 
           {error && (
-            <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
+            <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+              {error.message}
+            </Grid>
           )}
         </Grid>
       </Paper>

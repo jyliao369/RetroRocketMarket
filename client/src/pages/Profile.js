@@ -38,7 +38,7 @@ const Profile = () => {
   const allUserPostings = data?.myprofile.postings || data?.user || [];
 
   const [isLoading, setIsLoading] = useState(true);
-  const [postings, setPostings] = useState([]);
+  const [postings, setPostings] = useState(allUserPostings);
   let [pageIndex, setPageIndex] = useState(0);
   let [min, setMin] = useState(0);
   let [max, setMax] = useState(6);
@@ -49,7 +49,6 @@ const Profile = () => {
   }, [allUserPostings]);
 
   // THIS SHOWS ONLY 6 LISTINGS PER PAGE
-
   const ForBackListing = (direction) => {
     if (direction === "next") {
       min += 6;
@@ -90,10 +89,8 @@ const Profile = () => {
 
   const handleDelete = async (event) => {
     let postingId = event.target.id;
-    console.log(postingId);
-
     try {
-      await removePosting({
+      removePosting({
         variables: { postingId },
       });
       console.log("Posting succesfully deleted");
@@ -402,6 +399,17 @@ const Profile = () => {
                           </Grid>
                         </Grid>
                       </Link>
+                      <Grid
+                        item
+                        sx={{ display: "flex", flexDirection: "column" }}
+                      >
+                        <Button id={posting._id} onClick={handleDelete}>
+                          Delete
+                        </Button>
+                        <Button>
+                          <Link to={`/update/${posting._id}`}>Update</Link>
+                        </Button>
+                      </Grid>
                     </Card>
                   ))}
                 </Grid>
@@ -481,10 +489,6 @@ const Profile = () => {
             <PostForm />
           </Grid>
         </TabPanel>
-
-        {/* <TabPanel value={profileTab} index={2}>
-          Item Three
-        </TabPanel> */}
       </Paper>
     </Box>
   );
