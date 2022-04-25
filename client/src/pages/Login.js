@@ -60,7 +60,7 @@ const Login = (props) => {
         }}
       >
         <Grid item sx={{ mt: "50px", mb: "50px" }}>
-          <h1>Login</h1>
+          <h1 style={{ fontFamily: "Roboto Condensed" }}>Login</h1>
         </Grid>
         <Grid>
           {data ? (

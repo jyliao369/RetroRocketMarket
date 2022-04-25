@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -32,36 +31,60 @@ const Header = () => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "#FF7373",
+          background: "#005493",
+          pt: "10px",
+          pb: "10px",
         }}
       >
         <Grid
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
           <Grid>
-            <SearchOutlinedIcon sx={{ fontSize: "30px", m: "20px" }} />
+            <SearchOutlinedIcon
+              sx={{ fontSize: "30px", m: "20px" }}
+              style={{ color: "white" }}
+            />
           </Grid>
           <TextField
             sx={{ background: "white", borderRadius: "5px" }}
             size="small"
           />
         </Grid>
-        <Grid item sx={{ p: "15px" }}>
-          <h1>PopMarket!! Retro Rocket!!</h1>
+        <Grid
+          item
+          sx={{
+            pl: "30px",
+            pr: "30px",
+            borderStyle: "solid",
+            borderRadius: "60px",
+            borderWidth: "thick",
+            borderColor: "white",
+          }}
+        >
+          <h1 style={{ color: "white", fontFamily: "Titillium Web" }}>
+            Retro Rocket Shop
+          </h1>
         </Grid>
         <Grid>
-          <Link to="/shop">
-            <ShopOutlinedIcon sx={{ fontSize: "30px", m: "20px" }} />
+          <Link to="/">
+            <ShopOutlinedIcon
+              sx={{ fontSize: "30px", m: "20px" }}
+              style={{ color: "white" }}
+            />
           </Link>
           {Auth.loggedIn() ? (
             <>
               <Link to="/myprofile">
                 <AccountCircleOutlinedIcon
                   sx={{ fontSize: "30px", m: "20px" }}
+                  style={{ color: "white" }}
                 />
               </Link>
               <Link onClick={logout}>
-                <LogoutOutlinedIcon sx={{ fontSize: "30px", m: "20px" }} />
+                <LogoutOutlinedIcon
+                  sx={{ fontSize: "30px", m: "20px" }}
+                  style={{ color: "white" }}
+                />
               </Link>
             </>
           ) : (
@@ -69,52 +92,19 @@ const Header = () => {
               <Link to="/signup">
                 <AssignmentIndOutlinedIcon
                   sx={{ fontSize: "30px", m: "20px" }}
+                  style={{ color: "white" }}
                 />
               </Link>
               <Link to="/login">
-                <LoginOutlinedIcon sx={{ fontSize: "30px", m: "20px" }} />
+                <LoginOutlinedIcon
+                  sx={{ fontSize: "30px", m: "20px" }}
+                  style={{ color: "white" }}
+                />
               </Link>
             </>
           )}
         </Grid>
       </Paper>
-
-      {/* <header className="bg-info text-dark mb-4 py-3 display-flex align-center">
-        <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
-          <Link className="text-dark" to="/">
-            <h1 className="m-0" style={{ fontSize: "3rem" }}>
-              PopMarket!!
-            </h1>
-          </Link>
-          <p className="m-0" style={{ fontSize: "1.75rem", fontWeight: "700" }}>
-            Sell and Share your love of Pop Culture!!
-          </p>
-          <div>
-            <Link className="btn btn-lg btn-primary m-2" to="/shop">
-              Shop
-            </Link>
-            {Auth.loggedIn() ? (
-              <>
-                <Link className="btn btn-lg btn-primary m-2" to="/myprofile">
-                  View My Profile
-                </Link>
-                <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link className="btn btn-lg btn-primary m-2" to="/login">
-                  Login
-                </Link>
-                <Link className="btn btn-lg btn-light m-2" to="/signup">
-                  Signup
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header> */}
     </Box>
   );
 };

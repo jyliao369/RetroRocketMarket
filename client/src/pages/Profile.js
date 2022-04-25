@@ -279,7 +279,12 @@ const Profile = () => {
                               p: "5px",
                             }}
                           >
-                            <Grid>
+                            <Grid
+                              style={{
+                                fontFamily: "Roboto Condensed",
+                                color: "black",
+                              }}
+                            >
                               <h2>{posting.title}</h2>
                               <h5>Date: {posting.createdAt}</h5>
                             </Grid>
@@ -292,6 +297,10 @@ const Profile = () => {
                                     sx={{
                                       display: "flex",
                                       flexDirection: "row",
+                                    }}
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
                                     }}
                                   >
                                     <Grid item sx={{ pr: "30px" }}>
@@ -311,6 +320,10 @@ const Profile = () => {
                                     sx={{
                                       display: "flex",
                                       flexDirection: "row",
+                                    }}
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
                                     }}
                                   >
                                     <Grid item sx={{ pr: "30px" }}>
@@ -332,6 +345,10 @@ const Profile = () => {
                                       display: "flex",
                                       flexDirection: "row",
                                     }}
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
+                                    }}
                                   >
                                     <Grid item sx={{ pr: "30px" }}>
                                       <p>Category: {posting.category}</p>
@@ -350,7 +367,12 @@ const Profile = () => {
                                 posting.category === "Action Figures"
                               ) {
                                 return (
-                                  <Grid>
+                                  <Grid
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
+                                    }}
+                                  >
                                     <p>Category: {posting.category}</p>
                                     <p>Category: {posting.figureManufacture}</p>
                                     <p>Condition: {posting.condition}</p>
@@ -366,6 +388,10 @@ const Profile = () => {
                                       display: "flex",
                                       flexDirection: "row",
                                     }}
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
+                                    }}
                                   >
                                     <Grid item sx={{ pr: "30px" }}>
                                       <p>Category: {posting.category}</p>
@@ -379,14 +405,24 @@ const Profile = () => {
                                 );
                               } else if (posting.category === "Board Game") {
                                 return (
-                                  <Grid>
+                                  <Grid
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
+                                    }}
+                                  >
                                     <p>Category: {posting.category}</p>
                                     <p>Condition: {posting.condition}</p>
                                   </Grid>
                                 );
                               } else if (posting.category === "Figurines") {
                                 return (
-                                  <Grid>
+                                  <Grid
+                                    style={{
+                                      fontFamily: "Roboto Condensed",
+                                      color: "black",
+                                    }}
+                                  >
                                     <p>Category: {posting.category}</p>
                                     <p>
                                       Manufacture: {posting.figurineManufacture}
@@ -428,13 +464,14 @@ const Profile = () => {
                 alignItems: "center",
                 height: "400px",
               }}
+              style={{ fontFamily: "Roboto Condensed" }}
             >
               <Grid
                 item
                 sx={{
                   pt: "5px",
                   pb: "5px",
-                  background: "#FFA4A4",
+                  background: "#59BD59",
                   width: "100%",
                   display: "flex",
                   justifyContent: "center",

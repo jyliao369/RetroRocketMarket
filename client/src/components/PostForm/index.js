@@ -137,8 +137,9 @@ const PostForm = () => {
           alignItems: "center",
           m: "15px",
           ml: "45px",
-          maxHeight: "1024px",
+          height: "1110px",
         }}
+        style={{ fontFamily: "Roboto Condensed" }}
       >
         <Grid item sx={{ mt: "25px", mb: "25px" }}>
           <h1>New Posting</h1>
@@ -460,6 +461,7 @@ const PostForm = () => {
           mb: "30px",
           height: "1110px",
         }}
+        style={{ fontFamily: "Roboto Condensed" }}
       >
         <Grid item sx={{ mt: "30px", mb: "50px" }}>
           <h2>Listing Preview</h2>

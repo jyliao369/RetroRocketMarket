@@ -60,7 +60,7 @@ const Signup = () => {
         }}
       >
         <Grid item sx={{ mt: "50px", mb: "50px" }}>
-          <h1>Sign Up</h1>
+          <h1 style={{ fontFamily: "Roboto Condensed" }}>Sign Up</h1>
         </Grid>
         <Grid>
           {data ? (

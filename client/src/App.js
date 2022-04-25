@@ -48,9 +48,9 @@ function App() {
       <Router>
         <Header />
 
-        <Box>
+        <Box item sx={{ background: "#E6EEF4" }}>
           <Route exact path="/">
-            <Home />
+            <Shoppage />
           </Route>
 
           <Route exact path="/login">
@@ -63,10 +63,6 @@ function App() {
 
           <Route exact path="/myprofile">
             <Profile />
-          </Route>
-
-          <Route exact path="/shop">
-            <Shoppage />
           </Route>
 
           <Route exact path="/shop/:postingId">

@@ -70,22 +70,22 @@ const Shoppage = () => {
     }
   };
 
-  const [removePosting] = useMutation(REMOVE_POSTING);
+  // const [removePosting] = useMutation(REMOVE_POSTING);
 
-  const handleDelete = async (event) => {
-    let postingId = event.target.id;
-    console.log(postingId);
+  // const handleDelete = async (event) => {
+  //   let postingId = event.target.id;
+  //   console.log(postingId);
 
-    try {
-      await removePosting({
-        variables: { postingId },
-      });
-      console.log("Posting succesfully deleted");
-    } catch (e) {
-      console.error(e);
-      console.log(`It didn't work`);
-    }
-  };
+  //   try {
+  //     await removePosting({
+  //       variables: { postingId },
+  //     });
+  //     console.log("Posting succesfully deleted");
+  //   } catch (e) {
+  //     console.error(e);
+  //     console.log(`It didn't work`);
+  //   }
+  // };
 
   const handleFilter = (key) => {
     min = 0;
@@ -199,7 +199,7 @@ const Shoppage = () => {
               }}
             >
               <Grid>
-                <h2>Filter</h2>
+                <h2 style={{ fontFamily: "Bebas Neue" }}>Filter</h2>
               </Grid>
               <Grid onClick={showAll}>
                 <CachedOutlinedIcon style={{ cursor: "pointer" }} />
@@ -208,7 +208,9 @@ const Shoppage = () => {
             <Grid item sx={{ overflowY: "auto" }}>
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("category")}>
-                  <h3 style={{ cursor: "pointer" }}>Category</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Category
+                  </h3>
                 </Grid>
                 <Collapse in={categoryFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -218,7 +220,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(category)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{category}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {category}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -251,7 +260,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("system")}>
-                  <h3 style={{ cursor: "pointer" }}>System</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    System
+                  </h3>
                 </Grid>
                 <Collapse in={platformFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -261,7 +272,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(platform)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{platform}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {platform}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -270,7 +288,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("accessories")}>
-                  <h3 style={{ cursor: "pointer" }}>Accessories</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Accessories
+                  </h3>
                 </Grid>
                 <Collapse in={accessoryFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -279,7 +299,14 @@ const Shoppage = () => {
                         key={accessory}
                         onClick={() => handleFilter(accessory)}
                       >
-                        <p style={{ cursor: "pointer" }}>{accessory}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {accessory}
+                        </p>
                       </div>
                     ))}
                   </Grid>
@@ -288,7 +315,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("genre")}>
-                  <h3 style={{ cursor: "pointer" }}>Genre</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Genre
+                  </h3>
                 </Grid>
                 <Collapse in={genreFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -298,7 +327,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(genre)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{genre}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {genre}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -307,7 +343,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("cardGame")}>
-                  <h3 style={{ cursor: "pointer" }}>Card Games</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Card Games
+                  </h3>
                 </Grid>
                 <Collapse in={cardgameFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -317,7 +355,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(games)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{games}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {games}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -326,7 +371,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("AF")}>
-                  <h3 style={{ cursor: "pointer" }}>Action Figure Maker</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Action Figure Maker
+                  </h3>
                 </Grid>
                 <Collapse in={AFFilter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -336,7 +383,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(maker)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{maker}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {maker}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -345,7 +399,9 @@ const Shoppage = () => {
               <hr />
               <Grid sx={{ p: "10px" }}>
                 <Grid onClick={() => showFilters("FM")}>
-                  <h3 style={{ cursor: "pointer" }}>Figurine Maker</h3>
+                  <h3 style={{ cursor: "pointer", fontFamily: "Bebas Neue" }}>
+                    Figurine Maker
+                  </h3>
                 </Grid>
                 <Collapse in={FMFIlter}>
                   <Grid sx={{ mt: "10px" }}>
@@ -355,7 +411,14 @@ const Shoppage = () => {
                         onClick={() => handleFilter(maker)}
                         sx={{ mb: "7px" }}
                       >
-                        <p style={{ cursor: "pointer" }}>{maker}</p>
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            fontFamily: "Roboto Condensed",
+                          }}
+                        >
+                          {maker}
+                        </p>
                       </Grid>
                     ))}
                   </Grid>
@@ -394,7 +457,10 @@ const Shoppage = () => {
                 ) : (
                   <Grid onClick={() => ForBackListing("previous")}>
                     <ArrowBackIosNewOutlinedIcon
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        fontFamily: "Roboto Condensed",
+                      }}
                     />
                   </Grid>
                 )}
@@ -405,7 +471,10 @@ const Shoppage = () => {
                 ) : (
                   <Grid onClick={() => ForBackListing("next")}>
                     <ArrowForwardIosOutlinedIcon
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        fontFamily: "Roboto Condensed",
+                      }}
                     />
                   </Grid>
                 )}
@@ -491,8 +560,12 @@ const Shoppage = () => {
                           height: "32.5%",
                         }}
                       >
-                        <h4>{posting.title}</h4>
-                        <h4>Price: </h4>
+                        <h4 style={{ fontFamily: "Roboto Condensed" }}>
+                          {posting.title}
+                        </h4>
+                        <h4 style={{ fontFamily: "Roboto Condensed" }}>
+                          Price:{" "}
+                        </h4>
                       </Grid>
                     </Grid>
                   ))}
