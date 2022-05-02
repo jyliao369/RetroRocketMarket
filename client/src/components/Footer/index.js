@@ -19,7 +19,15 @@ const Footer = () => {
         background: "#9DB3CA",
       }}
     >
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid
+        item
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mb: "20px",
+          mt: "20px",
+        }}
+      >
         <Grid
           sx={{
             display: "flex",

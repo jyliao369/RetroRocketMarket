@@ -505,6 +505,7 @@ const Shoppage = () => {
                         borderWidth: "thin",
                         borderColor: "#C0C0C0",
                         height: "326.4px",
+                        background: "white",
                       }}
                     >
                       {(function () {
