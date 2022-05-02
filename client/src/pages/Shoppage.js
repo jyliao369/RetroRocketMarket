@@ -16,6 +16,7 @@ import Collapse from "@mui/material/Collapse";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Slider from "@mui/material/Slider";
+import Button from "@mui/material/Button";
 
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
@@ -437,57 +438,57 @@ const Shoppage = () => {
               justifyContent: "space-between",
             }}
           >
-            <Grid>
-              <Grid
-                item
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  p: "10px",
-                  borderStyle: "solid",
-                  borderWidth: "thin",
-                  borderColor: "#C0C0C0",
-                }}
-              >
-                {pageIndex === 0 ? (
-                  <Grid>
-                    <ArrowBackIosNewOutlinedIcon />
-                  </Grid>
-                ) : (
-                  <Grid onClick={() => ForBackListing("previous")}>
-                    <ArrowBackIosNewOutlinedIcon
-                      style={{
-                        cursor: "pointer",
-                        fontFamily: "Roboto Condensed",
-                      }}
-                    />
-                  </Grid>
-                )}
-                {pageIndex === Math.ceil(currentPostings.length / 15) - 1 ? (
-                  <Grid>
-                    <ArrowForwardIosOutlinedIcon />
-                  </Grid>
-                ) : (
-                  <Grid onClick={() => ForBackListing("next")}>
-                    <ArrowForwardIosOutlinedIcon
-                      style={{
-                        cursor: "pointer",
-                        fontFamily: "Roboto Condensed",
-                      }}
-                    />
-                  </Grid>
-                )}
-              </Grid>
-
-              {isLoading ? (
-                <Grid
-                  item
-                  sx={{ display: "flex", justifyContent: "center", mt: "50px" }}
-                >
-                  <h1>Loading...</h1>
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: "12px",
+                borderStyle: "solid",
+                borderWidth: "thin",
+                borderColor: "#C0C0C0",
+              }}
+            >
+              {pageIndex === 0 ? (
+                <Grid>
+                  <ArrowBackIosNewOutlinedIcon />
                 </Grid>
               ) : (
+                <Grid onClick={() => ForBackListing("previous")}>
+                  <ArrowBackIosNewOutlinedIcon
+                    style={{
+                      cursor: "pointer",
+                      fontFamily: "Roboto Condensed",
+                    }}
+                  />
+                </Grid>
+              )}
+              {pageIndex === Math.ceil(currentPostings.length / 15) - 1 ? (
+                <Grid>
+                  <ArrowForwardIosOutlinedIcon />
+                </Grid>
+              ) : (
+                <Grid onClick={() => ForBackListing("next")}>
+                  <ArrowForwardIosOutlinedIcon
+                    style={{
+                      cursor: "pointer",
+                      fontFamily: "Roboto Condensed",
+                    }}
+                  />
+                </Grid>
+              )}
+            </Grid>
+
+            {isLoading ? (
+              <Grid
+                item
+                sx={{ display: "flex", justifyContent: "center", mt: "50px" }}
+              >
+                <h1>Loading...</h1>
+              </Grid>
+            ) : (
+              <Grid item sx={{ height: "100%" }}>
                 <Grid
                   item
                   sx={{
@@ -504,50 +505,55 @@ const Shoppage = () => {
                         borderStyle: "solid",
                         borderWidth: "thin",
                         borderColor: "#C0C0C0",
-                        height: "326.4px",
+                        height: "325.58px",
                         background: "white",
                       }}
                     >
-                      {(function () {
-                        if (
-                          posting.imageid === null ||
-                          posting.imageid === "N/A"
-                        ) {
-                          return (
-                            <Grid item sx={{ p: "10px", height: "220px" }}>
-                              <Image
-                                width="100%"
-                                height="100%"
-                                cloudName="du119g90a"
-                                public_id="noimagegame_uvzgky"
-                              />
-                            </Grid>
-                          );
-                        } else {
-                          return (
-                            <Grid
-                              item
-                              sx={{
-                                p: "10px",
-                                height: "220px",
-                              }}
-                            >
-                              <Image
-                                width="100%"
-                                height="100%"
-                                cloudName="du119g90a"
-                                public_id={posting.imageid}
-                              >
-                                <Transformation
-                                  height="1080"
-                                  width="1920"
-                                  crop="pad"
+                      <Link
+                        to={`/shop/${posting._id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        {(function () {
+                          if (
+                            posting.imageid === null ||
+                            posting.imageid === "N/A"
+                          ) {
+                            return (
+                              <Grid item sx={{ p: "10px", height: "220px" }}>
+                                <Image
+                                  width="100%"
+                                  height="100%"
+                                  cloudName="du119g90a"
+                                  public_id="noimagegame_uvzgky"
                                 />
-                              </Image>
-                            </Grid>
-                          );
-                        }
-                      })()}
+                              </Grid>
+                            );
+                          } else {
+                            return (
+                              <Grid
+                                item
+                                sx={{
+                                  p: "10px",
+                                  height: "220px",
+                                }}
+                              >
+                                <Image
+                                  width="100%"
+                                  height="100%"
+                                  cloudName="du119g90a"
+                                  public_id={posting.imageid}
+                                >
+                                  <Transformation
+                                    height="1080"
+                                    width="1920"
+                                    crop="pad"
+                                  />
+                                </Image>
+                              </Grid>
+                            );
+                          }
+                        })()}
+                      </Link>
 
                       <Grid
                         item
@@ -558,21 +564,23 @@ const Shoppage = () => {
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
-                          height: "32.5%",
                         }}
                       >
                         <h4 style={{ fontFamily: "Roboto Condensed" }}>
                           {posting.title}
                         </h4>
                         <h4 style={{ fontFamily: "Roboto Condensed" }}>
-                          Price:{" "}
+                          Price:
                         </h4>
+                        <Button size="small">
+                          <Link to={`/update/${posting._id}`}>Update</Link>
+                        </Button>
                       </Grid>
                     </Grid>
                   ))}
                 </Grid>
-              )}
-            </Grid>
+              </Grid>
+            )}
 
             <Grid
               item

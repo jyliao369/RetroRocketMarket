@@ -12,8 +12,10 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
 import * as dataList from "../data";
+import { QUERY_POSTINGS } from "../../utils/queries";
 
 const UpdateForm = (props) => {
   // console.log("props.posting");
@@ -50,7 +52,15 @@ const UpdateForm = (props) => {
   console.log("updatedposting");
   console.log(updatedPosting);
 
-  const [updatePosting] = useMutation(UPDATE_POSTING);
+  // const [updatePosting] = useMutation(UPDATE_POSTING);
+
+  const [updatePosting] = useMutation(UPDATE_POSTING, {
+    refetchQueries: [
+      {
+        query: QUERY_POSTINGS,
+      },
+    ],
+  });
 
   const confirmUpdate = async (event) => {
     let postingId = updatedPosting._id;
@@ -367,7 +377,9 @@ const UpdateForm = (props) => {
             </Grid>
           </Grid>
           <Grid item sx={{ display: "flex", flexDirection: "column", m: 1 }}>
-            <button onClick={confirmUpdate}>Update</button>
+            <Button onClick={confirmUpdate}>
+              <Link to="/">Update</Link>
+            </Button>
           </Grid>
         </Paper>
       </Grid>
